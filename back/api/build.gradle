@@ -1,0 +1,37 @@
+plugins {
+	id 'org.springframework.boot' version "2.7.4"
+	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+	id 'java'
+}
+group = 'ru.charityradar'
+description = "Charity radar"
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-graphql'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	compileOnly 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework:spring-webflux'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	annotationProcessor 'javax.annotation:javax.annotation-api', 'org.projectlombok:lombok'
+}
+
+compileJava {
+    options.annotationProcessorPath = configurations.annotationProcessor
+}
+
+test {
+	useJUnitPlatform()
+}

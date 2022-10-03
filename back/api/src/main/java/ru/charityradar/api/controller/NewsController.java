@@ -1,0 +1,20 @@
+package ru.charityradar.api.controller;
+
+import lombok.AllArgsConstructor;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
+import ru.charityradar.api.repository.NewsRepository;
+import ru.charityradar.api.model.News;
+
+import java.util.List;
+
+@AllArgsConstructor
+@Controller
+public class NewsController {
+    private final NewsRepository _newsRepository;
+
+    @QueryMapping
+    public List<News> getAll() {
+        return _newsRepository.getAll();
+    }
+}
