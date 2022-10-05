@@ -5,13 +5,12 @@ on:
   release:
     types: [published]
 
-defaults:
-  run:
-    working-directory: front # The working directory path
-
 jobs:
   install-and-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front
     steps:
       - uses: actions/checkout@v2
       - name: Install yarn dependencies
@@ -20,6 +19,9 @@ jobs:
   build-android:
     needs: install-and-test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front
     steps: 
       - uses: actions/checkout@v2
       - name: Install npm dependencies
