@@ -1,8 +1,11 @@
+import org.springframework.core.metrics.ApplicationStartup
+
 plugins {
 	id 'org.springframework.boot' version "2.7.4"
 	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 	id 'java'
 }
+
 group = 'ru.charityradar'
 description = "Charity radar"
 sourceCompatibility = '17'
@@ -39,13 +42,7 @@ test {
 }
 
 jar {
-	doFirst {
-		manifest {
-			if (!configurations.compile.isEmpty()) {
-				attributes(
-						'Class-Path': configurations.compile.collect{it.toURI().toString()}.join(' '),
-						'Main-Class': 'ru.charityradar.api.Application')
-			}
-		}
+	manifest {
+		attributes 'Main-Class': 'ru.charityradar.api.Application'
 	}
 }
