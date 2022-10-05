@@ -5,6 +5,10 @@ on:
   release:
     types: [published]
 
+defaults:
+  run:
+    working-directory: front # The working directory path
+
 jobs:
   dev-distribution:
     runs-on: ubuntu-latest
@@ -12,9 +16,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Go to mobile folder
-      run: | 
-        cd front
     - uses: actions/setup-node@master
     - uses: c-hive/gha-yarn-cache@v1
 
