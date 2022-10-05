@@ -12,12 +12,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Go to mobile folder
+      run: | 
+        cd front
     - uses: actions/setup-node@master
     - uses: c-hive/gha-yarn-cache@v1
 
     - name: Install node modules
       run: |
-        cd front && yarn install
+        yarn install
     - name: Run test
       run: |
         yarn test-ci
