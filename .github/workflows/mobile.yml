@@ -17,7 +17,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - uses: actions/setup-node@master
+      with: 
+        cache-dependency-path: front/package-lock.json
     - uses: c-hive/gha-yarn-cache@v2
+      with:
+        directory: front
 
     - name: Install node modules
       run: |
@@ -28,13 +32,13 @@ jobs:
     - name: Cache Gradle Wrapper
       uses: actions/cache@v2
       with:
-        path: ~/.gradle/wrapper
+        path: front/.gradle/wrapper
         key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
 
     - name: Cache Gradle Dependencies
       uses: actions/cache@v1
       with:
-        path: ~/.gradle/caches
+        path: front/.gradle/caches
         key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-caches-
@@ -48,7 +52,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: app-release.apk
-        path: android/app/build/outputs/apk/release/
+        path: front/android/app/build/outputs/apk/release/
 
     - name: Distribute app via Firebase App Distribution
       env:
