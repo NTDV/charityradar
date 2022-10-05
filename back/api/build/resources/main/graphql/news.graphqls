@@ -1,0 +1,9 @@
+type News {
+    id: ID!
+    title: String
+    text: String
+}
+
+type Query {
+    getAll: [News]!
+}

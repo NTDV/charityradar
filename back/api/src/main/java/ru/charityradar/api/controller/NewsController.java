@@ -3,6 +3,7 @@ package ru.charityradar.api.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.charityradar.api.repository.NewsRepository;
 import ru.charityradar.api.model.News;
 
