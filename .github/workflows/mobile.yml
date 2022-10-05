@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install yarn dependencies
         run: |
-          yarn install
+          cd front && yarn install
   build-android:
     runs-on: ubuntu-latest
     steps: 
