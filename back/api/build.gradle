@@ -31,7 +31,7 @@ dependencies {
 }
 
 compileJava {
-    options.annotationProcessorPath = configurations.annotationProcessor
+	options.annotationProcessorPath = configurations.annotationProcessor
 }
 
 test {
