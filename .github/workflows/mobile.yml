@@ -29,19 +29,19 @@ jobs:
     - name: Run test
       run: |
         yarn test-ci
-    #- name: Cache Gradle Wrapper
-    #  uses: actions/cache@v2
-    #  with:
-    #    path: front/.gradle/wrapper
-    #    key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+    - name: Cache Gradle Wrapper
+      uses: actions/cache@v2
+      with:
+        path: front/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
 
-    #- name: Cache Gradle Dependencies
-    #  uses: actions/cache@v3
-    #  with:
-    #    path: front/.gradle/caches
-    #    key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-    #    restore-keys: |
-    #      ${{ runner.os }}-gradle-caches-
+    - name: Cache Gradle Dependencies
+      uses: actions/cache@v3
+      with:
+        path: front/.gradle/caches
+        key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-caches-
     - name: Make Gradlew Executable
       run: cd android && chmod +x ./gradlew
 
