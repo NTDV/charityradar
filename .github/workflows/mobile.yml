@@ -15,7 +15,7 @@ jobs:
           files: front
           
       - name: 🏗 Setup repo 2/2
-        run: cp -r front/* ./ && rm -rf front && echo "EAS_NO_VCS=1" >> $GITHUB_PATH
+        run: cp -r front/* ./ && rm -rf front
           
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
@@ -35,6 +35,9 @@ jobs:
 
       - name: 🚀 Build app
         run: eas build --profile production --platform android
+        env: 
+          EAS_NO_VCS: 1
+          EXPO_TOKEN: ${{ secrets.ARTEM_EXPO_TOKEN }}
         
       - name: 📲 Download Artifact from expo
         run: mkdir build_artifacts; export EXPO_ARTIFACT_URL=$(eas url:apk); cURL $EXPO_ARTIFACT_URL --output ./build_artifacts/$(basename $EXPO_ARTIFACT_URL);
