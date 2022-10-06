@@ -9,43 +9,34 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout files
+      - name: 🏗 Setup repo
         uses: Bhacaz/checkout-files@v2
         with:
           files: front
-      - uses: actions/setup-node@v3
-      - uses: c-hive/gha-yarn-cache@v2
-      - name: Install npm dependencies
-        run: |
-          yarn install
-      - name: Run test
-        run: |
-          yarn test-ci
-      - name: Cache Gradle Wrapper
-        uses: actions/cache@v3
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v2
         with:
-          path: ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          node-version: 16.x
+          cache: yarn
 
-      - name: Cache Gradle Dependencies
-        uses: actions/cache@v3
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
         with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-caches-
-            
-      - name: Make Gradlew Executable
-        run: cd android && chmod +x ./gradlew
-        # Build Command
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.ARTEM_EXPO_TOKEN }}
 
-      - name: Build Android Release
-        run: |
-          cd android && gradlew assembleRelease --no-daemon
-      
-      # Upload to Artifact
-      - name: Upload Artifact
+      - name: 📦 Install dependencies
+        run: yarn install
+
+      - name: 🚀 Build app
+        run: eas build --profile production --platform android
+        
+      - name: 📲 Download Artifact from expo
+        run: mkdir build_artifacts; export EXPO_ARTIFACT_URL=$(eas url:apk); cURL $EXPO_ARTIFACT_URL --output ./build_artifacts/$(basename $EXPO_ARTIFACT_URL);
+        
+      - name: 💾 Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: app-release.apk
-          path: android/app/build/outputs/apk/release/
+          name: charity-radar.apk
+          path: ./build_artifacts/$(basename $EXPO_ARTIFACT_URL)
