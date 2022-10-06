@@ -15,7 +15,7 @@ jobs:
           files: front
           
       - name: 🏗 Setup repo 2/2
-        run: cp front/* ./ && rm -rf front
+        run: cp -r front/* ./ && rm -rf front
           
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
