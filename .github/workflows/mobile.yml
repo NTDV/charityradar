@@ -34,7 +34,7 @@ jobs:
         run: yarn install
 
       - name: 🚀 Build app
-        run: eas build --profile production --platform android
+        run: eas build --profile preview --platform android
         env: 
           EAS_NO_VCS: 1
           EXPO_TOKEN: ${{ secrets.ARTEM_EXPO_TOKEN }}
