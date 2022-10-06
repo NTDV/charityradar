@@ -23,7 +23,10 @@ jobs:
               cp -r _charityradar/front/* charityradar &&
               rm -rf _charityradar &&
               cd charityradar
-         
+      
+      - name: 🧾 Verbose folder stucture
+        run: pwd && ls -l && tree
+        
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
         with:
