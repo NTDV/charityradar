@@ -16,7 +16,7 @@ jobs:
         run: pwd && ls -l && tree
         
       - name: 🏗 Setup repo 2/2
-        run: cp -r charityradar/front/ ./ && rm -rf charityradar/front
+        run: mv ./ temp && cp -r temp/front/ ./ && rm -rf temp
          
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
