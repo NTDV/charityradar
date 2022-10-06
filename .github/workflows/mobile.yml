@@ -13,6 +13,10 @@ jobs:
         uses: Bhacaz/checkout-files@v2
         with:
           files: front
+        
+      - name: Test pwd
+        run: pwd && ls -l && tree
+          
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
         with:
