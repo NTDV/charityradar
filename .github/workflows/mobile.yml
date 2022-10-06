@@ -17,11 +17,12 @@ jobs:
         
       - name: 🏗 Setup repo 2/2
         run: |
-              shopt -s extglob &&
-              mkdir temp &&
-              mv !(temp) temp &&
-              cp -r temp/front/* ./ &&
-              rm -rf temp
+              cd .. &&
+              mv charityradar _charityradar &&
+              mkdir charityradar &&
+              cp -r _charityradar/front/* charityradar &&
+              rm -rf _charityradar &&
+              cd charityradar
          
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
