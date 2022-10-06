@@ -15,7 +15,7 @@ jobs:
           files: front
           
       - name: 🏗 Setup repo 2/2
-        run: cp -r front/* ./ && rm -rf front
+        run: cp -r front/* ./ && rm -rf front && echo "EAS_NO_VCS=1" >> $GITHUB_PATH
           
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
