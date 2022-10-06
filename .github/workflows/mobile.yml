@@ -41,16 +41,19 @@ jobs:
         run: yarn install
 
       - name: 🚀 Build app
-        run: eas build --profile preview --platform android
+        run: eas build --local --profile preview --platform android
         env: 
           EAS_NO_VCS: 1
           EXPO_TOKEN: ${{ secrets.ARTEM_EXPO_TOKEN }}
+          
+      - name: 🧾 Verbose folder stucture
+        run: pwd && ls -l && tree
         
-      - name: 📲 Download Artifact from expo
-        run: mkdir build_artifacts; export EXPO_ARTIFACT_URL=$(eas url:apk); cURL $EXPO_ARTIFACT_URL --output ./build_artifacts/$(basename $EXPO_ARTIFACT_URL);
+      #- name: 📲 Download Artifact from expo
+      #  run: mkdir build_artifacts; export EXPO_ARTIFACT_URL=$(eas url:apk); cURL $EXPO_ARTIFACT_URL --output ./build_artifacts/$(basename $EXPO_ARTIFACT_URL);
         
-      - name: 💾 Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: charity-radar.apk
-          path: ./build_artifacts/$(basename $EXPO_ARTIFACT_URL)
+      #- name: 💾 Upload Artifact
+      #  uses: actions/upload-artifact@v3
+      #  with:
+      #    name: charity-radar.apk
+      #    path: ./build_artifacts/$(basename $EXPO_ARTIFACT_URL)
