@@ -11,7 +11,10 @@ jobs:
     steps:
       - name: 🏗 Setup repo 1/2
         uses: actions/checkout@v3
-         
+        
+      - name: 🧾 Verbose folder stucture
+        run: pwd && ls-l && tree
+        
       - name: 🏗 Setup repo 2/2
         run: cp -r charityradar/front/ ./ && rm -rf charityradar/front
          
