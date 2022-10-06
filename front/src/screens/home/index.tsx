@@ -4,6 +4,7 @@ import { styles } from './styles';
 import { stylesGlobal } from '@shared/constants/styles-global';
 
 import { HeaderLogo } from '@widgets/header-logo';
+import { PreviewCard } from '@entities/bank-card';
 import { Search } from '@shared/ui/search';
 
 export const Home = () => {
@@ -12,6 +13,9 @@ export const Home = () => {
       <HeaderLogo />
       <View style={{ marginVertical: 15 }}>
         <Search placeholder="Введите название фонда или сбора" />
+      </View>
+      <View style={{ marginVertical: 15, zIndex: 0 }}>
+        <PreviewCard />
       </View>
       {/*<View style={{ width: 300, height: 300, backgroundColor: '#000' }} />*/}
     </View>

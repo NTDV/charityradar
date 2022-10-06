@@ -1,10 +1,10 @@
-import { TextInput, TouchableOpacity, View, Text, Keyboard, StatusBar } from 'react-native';
+import { useState } from 'react';
+import { TextInput, TouchableOpacity, View, Text, Keyboard } from 'react-native';
 
 import { styles } from './styles';
 
 import { COLOR_PLACEHOLDER_LIGHT } from '@shared/constants/style-variables';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
 
 type SearchProps = {
   placeholder?: string;
@@ -28,7 +28,7 @@ export const Search = ({ placeholder }: SearchProps) => {
   };
 
   return (
-    <View style={{}}>
+    <View>
       <View style={[styles.container, focusSearch && styles.containerFocused]}>
         <View style={styles.textInputContainer}>
           <View style={styles.icon}>
@@ -55,19 +55,11 @@ export const Search = ({ placeholder }: SearchProps) => {
           </TouchableOpacity>
         )}
       </View>
-      {/*{focusSearch && (*/}
-      {/*  <View*/}
-      {/*    style={{*/}
-      {/*      display: 'flex',*/}
-      {/*      position: 'absolute',*/}
-      {/*      bottom: 0,*/}
-      {/*      left: 0,*/}
-      {/*      width: 200,*/}
-      {/*      height: 200,*/}
-      {/*      backgroundColor: '#e2e2e2',*/}
-      {/*    }}*/}
-      {/*  />*/}
-      {/*)}*/}
+      {focusSearch && (
+        <View style={styles.containerList}>
+          <Text>Тут будет что-то</Text>
+        </View>
+      )}
     </View>
   );
 };

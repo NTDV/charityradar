@@ -1,8 +1,19 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { COLOR_GREY_LIGHT, COLOR_SECONDARY } from '@shared/constants/style-variables';
+import { MAIN_PADDING } from '@shared/constants/styles-global';
 
 export const styles = StyleSheet.create({
+  containerList: {
+    display: 'flex',
+    left: -MAIN_PADDING,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    backgroundColor: '#fff',
+    padding: MAIN_PADDING,
+  },
   container: {
+    height: 40,
+    maxHeight: 40,
     flexDirection: 'row',
     alignItems: 'center',
   },

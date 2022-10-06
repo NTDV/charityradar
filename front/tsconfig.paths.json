@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "paths": {
-      "@app": ["app"],
-      "@app/*": ["app/*"],
-
       "@screens": ["screens"],
       "@screens/*": ["screens/*"],
 

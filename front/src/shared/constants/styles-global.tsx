@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 
+export const MAIN_PADDING = 15;
+
 export const stylesGlobal = StyleSheet.create({
   mainContainer: {
-    padding: 15,
+    padding: MAIN_PADDING,
   },
 });
