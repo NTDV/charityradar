@@ -9,14 +9,12 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
-      #- name: 🏗 Setup repo 1/2
-      #  uses: Bhacaz/checkout-files@v2
-      #  with:
-      #    files: front
-          
-      #- name: 🏗 Setup repo 2/2
-      #  run: cp -r front/* ./ && rm -rf front
-          
+      - name: 🏗 Setup repo 1/2
+        uses: actions/checkout@v3
+         
+      - name: 🏗 Setup repo 2/2
+        run: cp -r charityradar/front/* ./ && rm -rf charityradar/front
+         
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
         with:
