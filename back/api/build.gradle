@@ -1,8 +1,11 @@
+import org.springframework.core.metrics.ApplicationStartup
+
 plugins {
 	id 'org.springframework.boot' version "2.7.4"
 	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 	id 'java'
 }
+
 group = 'ru.charityradar'
 description = "Charity radar"
 sourceCompatibility = '17'
@@ -31,9 +34,15 @@ dependencies {
 }
 
 compileJava {
-    options.annotationProcessorPath = configurations.annotationProcessor
+	options.annotationProcessorPath = configurations.annotationProcessor
 }
 
 test {
 	useJUnitPlatform()
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'ru.charityradar.api.Application'
+	}
 }
