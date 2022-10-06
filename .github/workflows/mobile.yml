@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
          
       - name: 🏗 Setup repo 2/2
-        run: cp -r charityradar/front/* ./ && rm -rf charityradar/front
+        run: cp -r charityradar/front/ ./ && rm -rf charityradar/front
          
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
