@@ -38,7 +38,7 @@ jobs:
           token: ${{ secrets.ARTEM_EXPO_TOKEN }}
 
       - name: 📦 Install dependencies
-        run: yarn install
+        run: yarn install && yarn add --dev babel-plugin-module-resolver
 
       - name: 🚀 Build app
         run: expo build --platform android --profile preview --local --non-interactive
