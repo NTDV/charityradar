@@ -2,8 +2,9 @@ name: CharityRadar Android Build
 
 on:
   workflow_dispatch:
-  release:
-    types: [published]
+  push: 
+    paths:
+      - front/**
 
 jobs:
   build-android:
@@ -11,9 +12,6 @@ jobs:
     steps:
       - name: 🏗 Setup repo 1/2
         uses: actions/checkout@v3
-        
-      #- name: 🧾 Verbose folder stucture
-      #  run: pwd && ls -l && tree
         
       - name: 🏗 Setup repo 2/2
         run: |
@@ -48,11 +46,14 @@ jobs:
           
       - name: 🧾 Verbose folder stucture
         run: pwd && ls -l && tree
-        
-      #- name: 📲 Download Artifact from expo
-      #  run: mkdir build_artifacts; export EXPO_ARTIFACT_URL=$(eas url:apk); cURL $EXPO_ARTIFACT_URL --output ./build_artifacts/$(basename $EXPO_ARTIFACT_URL);
-        
-      - name: 💾 Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          path: yourProject/android/app/build/outputs/apk
+                          
+      - name: 💾 Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with: 
+          file_glob: true
+          overwrite: true
+          prerelease: true
+          file: build*.apk
+          asset_name: charity-radar.apk
+          tag: refs/tags/latest-build
+          body: "The latest build of application for android!"
