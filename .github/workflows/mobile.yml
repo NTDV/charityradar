@@ -52,7 +52,12 @@ jobs:
       #- name: 📲 Download Artifact from expo
       #  run: mkdir build_artifacts; export EXPO_ARTIFACT_URL=$(eas url:apk); cURL $EXPO_ARTIFACT_URL --output ./build_artifacts/$(basename $EXPO_ARTIFACT_URL);
         
-      - name: 💾 Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          path: yourProject/android/app/build/outputs/apk
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with: 
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build*.apk
+          asset_name: charity-radar.apk
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "The new app is avaliable!"
