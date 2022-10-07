@@ -15,7 +15,7 @@ public class NewsController {
     private final NewsRepository _newsRepository;
 
     @QueryMapping
-    public List<News> getAll() {
+    public List<News> getAllNews() {
         return _newsRepository.getAll();
     }
 }
