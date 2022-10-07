@@ -1,68 +1,277 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <body>
-    <img src='logo_big_v1.svg' alt='Charity Radar' style='width: 250px;'>
-    <br>
-    <span>Сервис благотворительности</span>
-    <br><br>
-    <table border=1>
-      <caption style='text-align: left'>Команда разработчиков</caption>
-      <thead>
-        <tr>
-          <th>Что?</th>
-          <th>Где?</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Архимагистр</td>
-          <td><a href='https://t.me/DanichVolk'>@DanichVolk</a></td>
-        </tr>
-        <tr>
-          <td>Гранд мастер</td>
-          <td><a href='https://t.me/safokhin'>@safokhin</a></td>
-        </tr>
-        <tr>
-          <td>Верховный магистр</td>
-          <td><a href='https://t.me/Dipvincer'>@Dipvincer</a></td>
-        </tr>
-        <tr>
-          <td>Мастер-джедай</td>
-          <td><a href='https://t.me/rooslean'>@rooslean</a></td>
-        </tr>
-        <tr>
-          <td>Сардор Ганиев</td>
-          <td><a href='https://t.me'></a></td>
-        </tr>
-      </tbody>
-    </table>
-    <br>
-    <table border=1>
-      <caption style='text-align: left'>Материалы команды</caption>
-      <thead>
-        <tr>
-          <th>Кто?</th>
-          <th>Где?</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Task</td>
-          <td><a href='https://codenrock.com/contests/vtbapihackathon2022#/tasks/1038/2571'>codenrock.com/contests/vtbapihackathon2022/tasks/1038/2571</a></td>
-        </tr>
-        <tr>
-          <td>User flow</td>
-          <td><a href='https://miro.com/app/board/uXjVOl9ZZf4=/?share_link_id=172386795069'>miro.com/app/board/uXjVOl9ZZf4=/?share_link_id=172386795069</a></td>
-        </tr>
-        <tr>
-          <td>User inerface</td>
-          <td><a href='https://www.figma.com/file/57jKWTvvcpW93ONA4f3uXx/VTB-Hackathon?node-id=0%3A1'>figma.com/file/57jKWTvvcpW93ONA4f3uXx/VTB-Hackathon?node-id=0%3A1</a></td>
-        </tr>
-        <tr>
-          <td>Github</td>
-          <td><a href='https://github.com/NTDV/charityradar'>github.com/NTDV/charityradar</a></td>
-        </tr>
-      </tbody>
-    </table>
-  </body>
+    <head>
+        <meta charset="utf-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CharityRadar</title>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js">
+
+        </script>
+    </head>
+    <body>
+
+        <!-- Header -->
+        <header class="header" id="header">
+            <div class="container">
+                <div class="header__inner">
+                    <div class="header__logo" data-scroll="#intro">
+                        <img src="images/logo_text_v1.svg" alt="" width="220" height="100%">
+                    </div>
+
+                    <nav class="nav">
+                        <a class="nav__link" href="#" data-scroll="#features">ОПИСАНИЕ</a>
+                        <a class="nav__link" href="#" data-scroll="#team">КОМАНДА</a>
+                        <a class="nav__link" href="#" data-scroll="#download">СКАЧАТЬ</a>
+                    </nav>
+
+                </div>
+            </div>
+        </header>
+
+        <!-- Intro -->
+        <div class="intro" id="intro">
+            <div class="container">
+                <div class="intro__block">
+                    <img src="images/logo_big_v1.svg" alt="" width="400">
+                    <h1>Сервис для помощи нуждающимся</h1>
+                    <h2>Давайте менять мир к лучшему вместе!</h2>
+                    <a class="btn btn--gradient" href="#" data-scroll="#download">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="container--color" id="features">
+            <div class="container">
+                <h1 class="features__headtitle">О проекте</h1>
+                <div class="features">
+                    <div class="features__item">
+                        <img class="features__icon" src="images/features/Wallet.svg" alt="" width="40%" height="40%">
+                        <h4 class="features__title">Быстрые платежи</h4>
+                        <div class="features__text">
+                            С помощью OpenBanking сервис дает возможность пользователю делать быстрые пожертвования
+                            фонду или сбору, представленному в приложении.
+                        </div>                    
+                    </div>
+
+                    <div class="features__item">
+                        <img class="features__icon" src="images/features/Star.svg" alt="" width="40%" height="40%">
+                        <h4 class="features__title">Рейтинг</h4>
+                        <div class="features__text">
+                            Умные алгоритмы приложения подскажут Вам каким фондам и сборам стоит доверять, а какие лучше
+                            пропустить и не отдать деньги впустую.
+                        </div>                    
+                    </div>
+
+                    <div class="features__item">
+                        <img class="features__icon" src="images/features/Bell.svg" alt="" width="40%" height="40%">
+                        <h4 class="features__title">Актуальные сборы</h4>
+                        <div class="features__text">
+                            Приложение подскажет вам, какие сборы требуют Вашего внимания. Пользователь может помочь тем,
+                            кому нужна безотлагательная помощь.
+                        </div>                    
+                    </div>
+
+                    <div class="features__item">
+                        <img class="features__icon" src="images/features/Document.svg" alt="" width="40%" height="40%">
+                        <h4 class="features__title">Отчетность</h4>
+                        <div class="features__text">
+                            Фонды создают подробные отчеты своих действий. Пользователь может легко увидеть, куда пошли его 
+                            пожертвования.
+                        </div>                    
+                    </div>
+
+                    <div class="features__item">
+                        <img class="features__icon" src="images/features/Lens.svg" alt="" width="40%" height="40%">
+                        <h4 class="features__title">Поиск</h4>
+                        <div class="features__text">
+                            Умная система поиска и персональные подборки помогут Вам найти именно тот фонд или сбор, в который
+                            Вы бы хотели отправить свое пожертвование.
+                        </div>                    
+                    </div>
+
+                    <div class="features__item">
+                        <img class="features__icon" src="images/features/Megaphone.svg" alt="" width="40%" height="40%">
+                        <h4 class="features__title">Новости</h4>
+                        <div class="features__text">
+                            Фонды и пользователи могут написать новость или создать обсуждение. Может и Вы хотите поделиться собственной
+                            историей благотворительности?
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team -->
+        <div class="team" id="team">
+            <div class="container">
+                <h1>Наша команда</h1>
+                <div class="team__inner">
+                    <div class="team__item">
+                        <img class="team__photo" src="images/team/Danila.jpg" alt="" width="270px" height="270px">
+                        <div class="team__name">Данила Вальковец</div>
+                        <div class="team__prof">
+                            <span class="team__proof__span">Архимагистр</span>
+                        </div>
+                        <div class="team__text">
+                            Великий Мастер, наивысший ранг в ордене, духовный лидер Джедаев. Ни умение,
+                            ни положение, лишь мудрость и глубокое понимание силы позволяет приблизиться
+                            к пониманию и становлению Великим Мастером.</div>
+                        <div class="team__contacts"></div>
+
+                        <div class="social">
+                            <a class="social__item" href="https://t.me/DanichVolk">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="" width="40px" height="auto">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="team__item">
+                        <img class="team__photo" src="images/team/Dima.jpg" alt="" width="270px" height="270px">
+                        <div class="team__name">Дмитрий Климкин</div>
+                        <div class="team__prof">
+                            <span class="team__proof__span">Верховный магистр</span>
+                        </div>
+                        <div class="team__text">
+                            Мастер-джедай самый высокий ранг, которого мог достичь джедай, являвшийся
+                            необходимым для вхождения в Совет джедаев. Он предназначался для тех, кто
+                            проявил исключительные преданность Силе.</div>
+                        <div class="team__contacts"></div>
+
+                        <div class="social">
+                            <a class="social__item" href="https://t.me/Dipvincer">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="" width="40px" height="auto">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="team__item">
+                        <img class="team__photo" src="images/team/Artem.png" alt="" width="270px" height="270px">
+                        <div class="team__name">Артем Сафохин</div>
+                        <div class="team__prof">
+                            <span class="team__proof__span">Гранд мастер</span>
+                        </div>
+                        <div class="team__text">
+                            Гранд-мастера выбирал Совет, а не предыдущий гранд-мастер, его выбирали по
+                            мудрости, силе, справедливости, а также по образованию, возрасту и времени
+                            пребывания в Совете.</div>
+                        <div class="team__contacts"></div>
+
+                        <div class="social">
+                            <a class="social__item" href="https://t.me/safokhin">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="" width="40px" height="auto">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="team__item">
+                        <img class="team__photo" src="images/team/Ruslan.jpg" alt="" width="270px" height="270px">
+                        <div class="team__name">Руслан Дусаев</div>
+                        <div class="team__prof">
+                            <span class="team__proof__span">Джедай Защитник</span>
+                        </div>
+                        <div class="team__text">
+                            Защитник - джедай, умение и навыки которого целиком посвящены битве. Они больше других
+                            джедаев изучают боевые искусства, тренируются и участвуют в битвах. Как и все джедаи они
+                            являются хранителями мира.</div>
+                        <div class="team__contacts"></div>
+
+                        <div class="social">
+                            <a class="social__item" href="https://t.me/rooslean">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="" width="40px" height="auto">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="team__item">
+                        <img class="team__photo" src="images/team/Sardon.png" alt="" width="270px" height="270px">
+                        <div class="team__name">Сардор Ганиев</div>
+                        <div class="team__prof">
+                            <span class="team__proof__span">Джедай Мудрец</span>
+                        </div>
+                        <div class="team__text">
+                            Использование термина «джедай-мудрец» может быть адаптацией звания «мастер-мудрец»,
+                            которым ранее называли джедаев-консулов, обладавших выдающимися знаниями и умениями.</div>
+                        <div class="team__contacts"></div>
+
+                        <div class="social">
+                            <a class="social__item" href="https://t.me">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="" width="40px" height="auto">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download -->
+        <div class="download" id="download">            
+            <div class="container">
+                <div class="download__inner">
+                    <img src="images/logo_big_v1.svg" alt="" width="400">
+                    <h1>Скачайте приложение прямо сейчас!</h1>
+                    <h2>Приложение доступно для Android</h2>
+                    <img src="images/qr-code.png" alt="" width="300">
+                    <h2>Или так :)</h2>
+                    <a class="btn btn--gradient" href="#">Скачать</a>
+                </div>                
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer__inner">
+                    <div class="footer__block">
+                        <h4 class="footer__title">Location</h4>
+                        <address class="footer__address">
+                            <div>107031, г. Москва</div>
+                            <div>ул. Кузнецкий мост</div>
+                            <div>д. 17, стр. 1</div>
+                        </address>
+                    </div>
+
+                    <div class="footer__block">
+                        <h4 class="footer__title">Made for hackathon</h4>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/VTB_Logo_2018.svg/2560px-VTB_Logo_2018.svg.png" alt="" width="100">
+                    </div>
+
+                    <div class="footer__block">
+                        <h4 class="footer__title">About us</h4>
+                        <div class="footer__text">
+                            <p>
+                                Благотворительность - очень важная часть нашего общества. Мы надеемся, что приложение
+                                найдет своих пользователей, и мир станет чуточку лучше :) 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer__copyright">
+                <div class="container">
+                    <div class="copyright__text">
+                        <div>
+                            Мы простая группа разработчиков, работающая за идею.
+                        </div>
+                        <div>
+                            Сделано командой <span>Nice-_-Team</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- JS -->
+        <script src="app.js">
+
+        </script>
+
+    </body>
 </html>
