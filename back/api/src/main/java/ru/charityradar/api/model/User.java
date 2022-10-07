@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
@@ -23,6 +23,12 @@ public class User {
 
     private String password;
 
+    public User(final String name, final String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public User() {}
 
     public Integer getId() {
         return id;
