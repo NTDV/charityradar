@@ -10,6 +10,11 @@ type SearchProps = {
   placeholder?: string;
 };
 
+/**
+ * Компонент для поисковика
+ * @param placeholder - children
+ */
+
 export const Search = ({ placeholder }: SearchProps) => {
   const [value, setValue] = useState('');
   const [focusSearch, setFocusSearch] = useState(false);

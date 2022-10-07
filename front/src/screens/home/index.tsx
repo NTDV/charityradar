@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { styles } from './styles';
 import { stylesGlobal } from '../../shared/constants/styles-global';
@@ -6,18 +6,31 @@ import { stylesGlobal } from '../../shared/constants/styles-global';
 import { HeaderLogo } from '../../widgets/header-logo';
 import { PreviewCard } from '../../entities/bank-card';
 import { Search } from '../../shared/ui/search';
+import { TitleMore } from '../../shared/ui/title-more';
+import { FundPreview } from '../../entities/fund';
 
 export const Home = () => {
   return (
-    <View style={[styles.wrapper, stylesGlobal.mainContainer]}>
+    <ScrollView style={[styles.wrapper, stylesGlobal.mainContainer]}>
       <HeaderLogo />
-      <View style={{ marginVertical: 15 }}>
+      <View style={[styles.rowSection, styles.rowCard]}>
         <Search placeholder="Введите название фонда или сбора" />
       </View>
-      <View style={{ marginVertical: 15, zIndex: 0 }}>
+      <View style={styles.rowSection}>
         <PreviewCard />
       </View>
-      {/*<View style={{ width: 300, height: 300, backgroundColor: '#000' }} />*/}
-    </View>
+      <View style={styles.rowSection}>
+        <TitleMore title="Кому вы помогали" nameLink="Смотреть все" onPress={() => {}} />
+        <View style={styles.listContainer}>
+          <FundPreview />
+        </View>
+      </View>
+      <View style={styles.rowSection}>
+        <TitleMore title="Популярные фонды" nameLink="Смотреть все" onPress={() => {}} />
+        <View style={styles.listContainer}>
+          <FundPreview />
+        </View>
+      </View>
+    </ScrollView>
   );
 };

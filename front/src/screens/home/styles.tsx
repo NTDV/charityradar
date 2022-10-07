@@ -6,4 +6,13 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLOR_WHITE,
   },
+  rowCard: {
+    marginTop: 15,
+  },
+  rowSection: {
+    marginBottom: 30,
+  },
+  listContainer: {
+    marginTop: 15,
+  },
 });
