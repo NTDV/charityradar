@@ -23,7 +23,7 @@ jobs:
               cp -r _charityradar/front/* charityradar &&
               rm -rf _charityradar &&
               cd charityradar
-         
+          
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
         with:
@@ -41,16 +41,18 @@ jobs:
         run: yarn install
 
       - name: 🚀 Build app
-        run: eas build --profile preview --platform android
+        run: expo build --platform android --profile preview --local --non-interactive
         env: 
           EAS_NO_VCS: 1
           EXPO_TOKEN: ${{ secrets.ARTEM_EXPO_TOKEN }}
+          
+      - name: 🧾 Verbose folder stucture
+        run: pwd && ls -l && tree
         
-      - name: 📲 Download Artifact from expo
-        run: mkdir build_artifacts; export EXPO_ARTIFACT_URL=$(eas url:apk); cURL $EXPO_ARTIFACT_URL --output ./build_artifacts/$(basename $EXPO_ARTIFACT_URL);
+      #- name: 📲 Download Artifact from expo
+      #  run: mkdir build_artifacts; export EXPO_ARTIFACT_URL=$(eas url:apk); cURL $EXPO_ARTIFACT_URL --output ./build_artifacts/$(basename $EXPO_ARTIFACT_URL);
         
       - name: 💾 Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: charity-radar.apk
-          path: ./build_artifacts/$(basename $EXPO_ARTIFACT_URL)
+          path: yourProject/android/app/build/outputs/apk

@@ -10,7 +10,8 @@ jobs:
   clear-ccache:
     runs-on: ubuntu-latest
     steps:
-      - name: Clear cache
+      - name: Clear cache 1/2
+        continue-on-error: true
         uses: actions/github-script@v6
         with:
           script: |
@@ -28,3 +29,7 @@ jobs:
               })
             }
             console.log("Clear completed")
+            
+      - name: Clear cache 2/2
+        continue-on-error: true
+        run: react-native start --reset-cache
