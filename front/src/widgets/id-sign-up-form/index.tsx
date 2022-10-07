@@ -2,10 +2,10 @@ import { View } from 'react-native';
 
 import { styles } from './styles';
 
-import { IconSber } from '@shared/icons/icon-sber';
-import { CustomButton } from '@shared/ui/custom-button';
-import { IconTinkoff } from '@shared/icons/icon-tinkoff';
-import { IconVtb } from '@shared/icons/icon-vtb';
+import { IconSber } from '../../shared/icons/icon-sber';
+import { CustomButton } from '../../shared/ui/custom-button';
+import { IconTinkoff } from '../../shared/icons/icon-tinkoff';
+import { IconVtb } from '../../shared/icons/icon-vtb';
 
 /**
  * widget регистрации через внешнее api

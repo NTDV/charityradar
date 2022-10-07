@@ -3,9 +3,9 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import { styles } from './styles';
 
-import { COLOR_PLACEHOLDER } from '@shared/constants/style-variables';
-import { IconEye } from '@shared/icons/icon-eye';
-import { IconEye2 } from '@shared/icons/icon-eye-2';
+import { COLOR_PLACEHOLDER } from '../../constants/style-variables';
+import { IconEye } from '../../icons/icon-eye';
+import { IconEye2 } from '../../icons/icon-eye-2';
 
 export type CustomTextInputProps = {
   name: string;

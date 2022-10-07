@@ -2,9 +2,9 @@ import { View } from 'react-native';
 
 import { styles } from './styles';
 
-import { CustomModal } from '@shared/ui/custom-modal';
-import { CustomTextInput } from '@shared/ui/custom-text-input';
-import { CustomButton } from '@shared/ui/custom-button';
+import { CustomModal } from '../../shared/ui/custom-modal';
+import { CustomTextInput } from '../../shared/ui/custom-text-input';
+import { CustomButton } from '../../shared/ui/custom-button';
 
 type ForgotPasswordProps = {
   visibility: boolean;

@@ -2,16 +2,16 @@ import { ScrollView, Text, View } from 'react-native';
 
 import { styles } from './styles';
 
-import { stylesGlobal } from '@shared/constants/styles-global';
+import { stylesGlobal } from '../../shared/constants/styles-global';
 
-import { SimpleSignInForm } from '@widgets/simple-sign-in-form';
-import { IdSignInForm } from '@widgets/id-sign-in-form';
+import { SimpleSignInForm } from '../../widgets/simple-sign-in-form';
+import { IdSignInForm } from '../../widgets/id-sign-in-form';
 
-import { KeyboardShift } from '@shared/ui/keyboard-shift';
-import { HeaderLogo } from '@widgets/header-logo';
-import { SignInProps } from '@navigation';
+import { KeyboardShift } from '../../shared/ui/keyboard-shift';
+import { HeaderLogo } from '../../widgets/header-logo';
+import { SignInProps } from '../../navigation';
 import { useState } from 'react';
-import { ForgotPassword } from '@widgets/forgot-password';
+import { ForgotPassword } from '../../widgets/forgot-password';
 
 /**
  * Страница авторизации

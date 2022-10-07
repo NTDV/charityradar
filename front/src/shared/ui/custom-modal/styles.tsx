@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import { COLOR_GREY, COLOR_WHITE } from '@shared/constants/style-variables';
+import { COLOR_GREY, COLOR_WHITE } from '../../constants/style-variables';
 
 export const styles = StyleSheet.create({
   background: {

@@ -2,12 +2,12 @@ import { Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { COLOR_GREY, COLOR_PRIMARY } from '@shared/constants/style-variables';
+import { COLOR_GREY, COLOR_PRIMARY } from '../shared/constants/style-variables';
 
-import { Home } from '@screens/home';
-import { News } from '@screens/news';
-import { Search } from '@screens/search';
-import { PersonalCabinet } from '@screens/personal-cabinet';
+import { Home } from '../screens/home';
+import { News } from '../screens/news';
+import { Search } from '../screens/search';
+import { PersonalCabinet } from '../screens/personal-cabinet';
 
 enum iconType {
   home = 'home',

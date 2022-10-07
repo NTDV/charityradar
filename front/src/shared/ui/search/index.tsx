@@ -3,7 +3,7 @@ import { TextInput, TouchableOpacity, View, Text, Keyboard } from 'react-native'
 
 import { styles } from './styles';
 
-import { COLOR_PLACEHOLDER_LIGHT } from '@shared/constants/style-variables';
+import { COLOR_PLACEHOLDER_LIGHT } from '../../constants/style-variables';
 import { Ionicons } from '@expo/vector-icons';
 
 type SearchProps = {

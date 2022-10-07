@@ -2,9 +2,9 @@ import { View } from 'react-native';
 
 import { styles } from './styles';
 
-import { CustomTextInput } from '@shared/ui/custom-text-input';
-import { CustomButton } from '@shared/ui/custom-button';
-import { useAuth } from '@shared/hooks/use-auth';
+import { CustomTextInput } from '../../shared/ui/custom-text-input';
+import { CustomButton } from '../../shared/ui/custom-button';
+import { useAuth } from '../../shared/hooks/use-auth';
 /**
  * widget авторизации через форму
  * @param guestCallback

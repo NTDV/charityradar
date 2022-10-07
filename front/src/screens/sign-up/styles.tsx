@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import { COLOR_BLACK, COLOR_GREY, COLOR_PRIMARY } from '@shared/constants/style-variables';
+import { COLOR_BLACK, COLOR_GREY, COLOR_PRIMARY } from '../../shared/constants/style-variables';
 
 export const styles = StyleSheet.create({
   wrapper: {

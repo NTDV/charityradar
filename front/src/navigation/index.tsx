@@ -3,10 +3,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { AppNavigation } from './app-navigation';
-import { SignIn } from '@screens/sign-in';
-import { SignUp } from '@screens/sign-up';
+import { SignIn } from '../screens/sign-in';
+import { SignUp } from '../screens/sign-up';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useAuth } from '@shared/hooks/use-auth';
+import { useAuth } from '../shared/hooks/use-auth';
 
 const Stack = createStackNavigator();
 

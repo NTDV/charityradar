@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { COLOR_PRIMARY } from '@shared/constants/style-variables';
+import { COLOR_PRIMARY } from '../../../shared/constants/style-variables';
 
 export const styles = StyleSheet.create({
   container: {

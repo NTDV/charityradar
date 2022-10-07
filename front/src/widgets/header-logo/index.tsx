@@ -1,6 +1,6 @@
 import { Platform, SafeAreaView, StatusBar, View } from 'react-native';
 
-import { Logo } from '@shared/ui/logo';
+import { Logo } from '../../shared/ui/logo';
 
 /**
  * Шапка с логотипом

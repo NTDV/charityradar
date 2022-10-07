@@ -2,12 +2,12 @@ import { ScrollView, Text, View } from 'react-native';
 
 import { styles } from './styles';
 
-import { SignUpProps } from '@navigation';
-import { HeaderLogo } from '@widgets/header-logo';
-import { IdSignUpForm } from '@widgets/id-sign-up-form';
-import { SimpleSignUpForm } from '@widgets/simple-sign-up-form';
-import { KeyboardShift } from '@shared/ui/keyboard-shift';
-import { stylesGlobal } from '@shared/constants/styles-global';
+import { SignUpProps } from '../../navigation';
+import { HeaderLogo } from '../../widgets/header-logo';
+import { IdSignUpForm } from '../../widgets/id-sign-up-form';
+import { SimpleSignUpForm } from '../../widgets/simple-sign-up-form';
+import { KeyboardShift } from '../../shared/ui/keyboard-shift';
+import { stylesGlobal } from '../../shared/constants/styles-global';
 
 /**
  * Страница регистрации

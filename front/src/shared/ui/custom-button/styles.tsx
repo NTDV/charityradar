@@ -4,7 +4,7 @@ import {
   COLOR_GREY,
   COLOR_PRIMARY,
   COLOR_WHITE,
-} from '@shared/constants/style-variables';
+} from '../../constants/style-variables';
 
 export const styles = StyleSheet.create({
   container: {

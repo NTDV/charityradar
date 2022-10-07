@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { COLOR_BLACK, COLOR_ERROR, COLOR_GREY } from '@shared/constants/style-variables';
+import { COLOR_BLACK, COLOR_ERROR, COLOR_GREY } from '../../constants/style-variables';
 
 export const styles = StyleSheet.create({
   container: {

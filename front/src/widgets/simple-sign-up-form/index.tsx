@@ -2,9 +2,9 @@ import { View } from 'react-native';
 
 import { styles } from './styles';
 
-import { CustomTextInput } from '@shared/ui/custom-text-input';
-import { CustomButton } from '@shared/ui/custom-button';
-import { DatePicker } from '@shared/ui/date-picker';
+import { CustomTextInput } from '../../shared/ui/custom-text-input';
+import { CustomButton } from '../../shared/ui/custom-button';
+import { DatePicker } from '../../shared/ui/date-picker';
 
 /**
  * widget регистрации через форму

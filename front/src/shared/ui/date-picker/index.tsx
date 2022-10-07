@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Pressable, View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import { CustomTextInput, CustomTextInputProps } from '@shared/ui/custom-text-input';
+import { CustomTextInput, CustomTextInputProps } from '../../ui/custom-text-input';
 
 interface DatePicker extends CustomTextInputProps {}
 

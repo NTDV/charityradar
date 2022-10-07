@@ -1,11 +1,11 @@
 import { View } from 'react-native';
 
 import { styles } from './styles';
-import { stylesGlobal } from '@shared/constants/styles-global';
+import { stylesGlobal } from '../../shared/constants/styles-global';
 
-import { HeaderLogo } from '@widgets/header-logo';
-import { PreviewCard } from '@entities/bank-card';
-import { Search } from '@shared/ui/search';
+import { HeaderLogo } from '../../widgets/header-logo';
+import { PreviewCard } from '../../entities/bank-card';
+import { Search } from '../../shared/ui/search';
 
 export const Home = () => {
   return (
