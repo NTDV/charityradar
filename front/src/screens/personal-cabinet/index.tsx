@@ -1,12 +1,10 @@
-import { SafeAreaView, Text } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { View } from 'react-native';
+import { useState } from 'react';
+
+import { AuthUserCabinet } from './auth-user-cabinet';
+import { UnAuthUserCabinet } from './un-auth-user-cabinet';
 
 export const PersonalCabinet = () => {
-  return (
-    <GestureHandlerRootView>
-      <SafeAreaView>
-        <Text>PersonalCabinet</Text>
-      </SafeAreaView>
-    </GestureHandlerRootView>
-  );
+  const [isAuth, setAuth] = useState(true);
+  return <View>{isAuth ? <AuthUserCabinet /> : <UnAuthUserCabinet />}</View>;
 };

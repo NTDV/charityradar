@@ -9,6 +9,7 @@ type CustomButtonProps = {
   primary?: boolean;
   icon?: ReactElement;
   stylesButton?: object;
+  rect?: boolean;
 };
 
 /**
@@ -26,6 +27,7 @@ export const CustomButton = ({
   primary = false,
   icon: Icon,
   stylesButton = {},
+  rect,
 }: CustomButtonProps) => {
   return (
     <Pressable
@@ -33,6 +35,7 @@ export const CustomButton = ({
         styles.container,
         pressed && styles.containerPressed,
         primary && styles.primaryContainer,
+        rect && styles.rectContainer,
         primary && pressed && styles.primaryContainerPressed,
         stylesButton,
       ]}

@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import {
+  COLOR_BLACK,
   COLOR_GOLD,
   COLOR_GREY_LIGHT,
   COLOR_WHITE,
@@ -16,14 +17,21 @@ export const styles = StyleSheet.create({
       width: 0,
       height: 0,
     },
-    shadowOpacity: 0.35,
-    shadowRadius: 4,
-    elevation: 5,
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 3,
+  },
+  containerLarge: {
+    width: '100%',
+    marginBottom: 10,
   },
   img: {
     width: '100%',
     height: 120,
     resizeMode: 'stretch',
+  },
+  imgLarge: {
+    height: 160,
   },
   containerImg: {},
   coefficientRow: {
@@ -41,12 +49,21 @@ export const styles = StyleSheet.create({
   coefficient: {
     fontSize: 16,
     color: COLOR_GOLD,
+    fontWeight: 'bold',
   },
   info: {
     marginVertical: 10,
   },
   nameFund: {
+    color: COLOR_BLACK,
+    opacity: 0.9,
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  fee: {
+    marginTop: 10,
+  },
+  feeText: {
+    fontSize: 14,
   },
 });

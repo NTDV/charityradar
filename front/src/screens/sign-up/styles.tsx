@@ -1,9 +1,15 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import { COLOR_BLACK, COLOR_GREY, COLOR_PRIMARY } from '../../shared/constants/style-variables';
+import {
+  COLOR_BLACK,
+  COLOR_GREY,
+  COLOR_PRIMARY,
+  COLOR_WHITE,
+} from '../../shared/constants/style-variables';
 
 export const styles = StyleSheet.create({
   wrapper: {
     height: Dimensions.get('window').height,
+    backgroundColor: COLOR_WHITE,
   },
   container: {
     flex: 1,

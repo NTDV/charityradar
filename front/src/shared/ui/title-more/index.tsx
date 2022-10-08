@@ -6,8 +6,8 @@ import { COLOR_PRIMARY } from '../../constants/style-variables';
 
 type TitleMoreProps = {
   title: string;
-  nameLink: string;
-  onPress: () => void;
+  nameLink?: string;
+  onPress?: () => void;
 };
 
 /**
@@ -17,14 +17,16 @@ type TitleMoreProps = {
  * @param onPress - callback при клике по ссылке
  */
 
-export const TitleMore = ({ title, nameLink, onPress }: TitleMoreProps) => {
+export const TitleMore = ({ title, nameLink, onPress = () => {} }: TitleMoreProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity style={styles.button} onPress={onPress} activeOpacity={0.8}>
-        <Text style={styles.nameLink}>{nameLink}</Text>
-        <Entypo size={25} name="chevron-right" style={{ color: COLOR_PRIMARY }} />
-      </TouchableOpacity>
+      {!!nameLink && (
+        <TouchableOpacity style={styles.button} onPress={onPress} activeOpacity={0.8}>
+          <Text style={styles.nameLink}>{nameLink}</Text>
+          <Entypo size={25} name="chevron-right" style={{ color: COLOR_PRIMARY }} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

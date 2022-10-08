@@ -16,6 +16,9 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLOR_GREY,
   },
+  rectContainer: {
+    borderRadius: 8,
+  },
   primaryContainer: {
     backgroundColor: COLOR_PRIMARY,
     borderColor: COLOR_PRIMARY,
