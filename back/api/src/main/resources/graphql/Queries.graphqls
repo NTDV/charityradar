@@ -1,0 +1,4 @@
+type Query {
+    getAllUsers: [User]!
+    getAllNews: [News]!
+}

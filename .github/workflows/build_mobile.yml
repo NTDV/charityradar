@@ -1,4 +1,4 @@
-name: CharityRadar Android Build
+name: CharityRadar application build
 
 on:
   workflow_dispatch:
@@ -44,16 +44,18 @@ jobs:
           EAS_NO_VCS: 1
           EXPO_TOKEN: ${{ secrets.ARTEM_EXPO_TOKEN }}
           
+      - name: 📝 Rename build
+        run: mv build*.apk charity-radar.apk
+          
       - name: 🧾 Verbose folder stucture
         run: pwd && ls -l && tree
                           
       - name: 💾 Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with: 
-          file_glob: true
           overwrite: true
           prerelease: true
-          file: build*.apk
+          file: charity-radar.apk
           asset_name: charity-radar.apk
           tag: refs/tags/latest-build
           body: "The latest build of application for android!"
