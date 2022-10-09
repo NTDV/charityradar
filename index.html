@@ -4,10 +4,12 @@
         <meta charset="utf-8">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">        
 
         <link rel="stylesheet" href="style.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">        
+
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <title>CharityRadar</title>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js">
@@ -24,11 +26,15 @@
                         <img src="images/logo_text_v1.svg" alt="" width="220" height="100%">
                     </div>
 
-                    <nav class="nav">
+                    <nav class="nav" id="nav">
                         <a class="nav__link" href="#" data-scroll="#features">ОПИСАНИЕ</a>
                         <a class="nav__link" href="#" data-scroll="#team">КОМАНДА</a>
                         <a class="nav__link" href="#" data-scroll="#download">СКАЧАТЬ</a>
                     </nav>
+
+                    <div class="burger" id="burger">
+                        <span class="burger__item">Menu</span>
+                    </div>
 
                 </div>
             </div>
@@ -139,7 +145,7 @@
                             <span class="team__proof__span">Верховный магистр</span>
                         </div>
                         <div class="team__text">
-                            Мастер-джедай самый высокий ранг, которого мог достичь джедай, являвшийся
+                            Мастер-джедай - самый высокий ранг, которого мог достичь джедай, являвшийся
                             необходимым для вхождения в Совет джедаев. Он предназначался для тех, кто
                             проявил исключительные преданность Силе.</div>
                         <div class="team__contacts"></div>
