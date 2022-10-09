@@ -93,17 +93,17 @@ public class AuthService {
         return _authRepository.getAuthByToken(token);
     }
 
-    public Auth setConfirmed(Auth auth) {
+    public void setConfirmed(Auth auth) {
         auth.setConfirmed(true);
-        return _authRepository.save(auth);
+        _authRepository.save(auth);
     }
 
-    public Auth setNewPassword(Auth auth, String pass1) throws NoSuchAlgorithmException {
+    public void setNewPassword(Auth auth, String pass1) throws NoSuchAlgorithmException {
         auth.setPassword(AuthHash.getSecureHash(pass1, auth.getLogin()));
-        return _authRepository.save(auth);
+        _authRepository.save(auth);
     }
 
-    public String sendLetterToConfirmEmail(String token) {
+    public Boolean sendLetterToConfirmEmail(String token) {
         Properties properties = ProjectProperties.getProperties();
         String url = properties.getProperty("main.url");
         Auth auth = getAuthByToken(token);
@@ -118,17 +118,17 @@ public class AuthService {
             } catch (Exception e) {
                 System.out.println("MailSender.sendLetterToSomebodyFromRobot : ERROR");
             }
-            return "true";
+            return true;
         } else {
-            return "false";
+            return false;
         }
     }
 
-    public String sendLetterToResetPassword(String login) {
+    public Boolean sendLetterToResetPassword(String login) {
         Properties properties = ProjectProperties.getProperties();
         String url = properties.getProperty("main.url");
         Auth auth = getAuthByLogin(login);
-        if (auth!= null && auth.getId() > 0){
+        if (auth != null && auth.getId() > 0){
             try {
                 MailSender.sendLetterToSomebodyFromRobot("Сброс пароля в Charity Radar",
                         "Получен запрос на сброс пароля в Charity Radar.<br><br>" +
@@ -136,14 +136,14 @@ public class AuthService {
                                 "<a target='_blank' href='" + url + "reset_password/" + auth.getToken() + "'>" +
                                 url + "reset_password/" + auth.getToken() + "</a><br><br>" +
                                 "Если вы не подавали этот запрос, не беспокойтесь! Ваш пароль в безопасности. " +
-                                "Вы можете просто удалить это сообщение электронной почты.<br><br>" +
+                                "Вы можете просто удалить это сообщение c электронной почты.<br><br>" +
                                 "С наилучшими пожеланиями,<br>Команда Charity Radar", "mail@sganiev.ru");
             } catch (Exception e) {
                 System.out.println("MailSender.sendLetterToSomebodyFromRobot : ERROR");
             }
-            return "true";
+            return true;
         } else {
-            return "false";
+            return false;
         }
     }
 

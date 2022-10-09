@@ -13,11 +13,7 @@ public class ProjectProperties {
             properties = new Properties();
             properties.load(input);
         } catch (Exception e) {
-            try {
-                MailSender.sendLetterToSomebodyFromRobot("Ошибка чтения properties", e.getMessage(), "mail@sganiev.ru");
-            } catch (MessagingException ex) {
-                throw new RuntimeException(ex);
-            }
+            System.out.println("Error: Ошибка чтения файла main.properties");
         }
         return properties;
     }
