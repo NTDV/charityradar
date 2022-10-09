@@ -4,7 +4,7 @@ import {
   COLOR_GREY,
   COLOR_PRIMARY,
   COLOR_WHITE,
-} from '@shared/constants/style-variables';
+} from '../../constants/style-variables';
 
 export const styles = StyleSheet.create({
   container: {
@@ -15,6 +15,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: COLOR_GREY,
+  },
+  rectContainer: {
+    borderRadius: 8,
   },
   primaryContainer: {
     backgroundColor: COLOR_PRIMARY,

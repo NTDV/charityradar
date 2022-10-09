@@ -1,0 +1,86 @@
+name: CharityRadar application build
+
+on:
+  workflow_dispatch:
+  push: 
+    paths:
+      - front/**
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:          
+      - name: 🏗 Setup repo 1/2
+        uses: actions/checkout@v3
+        
+      - name: 🏗 Setup repo 2/2
+        run: |
+              cd .. &&
+              mv charityradar _charityradar &&
+              mkdir charityradar &&
+              cp -r _charityradar/front/* charityradar &&
+              rm -rf _charityradar &&
+              cd charityradar
+          
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: yarn
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.ARTEM_EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: yarn install && yarn add --dev babel-plugin-module-resolver
+
+      - name: 🚀 Build app
+        run: eas build --platform android --profile preview --local --non-interactive
+        env: 
+          EAS_NO_VCS: 1
+          EXPO_TOKEN: ${{ secrets.ARTEM_EXPO_TOKEN }}
+          
+      - name: 📝 Rename build
+        run: mv build*.apk charity-radar.apk
+          
+      - name: 🧾 Verbose folder stucture
+        run: pwd && ls -l && tree
+                          
+      - name: 💾 Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with: 
+          overwrite: true
+          prerelease: true
+          file: charity-radar.apk
+          asset_name: charity-radar.apk
+          tag: refs/tags/latest-build
+          body: "The latest build of application for android!"
+          
+      - name: New build released notification
+        if: ${{ success() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TG_BOT_CHATID }}
+          token: ${{ secrets.TG_BOT_TOKEN }}
+          message: | 
+            ✅ New build has been realeased!
+            🔗 Href: https://github.com/NTDV/charityradar/releases/tag/latest-build
+          format: markdown
+          disable_web_page_preview: true
+          document: charity-radar.apk
+          
+      - name: New build corrupted notification
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TG_BOT_CHATID }}
+          token: ${{ secrets.TG_BOT_TOKEN }}
+          message: |
+            ❌ *Failed to release new build!*
+            🔗 Href: https://github.com/NTDV/charityradar/actions/workflows/build_mobile.yml
+          format: markdown
+          disable_web_page_preview: true

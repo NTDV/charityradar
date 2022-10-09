@@ -15,14 +15,7 @@
           ".jsx",
           ".js",
           ".json"
-        ],
-        "alias": {
-          "@screens": "./src/screens",
-          "@widgets": "./src/widgets",
-          "@entities": "./src/entities",
-          "@shared": "./src/shared",
-          "@navigation": "./src/navigation"
-        }
+        ]
       }
     ]
   ]

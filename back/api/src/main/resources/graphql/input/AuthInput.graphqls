@@ -1,0 +1,4 @@
+input AuthInput {
+    login: String!
+    password: String!
+}

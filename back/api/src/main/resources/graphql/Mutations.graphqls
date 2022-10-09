@@ -1,0 +1,8 @@
+type Mutation {
+    addFundAuth(authInput: AuthInput, fundInput: FundInput): Auth
+    addUserAuth(authInput: AuthInput, userInput: UserInput): Auth
+    addNews(newsInput: NewsInput): News
+    addFees(feesInput: FeesInput): Fees
+    addEvent(eventInput: EventInput): Event
+    addTransaction(transactionInput: TransactionInput): Transaction
+}

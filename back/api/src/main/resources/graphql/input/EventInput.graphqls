@@ -1,0 +1,7 @@
+input EventInput {
+    name: String!
+    address: String!
+    dateTime: String!
+    description: String!
+    fundId: Int!
+}

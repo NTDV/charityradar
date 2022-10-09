@@ -1,0 +1,20 @@
+type Query {
+    getAllUsers: [User]!
+    getUserById(id: Int!): User!
+    getUserByEmail(email: String!): User!
+    getAllNews: [News]!
+    getAllFunds: [Fund]!
+    getFundById(id: Int!): Fund!
+    getAuthByLogin(login: String!): Auth!
+    getNewsByFundId(fundId: Int!): [News]!
+    getAllFees: [Fees]!
+    getFeesByFundId(fundId: Int!): Fees!
+    getAllEvents: [Event]!
+    getEventsByFundId(fundId: Int!): [Event]!
+    getTransactionsByUserId(userId: Int!): [Transaction]!
+    getTransactionsByFundId(fundId: Int!): [Transaction]!
+    authByLoginPass(login: String!, password: String!): Auth
+    getAllAuth: [Auth]!
+    sendLetterToConfirmEmail(token: String!): String!
+    sendLetterToResetPassword(login: String!): String!
+}

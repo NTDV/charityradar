@@ -1,0 +1,7 @@
+input NewsInput {
+    name: String!
+    date: String!
+    description: String!
+    image: String!
+    fundId: Int!
+}

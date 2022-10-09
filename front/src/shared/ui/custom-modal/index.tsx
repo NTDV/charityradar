@@ -1,7 +1,7 @@
 import { Modal, View, Text, SafeAreaView, ScrollView, Pressable } from 'react-native';
 
 import { styles } from './styles';
-import { IconExit } from '@shared/icons/icon-exit';
+import { IconExit } from '../../icons/icon-exit';
 
 type CustomModalProps = {
   title: string;

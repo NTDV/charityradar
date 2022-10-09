@@ -1,0 +1,8 @@
+input FundInput {
+    name: String!
+    image: String
+    description: String
+    email: String
+    phone: String
+    rating: Float
+}

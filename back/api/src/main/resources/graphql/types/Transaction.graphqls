@@ -1,0 +1,9 @@
+type Transaction {
+    id: ID!
+    type: TransactionType!
+    status: TransactionStatus!
+    feesId: Int
+    fundId: Int
+    userId: Int
+    document: String
+}

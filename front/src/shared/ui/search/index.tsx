@@ -3,12 +3,17 @@ import { TextInput, TouchableOpacity, View, Text, Keyboard } from 'react-native'
 
 import { styles } from './styles';
 
-import { COLOR_PLACEHOLDER_LIGHT } from '@shared/constants/style-variables';
+import { COLOR_PLACEHOLDER_LIGHT } from '../../constants/style-variables';
 import { Ionicons } from '@expo/vector-icons';
 
 type SearchProps = {
   placeholder?: string;
 };
+
+/**
+ * Компонент для поисковика
+ * @param placeholder - children
+ */
 
 export const Search = ({ placeholder }: SearchProps) => {
   const [value, setValue] = useState('');

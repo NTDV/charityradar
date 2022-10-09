@@ -2,18 +2,21 @@ import { Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { COLOR_GREY, COLOR_PRIMARY } from '@shared/constants/style-variables';
+import { COLOR_GREY, COLOR_PRIMARY } from '../shared/constants/style-variables';
 
-import { Home } from '@screens/home';
-import { News } from '@screens/news';
-import { Search } from '@screens/search';
-import { PersonalCabinet } from '@screens/personal-cabinet';
+import { Home } from '../screens/home';
+import { News } from '../screens/news';
+import { Search } from '../screens/search';
+import { PersonalCabinet } from '../screens/personal-cabinet';
+import { AppNavigationProps } from './index';
+import { FundAdmin } from '../screens/fund-admin';
 
 enum iconType {
   home = 'home',
   newspaperOutline = 'newspaper-outline',
   search = 'search',
   personOutline = 'person-outline',
+  fundAdmin = 'grid-outline',
 }
 
 const Tab = createBottomTabNavigator();
@@ -22,7 +25,7 @@ const Tab = createBottomTabNavigator();
  * Компонент для Tab роутинга
  */
 
-export const AppNavigation = () => {
+export const AppNavigation = (appNavigation: AppNavigationProps) => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -41,6 +44,10 @@ export const AppNavigation = () => {
 
           if (route.name === 'Search') {
             name = iconType.search;
+          }
+
+          if (route.name === 'FundAdmin') {
+            name = iconType.fundAdmin;
           }
 
           if (route.name === 'PersonalCabinet') {
@@ -62,6 +69,7 @@ export const AppNavigation = () => {
           if (name === 'Home') namePage = 'Главная';
           if (name === 'News') namePage = 'Новости';
           if (name === 'Search') namePage = 'Поиск';
+          if (name === 'FundAdmin') namePage = 'Фонд';
           if (name === 'PersonalCabinet') namePage = 'Кабинет';
 
           return (
@@ -72,9 +80,16 @@ export const AppNavigation = () => {
         },
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="News" component={News} />
+      <Tab.Screen
+        name="Home"
+        children={(props) => <Home appNavigation={appNavigation} {...props} />}
+      />
+      <Tab.Screen
+        name="News"
+        children={(props) => <News appNavigation={appNavigation} {...props} />}
+      />
       <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen name="FundAdmin" component={FundAdmin} />
       <Tab.Screen name="PersonalCabinet" component={PersonalCabinet} />
     </Tab.Navigator>
   );

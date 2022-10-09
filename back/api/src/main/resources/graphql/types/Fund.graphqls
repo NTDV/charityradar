@@ -1,0 +1,9 @@
+type Fund {
+    id: ID!
+    name: String!
+    image: String
+    email: String
+    phone: String
+    description: String
+    rating: Float
+}

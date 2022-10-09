@@ -1,0 +1,9 @@
+type Auth {
+    id: ID!
+    login: String!
+    password: String!
+    token: String
+    confirmed: Boolean!
+    type: Int!
+    link: Int!
+}

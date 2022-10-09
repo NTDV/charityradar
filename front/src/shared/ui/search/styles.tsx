@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import { COLOR_GREY_LIGHT, COLOR_SECONDARY } from '@shared/constants/style-variables';
-import { MAIN_PADDING } from '@shared/constants/styles-global';
+import { COLOR_GREY_LIGHT, COLOR_SECONDARY } from '../../constants/style-variables';
+import { MAIN_PADDING } from '../../constants/styles-global';
 
 export const styles = StyleSheet.create({
   containerList: {
