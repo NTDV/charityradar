@@ -1,19 +1,29 @@
 package ru.charityradar.api.helper;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class MailSender {
 
-    public static void sendLetterToSomebodyFromRobot (String subject, String body, String receiver) throws MessagingException {
+    public static void sendLetterToProgrammer(String subject, String body) throws MessagingException {
         Properties properties = ProjectProperties.getProperties();
-        String login = properties.getProperty("mail.sender.login");
-        String password = properties.getProperty("mail.sender.password");
+        String[] programmersMails = properties.getProperty("programmers.mails").split(":");
+        sendLetterToSomebodyFromRobot(subject, body, programmersMails);
+    }
 
-        String from = "no-reply@iotachi.ru";
+    public static void sendLetterToSomebodyFromRobot(String subject, String body, String receiver) throws MessagingException {
+        sendLetterToSomebodyFromRobot(subject, body, new String[]{receiver});
+    }
+
+    public static void sendLetterToSomebodyFromRobot(String subject, String body, String[] receiver) throws MessagingException {
+        Properties properties = ProjectProperties.getProperties();
+        String from = properties.getProperty("mail.sender.login");
+        String password = properties.getProperty("mail.sender.password");
         Properties mailProperties = new Properties();
         mailProperties.put("mail.smtp.host", "smtp.mail.ru");
         mailProperties.put("mail.smtp.auth", "true");
@@ -24,12 +34,19 @@ public class MailSender {
                 new Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(login, password);
+                        return new PasswordAuthentication(from, password);
                     }
                 });
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
-        message.setRecipient(Message.RecipientType.TO, new InternetAddress("mail@sganiev.ru"));
+        ArrayList<InternetAddress> programmersAddresses = new ArrayList<>();
+        for (String mail : receiver) {
+            programmersAddresses.add(new InternetAddress(mail));
+        }
+        InternetAddress[] addresses = new InternetAddress[programmersAddresses.size()];
+        programmersAddresses.toArray(addresses);
+
+        message.setRecipients(MimeMessage.RecipientType.TO, addresses);
         message.setSubject(subject);
         Multipart mainMultipart = new MimeMultipart("mixed");
 

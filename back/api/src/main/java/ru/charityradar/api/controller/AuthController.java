@@ -41,11 +41,11 @@ public class AuthController {
         return _authService.authByLoginPass(login, password);
     }
     @QueryMapping
-    public String sendLetterToConfirmEmail(@Argument final String token) {
+    public Boolean sendLetterToConfirmEmail(@Argument final String token) {
         return _authService.sendLetterToConfirmEmail(token);
     }
     @QueryMapping
-    public String sendLetterToResetPassword(@Argument final String login) {
+    public Boolean sendLetterToResetPassword(@Argument final String login) {
         return _authService.sendLetterToResetPassword(login);
     }
 
