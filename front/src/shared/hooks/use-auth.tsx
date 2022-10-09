@@ -3,6 +3,10 @@ import * as SecureStore from 'expo-secure-store';
 
 import { signUpFormApi } from '../api/sign-up/sign-up-form-api';
 import { validationSchemaSimpleFormProps } from '../../widgets/sign-up/lib/validation-schema';
+import { validationSchemaSimpleFormSignInProps } from '../../widgets/sign-in/lib/validation-schema';
+import { signInFormApi } from '../api/sign-in/sign-in-form-api';
+import { AuthUser } from '../api/sign-in/auth-user';
+import { AuthFund } from '../api/sign-in/auth-fund';
 
 export enum UserType {
   'guest',
@@ -10,12 +14,33 @@ export enum UserType {
   'fund',
 }
 
-type User = {
-  type: UserType;
-  token?: string;
-  id?: string;
-  login?: string;
-};
+interface UserDynamic {
+  [key: string]: any;
+}
+
+export type User =
+  | {
+      type: UserType;
+      user?: {
+        token: string;
+        email: string;
+        id: string;
+        name: string;
+        patronymic: string;
+        phone: string;
+        surname: string;
+      };
+      fund?: {
+        id: string;
+        name: string;
+        email: string;
+        phone: string;
+        image: string;
+        description: string;
+        rating: number;
+      };
+    }
+  | UserDynamic;
 
 // Пока не сработает хук
 type AuthContextDefault = {
@@ -29,7 +54,7 @@ type AuthContextDefault = {
 // После того, как сработал хук
 export type UseProvideAuthExit = {
   user: User | null | undefined;
-  signInSimple: () => void;
+  signInSimple: (values: validationSchemaSimpleFormSignInProps) => void;
   signInGuest: () => void;
   logout: () => void;
   signUpSimple: (values: validationSchemaSimpleFormProps) => void;
@@ -52,7 +77,39 @@ export const useProvideAuth = (): UseProvideAuthExit => {
   const [user, setUser] = useState<User | null | undefined>(undefined);
 
   // Авторизация через форму
-  const signInSimple = () => {};
+  const signInSimple = async (values: validationSchemaSimpleFormSignInProps) => {
+    const user: User | UserDynamic = {};
+    const payload = await signInFormApi(values);
+
+    if (payload?.['data']?.['authByLoginPass'] === null) {
+      return { err: { message: 'Логин или пароль введены неверно', type: 'incorrect' } };
+    } else if (payload?.['data']?.['authByLoginPass']?.['confirmed'] === false) {
+      return {
+        err: { message: 'Ваша почта не подтверждена', type: 'noConfirmed' },
+        token: payload['data']['authByLoginPass']['token'],
+      };
+    } else {
+      // Если успешно, то отправляем запрос на получение данных у фонда или физ лица
+      const type: UserType = payload['data']['authByLoginPass']['type'];
+      const link = payload['data']['authByLoginPass']['link'];
+
+      // Присваиваем тип
+      user['type'] = type;
+
+      if (type === UserType.fund) {
+        const fundData = await AuthFund(link);
+        user['fund'] = fundData;
+      }
+
+      if (type === UserType.user) {
+        const userData = await AuthUser(link);
+        user['user'] = userData;
+      }
+    }
+
+    await SecureStore.setItemAsync('user', JSON.stringify(user));
+    setUser(user);
+  };
 
   // Авторизация гостя
   const signInGuest = () => {
@@ -65,16 +122,9 @@ export const useProvideAuth = (): UseProvideAuthExit => {
 
     // Если нет ошибок
     if (payload?.['data']?.['addUserAuth']) {
-      const userData = payload['data']['addUserAuth'];
-      const user = {
-        type: userData['type'],
-        token: userData['token'] || '',
-        id: userData['id'],
-        login: userData['login'],
-      };
-
-      await SecureStore.setItemAsync('user', JSON.stringify(user));
-      setUser(user);
+      return { err: null };
+    } else {
+      return { err: { message: 'Что-то пошло не так' } };
     }
   };
 

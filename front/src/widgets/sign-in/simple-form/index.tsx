@@ -1,4 +1,4 @@
-import { Keyboard, View } from 'react-native';
+import { Keyboard, View, Text } from 'react-native';
 
 import { styles } from './styles';
 
@@ -8,13 +8,30 @@ import { useAuth } from '../../../shared/hooks/use-auth';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { validationSchemaSimpleFormSignIn } from '../lib/validation-schema';
+import {
+  validationSchemaSimpleFormSignIn,
+  validationSchemaSimpleFormSignInProps,
+} from '../lib/validation-schema';
+import { useState } from 'react';
+import { sendRepeatEmail } from '../../../shared/api/sign-in/send-repeat-email';
+import { settingsToast } from '../../../shared/constants/settings-toast';
+import Toast from 'react-native-root-toast';
+
+const defaultValues = __DEV__
+  ? { email: 'asafohin55@gmail.com', password: 'qwerty123QQW' }
+  : { email: '', password: '' };
+
 /**
  * widget авторизации через форму
  * @param guestCallback
  */
 
 export const SimpleForm = () => {
+  const [token, setToken] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [loadingRepeatEmail, setLoadingRepeatEmail] = useState(false);
+  const [showButtonRepeatMail, setShowButtonRepeatMail] = useState(false);
+  const [err, setErr] = useState('');
   const auth = useAuth();
 
   const {
@@ -22,15 +39,51 @@ export const SimpleForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    defaultValues,
     resolver: yupResolver(validationSchemaSimpleFormSignIn),
   });
 
-  const guestHandler = () => {
-    if (auth.signUpSimple !== null) auth.signInGuest();
+  const sendEmail = async () => {
+    setLoadingRepeatEmail(true);
+    const payload = await sendRepeatEmail(token);
+    const res = payload['data']?.['sendLetterToConfirmEmail'];
+
+    // Костыль)
+    if (res === 'true') {
+      setShowButtonRepeatMail(false);
+      setErr('');
+      Toast.show('Сообщение на почту успешно доставлено', settingsToast);
+    }
+
+    setLoadingRepeatEmail(false);
   };
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const guestHandler = () => {
+    if (auth.signInGuest !== null) {
+      auth.signInGuest();
+    }
+  };
+
+  const onSubmit = async (values: validationSchemaSimpleFormSignInProps) => {
+    setLoading(true);
+    if (auth.signInSimple !== null) {
+      let showButtonRepeatMail = false;
+      let err = '';
+      const payload = await auth.signInSimple(values);
+
+      if (payload?.['err']?.['type'] === 'incorrect') {
+        err = payload['err']['message'];
+        showButtonRepeatMail = false;
+      } else if (payload?.['err']?.['type'] === 'noConfirmed') {
+        err = payload['err']['message'];
+        showButtonRepeatMail = true;
+        setToken(payload['token']); // сохраняем токен
+      }
+
+      setErr(err);
+      setShowButtonRepeatMail(showButtonRepeatMail);
+    }
+    setLoading(false);
   };
 
   return (
@@ -75,11 +128,21 @@ export const SimpleForm = () => {
           )}
         />
       </View>
+      {!!err && <Text style={styles.errorText}>{err}</Text>}
+      {showButtonRepeatMail && (
+        <CustomButton
+          name="Отправить повторно"
+          onPress={sendEmail}
+          stylesButton={styles.rowButton}
+          loading={loadingRepeatEmail}
+        />
+      )}
       <CustomButton
         name="Войти"
         onPress={handleSubmit(onSubmit)}
         primary={true}
         stylesButton={styles.rowButton}
+        loading={loading}
       />
       <CustomButton name="Гость" onPress={guestHandler} />
     </View>

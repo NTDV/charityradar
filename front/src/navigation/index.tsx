@@ -67,7 +67,7 @@ export const Provider = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SignUp">
+      <Stack.Navigator initialRouteName="SignIn">
         {isSignedIn ? (
           <Stack.Group>
             <Stack.Screen

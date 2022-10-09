@@ -37,4 +37,20 @@ export const styles = StyleSheet.create({
   buttons: {
     marginTop: 30,
   },
+  confirmed: {
+    paddingBottom: MAIN_PADDING,
+    borderBottomWidth: 1,
+    borderBottomColor: COLOR_GREY_LIGHT,
+  },
+  confirmedTitle: {
+    fontSize: 20,
+    color: COLOR_BLACK,
+    marginBottom: 8,
+  },
+  confirmedSubtitle: {
+    fontSize: 16,
+    fontStyle: 'italic',
+    color: COLOR_BLACK,
+    marginBottom: 15,
+  },
 });

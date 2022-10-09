@@ -15,6 +15,7 @@ import {
 } from '../lib/validation-schema';
 import { COLOR_PLACEHOLDER } from '../../../shared/constants/style-variables';
 import { useAuth } from '../../../shared/hooks/use-auth';
+import { useState } from 'react';
 /**
  * widget регистрации через форму
  */
@@ -26,7 +27,7 @@ const defaultValues = __DEV__
       patronymic: '123',
       phone: '89998670934',
       birthday: '29.10.1999',
-      email: 'asafohin@gmail.com',
+      email: 'asafohin55@gmail.com',
       password: 'qwerty123QQW',
       passwordRepeat: 'qwerty123QQW',
     }
@@ -40,8 +41,13 @@ const defaultValues = __DEV__
       passwordRepeat: '',
     };
 
-export const SimpleForm = () => {
+type SimpleFormProps = {
+  successCallback: () => void;
+};
+
+export const SimpleForm = ({ successCallback }: SimpleFormProps) => {
   const auth = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const {
     control,
@@ -52,9 +58,16 @@ export const SimpleForm = () => {
     resolver: yupResolver(validationSchemaSimpleForm),
   });
 
-  const onSubmit: SubmitHandler<validationSchemaSimpleFormProps> = (values) => {
+  const onSubmit: SubmitHandler<validationSchemaSimpleFormProps> = async (values) => {
     if (auth.signUpSimple !== null) {
-      auth.signUpSimple(values);
+      setLoading(true);
+      const payload = await auth.signUpSimple(values);
+      // Если регистрация прошла успешно, то уведомляем popup-ом и переносим на авторизацию
+      if (payload?.['err'] === null) {
+        successCallback();
+      }
+
+      setLoading(false);
     }
   };
 
@@ -232,6 +245,7 @@ export const SimpleForm = () => {
         onPress={handleSubmit(onSubmit)}
         primary={true}
         stylesButton={styles.rowButton}
+        loading={loading}
       />
       <CustomButton name="Гость" onPress={guestHandler} />
     </View>

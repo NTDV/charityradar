@@ -31,9 +31,6 @@ export const signUpFormApi = async ({
         }
       ){
           id
-          login
-          password
-          type
         }
       }`,
   };

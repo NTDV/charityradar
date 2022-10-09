@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { COLOR_ERROR } from '../../../shared/constants/style-variables';
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,5 +13,10 @@ export const styles = StyleSheet.create({
   },
   rowButton: {
     marginBottom: 20,
+  },
+  errorText: {
+    textAlign: 'center',
+    marginBottom: 10,
+    color: COLOR_ERROR,
   },
 });

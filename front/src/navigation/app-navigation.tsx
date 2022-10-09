@@ -9,12 +9,14 @@ import { News } from '../screens/news';
 import { Search } from '../screens/search';
 import { PersonalCabinet } from '../screens/personal-cabinet';
 import { AppNavigationProps } from './index';
+import { FundAdmin } from '../screens/fund-admin';
 
 enum iconType {
   home = 'home',
   newspaperOutline = 'newspaper-outline',
   search = 'search',
   personOutline = 'person-outline',
+  fundAdmin = 'grid-outline',
 }
 
 const Tab = createBottomTabNavigator();
@@ -44,6 +46,10 @@ export const AppNavigation = (appNavigation: AppNavigationProps) => {
             name = iconType.search;
           }
 
+          if (route.name === 'FundAdmin') {
+            name = iconType.fundAdmin;
+          }
+
           if (route.name === 'PersonalCabinet') {
             name = iconType.personOutline;
           }
@@ -63,6 +69,7 @@ export const AppNavigation = (appNavigation: AppNavigationProps) => {
           if (name === 'Home') namePage = 'Главная';
           if (name === 'News') namePage = 'Новости';
           if (name === 'Search') namePage = 'Поиск';
+          if (name === 'FundAdmin') namePage = 'Фонд';
           if (name === 'PersonalCabinet') namePage = 'Кабинет';
 
           return (
@@ -82,6 +89,7 @@ export const AppNavigation = (appNavigation: AppNavigationProps) => {
         children={(props) => <News appNavigation={appNavigation} {...props} />}
       />
       <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen name="FundAdmin" component={FundAdmin} />
       <Tab.Screen name="PersonalCabinet" component={PersonalCabinet} />
     </Tab.Navigator>
   );

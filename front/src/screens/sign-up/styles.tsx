@@ -67,4 +67,9 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'center',
   },
+
+  modalText: {
+    textAlign: 'justify',
+    marginBottom: 15,
+  },
 });

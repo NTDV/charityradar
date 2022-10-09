@@ -6,9 +6,10 @@ import { HeaderLogo } from '../../../widgets/header';
 import { PreviewCard } from '../../../entities/bank-card';
 import { CabinetButtonList } from '../ui/cabinet-button-list';
 import { useAuth } from '../../../shared/hooks/use-auth';
+import { ConfirmedEmail } from '../../../widgets/confirmed-email';
 
 export const AuthUserCabinet = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   const exitAccount = () => {
     if (logout !== null) logout();
