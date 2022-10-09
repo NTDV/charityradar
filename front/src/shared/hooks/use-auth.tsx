@@ -1,7 +1,12 @@
 import { createContext, useContext, useState } from 'react';
+import { signUpFormApi } from '../api/sign-up/sign-up-form-api';
+import { validationSchemaSimpleFormProps } from '../../widgets/sign-up/lib/validation-schema';
 
 type User = {
   type: 'user' | 'guest' | 'fund';
+  data: {
+    token: null;
+  } | null;
 };
 
 type AuthContextDefault = {
@@ -15,7 +20,7 @@ export type UseProvideAuthExit = {
   user: User | null;
   signInSimple: () => void;
   signInGuest: () => void;
-  signUpSimple: () => void;
+  signUpSimple: (values: validationSchemaSimpleFormProps) => void;
 };
 
 // Контекст
@@ -39,7 +44,10 @@ export const useProvideAuth = (): UseProvideAuthExit => {
   };
 
   // Регистрация через форму
-  const signUpSimple = () => {};
+  const signUpSimple = async (values: validationSchemaSimpleFormProps) => {
+    const payload = await signUpFormApi(values);
+    console.log(typeof payload);
+  };
 
   return { user, signUpSimple, signInSimple, signInGuest };
 };
