@@ -13,9 +13,9 @@ public class MailSender {
         String login = properties.getProperty("mail.sender.login");
         String password = properties.getProperty("mail.sender.password");
 
-        String from = "robot.sprsa@yandex.ru";
+        String from = "no-reply@iotachi.ru";
         Properties mailProperties = new Properties();
-        mailProperties.put("mail.smtp.host", "smtp.yandex.ru");
+        mailProperties.put("mail.smtp.host", "smtp.mail.ru");
         mailProperties.put("mail.smtp.auth", "true");
         mailProperties.put("mail.smtp.socketFactory.port", "465");
         mailProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");

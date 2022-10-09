@@ -15,4 +15,6 @@ type Query {
     getTransactionsByFundId(fundId: Int!): [Transaction]!
     authByLoginPass(login: String!, password: String!): Auth
     getAllAuth: [Auth]!
+    sendLetterToConfirmEmail(token: String!): String!
+    sendLetterToResetPassword(login: String!): String!
 }

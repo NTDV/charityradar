@@ -22,6 +22,7 @@ public class Auth {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private String login;
+    @Setter
     private String password;
     @Setter
     private String token;

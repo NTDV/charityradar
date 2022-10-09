@@ -40,6 +40,14 @@ public class AuthController {
     public Auth authByLoginPass(@Argument final String login, @Argument final String password) throws NoSuchAlgorithmException {
         return _authService.authByLoginPass(login, password);
     }
+    @QueryMapping
+    public String sendLetterToConfirmEmail(@Argument final String token) {
+        return _authService.sendLetterToConfirmEmail(token);
+    }
+    @QueryMapping
+    public String sendLetterToResetPassword(@Argument final String login) {
+        return _authService.sendLetterToResetPassword(login);
+    }
 
     @QueryMapping
     public Iterable<Auth> getAllAuth() {

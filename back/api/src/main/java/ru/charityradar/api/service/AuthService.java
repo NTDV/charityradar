@@ -98,6 +98,55 @@ public class AuthService {
         return _authRepository.save(auth);
     }
 
+    public Auth setNewPassword(Auth auth, String pass1) throws NoSuchAlgorithmException {
+        auth.setPassword(AuthHash.getSecureHash(pass1, auth.getLogin()));
+        return _authRepository.save(auth);
+    }
+
+    public String sendLetterToConfirmEmail(String token) {
+        Properties properties = ProjectProperties.getProperties();
+        String url = properties.getProperty("main.url");
+        Auth auth = getAuthByToken(token);
+        if (auth!= null && auth.getId() > 0){
+            try {
+                MailSender.sendLetterToSomebodyFromRobot("Регистрация в Charity Radar",
+                        "Благодарим вас за регистрацию в системе Charity Radar.<br><br>" +
+                                "Нажмите на ссылку ниже, чтобы подтвердить адрес электронной почты.<br><br>" +
+                                "<a target='_blank' href='" + url + "activate_email/" + auth.getToken() + "'>" +
+                                url + "activate_email/" + auth.getToken() + "</a><br><br>" +
+                                "С наилучшими пожеланиями,<br>Команда Charity Radar", "mail@sganiev.ru");
+            } catch (Exception e) {
+                System.out.println("MailSender.sendLetterToSomebodyFromRobot : ERROR");
+            }
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
+    public String sendLetterToResetPassword(String login) {
+        Properties properties = ProjectProperties.getProperties();
+        String url = properties.getProperty("main.url");
+        Auth auth = getAuthByLogin(login);
+        if (auth!= null && auth.getId() > 0){
+            try {
+                MailSender.sendLetterToSomebodyFromRobot("Сброс пароля в Charity Radar",
+                        "Получен запрос на сброс пароля в Charity Radar.<br><br>" +
+                                "Перейдите по ссылке, чтобы ввести новый пароль:<br>" +
+                                "<a target='_blank' href='" + url + "reset_password/" + auth.getToken() + "'>" +
+                                url + "reset_password/" + auth.getToken() + "</a><br><br>" +
+                                "Если вы не подавали этот запрос, не беспокойтесь! Ваш пароль в безопасности. " +
+                                "Вы можете просто удалить это сообщение электронной почты.<br><br>" +
+                                "С наилучшими пожеланиями,<br>Команда Charity Radar", "mail@sganiev.ru");
+            } catch (Exception e) {
+                System.out.println("MailSender.sendLetterToSomebodyFromRobot : ERROR");
+            }
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
     public Auth setNewUUIDToken(Auth auth, String login, String pass) throws NoSuchAlgorithmException {
         if (AuthHash.getSecureHash(pass, login).equals(auth.getPassword())) {
             String token = UUID.randomUUID().toString();
