@@ -19,14 +19,24 @@ $(function() {
     });
 
     //Scrolling
+    let nav = $("#nav")
     $("[data-scroll]").on("click", function (event) {
         event.preventDefault();
 
-        let elementID = $(this).data('scroll')
+        let elementID = $(this).data('scroll');
         let elementOffset = $(elementID).offset().top;
+
+        nav.removeClass("show");
 
         $("html, body").animate({
             scrollTop: elementOffset - 80
         }, 600);
+    });
+
+    //Burger
+    $("#burger").on("click", function(event) {
+        event.preventDefault();
+
+        nav.toggleClass("show");
     });
 });
