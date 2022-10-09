@@ -18,8 +18,15 @@ public class UserService {
         return _userRepository.save(user);
     }
 
+    public Iterable<User> getAllUsers() {
+        return _userRepository.findAll();
+    }
+
     public User getUserByEmail(String email) {
         return _userRepository.getUserByEmail(email);
+    }
+    public User getUserById(Integer id) {
+        return _userRepository.getUserById(id);
     }
 
 }

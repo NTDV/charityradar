@@ -9,6 +9,6 @@ import ru.charityradar.api.model.User;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
     User getUserByEmail(String email);
-
+    User getUserById(Integer id);
 
 }
