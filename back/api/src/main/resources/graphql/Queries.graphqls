@@ -4,4 +4,5 @@ type Query {
     getAllFunds: [Fund]!
     getFundById(id: Int!): Fund!
     getAuthByLogin(login: String!): Auth!
+    getNewsByFundId(fundId: Int!): [News]!
 }

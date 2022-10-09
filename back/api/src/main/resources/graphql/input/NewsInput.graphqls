@@ -1,5 +1,4 @@
-type News {
-    id: ID!
+input NewsInput {
     name: String!
     date: String!
     description: String!
