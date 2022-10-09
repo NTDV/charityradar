@@ -1,0 +1,8 @@
+type Event {
+    id: ID!
+    name: String!
+    address: String!
+    dateTime: String!
+    description: String!
+    fundId: Int!
+}
