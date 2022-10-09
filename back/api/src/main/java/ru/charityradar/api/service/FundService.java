@@ -13,7 +13,7 @@ public class FundService {
 
     @Autowired
     private FundRepository _fundRepository;
-    public Fund addFund(@Argument final FundInput fundInput) {
+    public Fund addFund(FundInput fundInput) {
         final var fund = new Fund(fundInput);
         return _fundRepository.save(fund);
     }

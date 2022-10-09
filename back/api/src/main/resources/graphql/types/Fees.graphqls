@@ -1,0 +1,11 @@
+type Fees {
+    id: Int!
+    name: String!
+    goal: Int
+    startDate: String!
+    endDate: String
+    description: String!
+    status: FeeStatus!
+    collected: Int!
+    fundId: Int!
+}

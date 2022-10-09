@@ -1,33 +1,32 @@
 package ru.charityradar.api.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import ru.charityradar.api.input.NewsInput;
-import ru.charityradar.api.repository.NewsRepository;
 import ru.charityradar.api.model.News;
-
-import java.util.List;
+import ru.charityradar.api.service.NewsService;
 
 
 @AllArgsConstructor
 @Controller
 public class NewsController {
-    private final NewsRepository _newsRepository;
 
+    @Autowired
+    private NewsService _newsService;
     @MutationMapping
     public News addNews(@Argument final NewsInput newsInput) {
-        final var news = new News(newsInput);
-        return _newsRepository.save(news);
+        return _newsService.addNews(newsInput);
     }
     @QueryMapping
     public Iterable<News> getAllNews() {
-        return _newsRepository.findAll();
+        return _newsService.getAllNews();
     }
     @QueryMapping
     public Iterable<News> getNewsByFundId(@Argument final Integer fundId) {
-        return _newsRepository.findNewsByFundId(fundId);
+        return _newsService.getNewsByFundId(fundId);
     }
 }

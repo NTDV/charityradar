@@ -7,4 +7,6 @@ type Query {
     getFundById(id: Int!): Fund!
     getAuthByLogin(login: String!): Auth!
     getNewsByFundId(fundId: Int!): [News]!
+    getAllFees:[Fees]!
+    getFeesByFundId(id: Int!): Fees!
 }
