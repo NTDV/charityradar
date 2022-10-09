@@ -8,5 +8,7 @@ import ru.charityradar.api.model.User;
 // CRUD refers Create, Read, Update, Delete
 
 public interface UserRepository extends CrudRepository<User, Integer> {
+    User getUserByEmail(String email);
+
 
 }

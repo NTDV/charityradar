@@ -29,11 +29,12 @@ public class User {
     private String phone;
     private String email;
 
-    private String password;
-
     public User(final UserInput userInput) {
         this.name = userInput.getName();
+        this.surname = userInput.getSurname();
+        this.patronymic = userInput.getPatronymic();
         this.email = userInput.getEmail();
+        this.phone = userInput.getPhone();
     }
 
     @Override

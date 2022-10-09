@@ -1,0 +1,6 @@
+input FundInput {
+    name: String!
+    image: String
+    description: String
+    rating: Float
+}

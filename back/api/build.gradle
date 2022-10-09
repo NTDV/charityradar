@@ -29,7 +29,7 @@ dependencies {
 
 	testImplementation 'org.springframework:spring-webflux'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+	implementation 'com.sun.mail:javax.mail:1.6.2'
 	annotationProcessor 'javax.annotation:javax.annotation-api', 'org.projectlombok:lombok'
 }
 

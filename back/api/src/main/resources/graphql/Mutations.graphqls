@@ -1,3 +1,5 @@
 type Mutation {
-    addUser(userInput: UserInput): User
+    addFund(fundInput: FundInput): Fund
+    addFundAuth(authInput: AuthInput, fundInput: FundInput): Auth
+    addUserAuth(authInput: AuthInput, userInput: UserInput): Auth
 }

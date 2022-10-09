@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInput {
+public class FundInput {
     private String name;
-    private String surname;
-    private String patronymic;
+    private String image;
     private String email;
-    private String phone;
+    private String description;
+    private Float rating;
 }

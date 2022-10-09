@@ -1,0 +1,7 @@
+type Fund {
+    id: ID!
+    name: String!
+    image: String
+    description: String
+    rating: Float
+}
