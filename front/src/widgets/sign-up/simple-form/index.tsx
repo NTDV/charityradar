@@ -23,6 +23,7 @@ const defaultValues = __DEV__
   ? {
       surname: '123456',
       name: '123456',
+      patronymic: '123',
       phone: '89998670934',
       birthday: '29.10.1999',
       email: 'asafohin@gmail.com',
@@ -55,6 +56,10 @@ export const SimpleForm = () => {
     if (auth.signUpSimple !== null) {
       auth.signUpSimple(values);
     }
+  };
+
+  const guestHandler = () => {
+    if (auth.signUpSimple !== null) auth.signInGuest();
   };
 
   return (
@@ -228,7 +233,7 @@ export const SimpleForm = () => {
         primary={true}
         stylesButton={styles.rowButton}
       />
-      <CustomButton name="Гость" onPress={() => {}} />
+      <CustomButton name="Гость" onPress={guestHandler} />
     </View>
   );
 };

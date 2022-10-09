@@ -1,17 +1,30 @@
-import { View, ScrollView, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
+
+import { styles } from './styles';
 
 import { HeaderLogo } from '../../../widgets/header';
-import { COLOR_WHITE } from '../../../shared/constants/style-variables';
-import { MAIN_PADDING } from '../../../shared/constants/styles-global';
+import { CustomButton } from '../../../shared/ui/custom-button';
+import { useAuth } from '../../../shared/hooks/use-auth';
 
 export const UnAuthUserCabinet = () => {
+  const { logout } = useAuth();
+
+  const signInHandler = () => {
+    if (logout !== null) return logout();
+  };
+
   return (
-    <View>
+    <View style={styles.container}>
       <HeaderLogo />
-      <ScrollView style={{ flexGrow: 1 }}>
-        <View style={{ backgroundColor: COLOR_WHITE, flex: 1 }}>
-          <Text>123</Text>
+      <ScrollView style={styles.wrapper}>
+        <Text style={styles.title}>Войдите в личный кабинет</Text>
+        <Text style={styles.subTitle}>Если вы хотите помочь то сможете:</Text>
+        <View style={styles.ul}>
+          <Text style={styles.li}>- Получать полный отчет о своих пожертвованиях</Text>
+          <Text style={styles.li}>- Стать Филантропом, подключив ежемесячное пожертвование</Text>
+          <Text style={styles.li}>- Формировать рейтинг доверия с другими участниками</Text>
         </View>
+        <CustomButton name="Войти" onPress={signInHandler} primary={true} />
       </ScrollView>
     </View>
   );

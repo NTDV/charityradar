@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { BASE_URL } from '../general';
 import { validationSchemaSimpleFormProps } from '../../../widgets/sign-up/lib/validation-schema';
 
