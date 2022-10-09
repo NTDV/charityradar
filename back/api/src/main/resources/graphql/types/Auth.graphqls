@@ -3,6 +3,7 @@ type Auth {
     login: String!
     password: String!
     token: String
+    confirmed: Boolean!
     type: Int!
     link: Int!
 }
