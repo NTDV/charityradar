@@ -48,8 +48,7 @@ export const SimpleForm = () => {
     const payload = await sendRepeatEmail(token);
     const res = payload['data']?.['sendLetterToConfirmEmail'];
 
-    // Костыль)
-    if (res === 'true') {
+    if (res) {
       setShowButtonRepeatMail(false);
       setErr('');
       Toast.show('Сообщение на почту успешно доставлено', settingsToast);
@@ -58,9 +57,9 @@ export const SimpleForm = () => {
     setLoadingRepeatEmail(false);
   };
 
-  const guestHandler = () => {
+  const guestHandler = async () => {
     if (auth.signInGuest !== null) {
-      auth.signInGuest();
+      await auth.signInGuest();
     }
   };
 
