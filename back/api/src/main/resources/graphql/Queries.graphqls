@@ -13,4 +13,6 @@ type Query {
     getEventsByFundId(fundId: Int!): [Event]!
     getTransactionsByUserId(userId: Int!): [Transaction]!
     getTransactionsByFundId(fundId: Int!): [Transaction]!
+    authByLoginPass(login: String!, password: String!): String!
+    getAllAuth: [Auth]!
 }

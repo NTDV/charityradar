@@ -2,6 +2,7 @@ type Fund {
     id: ID!
     name: String!
     image: String
+    email: String
     description: String
     rating: Float
 }

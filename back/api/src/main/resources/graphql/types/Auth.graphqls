@@ -2,6 +2,7 @@ type Auth {
     id: ID!
     login: String!
     password: String!
+    token: String
     type: Int!
     link: Int!
 }

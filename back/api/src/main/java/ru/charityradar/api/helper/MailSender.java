@@ -1,7 +1,9 @@
 package ru.charityradar.api.helper;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 public class MailSender {
@@ -29,8 +31,19 @@ public class MailSender {
         message.setFrom(new InternetAddress(from));
         message.setRecipient(Message.RecipientType.TO, new InternetAddress("mail@sganiev.ru"));
         message.setSubject(subject);
-        message.setText(body);
+        Multipart mainMultipart = new MimeMultipart("mixed");
+
+        Multipart htmlMultiPart = new MimeMultipart("alternative");
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        htmlPart.setContent(body, "text/html; charset=utf-8");
+        htmlMultiPart.addBodyPart(htmlPart);
+
+        MimeBodyPart mimeMainPart = new MimeBodyPart();
+        mimeMainPart.setContent(htmlMultiPart);
+        mainMultipart.addBodyPart(mimeMainPart);
+        message.setContent(mainMultipart);
         Transport.send(message);
+
     }
 }
 

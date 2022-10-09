@@ -34,4 +34,17 @@ public class AuthController {
     public Auth getAuthByLogin(@Argument final String login) {
         return _authService.getAuthByLogin(login);
     }
+
+
+    @QueryMapping
+    public String authByLoginPass(@Argument final String login, @Argument final String password) throws NoSuchAlgorithmException {
+        return _authService.authByLoginPass(login, password);
+    }
+
+    @QueryMapping
+    public Iterable<Auth> getAllAuth() {
+        return _authService.getAllAuth();
+    }
+
+
 }
