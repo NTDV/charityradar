@@ -3,21 +3,30 @@ import { View, ScrollView, Text } from 'react-native';
 import { styles } from './styles';
 
 import { HeaderLogo } from '../../../widgets/header';
-import { COLOR_WHITE } from '../../../shared/constants/style-variables';
-import { MAIN_PADDING } from '../../../shared/constants/styles-global';
 import { PreviewCard } from '../../../entities/bank-card';
+import { CabinetButtonList } from '../ui/cabinet-button-list';
+import { useAuth } from '../../../shared/hooks/use-auth';
 
 export const AuthUserCabinet = () => {
+  const { logout } = useAuth();
+
+  const exitAccount = () => {
+    if (logout !== null) logout();
+  };
+
   return (
-    <View style={{ flex: 1, backgroundColor: COLOR_WHITE }}>
+    <View style={styles.container}>
       <HeaderLogo />
-      <ScrollView style={{ flexGrow: 1, paddingHorizontal: MAIN_PADDING }}>
+      <ScrollView style={styles.wrapper}>
         <View style={styles.header}>
           <Text style={styles.headerName}>Сафохин Артем</Text>
           <Text style={styles.headerEmail}>asafohin@test.com</Text>
         </View>
         <View>
           <PreviewCard />
+        </View>
+        <View style={styles.buttons}>
+          <CabinetButtonList buttons={[{ name: 'Выйти', onPress: exitAccount, isWarning: true }]} />
         </View>
       </ScrollView>
     </View>

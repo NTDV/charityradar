@@ -12,6 +12,7 @@ import { COLOR_BLACK } from '../shared/constants/style-variables';
 import { FundScreen } from '../screens/fund-screen';
 import { FeesAllScreen } from '../screens/fees-all-screen';
 import { FeesFullScreen } from '../screens/fees-full-screen';
+import { View } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -50,14 +51,19 @@ export type FeesAllScreenProps = {
 };
 
 export const Provider = () => {
-  const auth = useAuth();
-  const [isSignedIn, setSignedIn] = useState(false);
+  const { user } = useAuth();
+  const [isSignedIn, setSignedIn] = useState<null | boolean>(null);
 
+  // Роутиг пользователей
   useEffect(() => {
-    if (auth.user !== null) {
-      setSignedIn(true);
-    }
-  }, [auth.user]);
+    // Неавторизованный пользователь
+    if (user === null) setSignedIn(false);
+
+    // Авторизованный пользователь
+    if (user !== null && user !== undefined) setSignedIn(true);
+  }, [user]);
+
+  if (isSignedIn === null) return <View />;
 
   return (
     <NavigationContainer>
