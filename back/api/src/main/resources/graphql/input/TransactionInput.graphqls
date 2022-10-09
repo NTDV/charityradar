@@ -1,5 +1,6 @@
 input TransactionInput {
     type: TransactionType!
+    amount: Float!
     status: TransactionStatus!
     feesId: Int
     fundId: Int

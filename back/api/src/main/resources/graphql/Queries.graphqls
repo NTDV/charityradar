@@ -17,4 +17,6 @@ type Query {
     getAllAuth: [Auth]!
     sendLetterToConfirmEmail(token: String!): Boolean!
     sendLetterToResetPassword(login: String!): Boolean!
+    addExpense(balanceId: ID!, expense: Float!): Float!
+    addRefill(balanceId: ID!, refill: Float!): Float!
 }

@@ -16,11 +16,6 @@ public class UserController {
     @Autowired
     private final UserService _userService;
 
-    @MutationMapping
-    public User addUser(@Argument final UserInput userInput) {
-        return _userService.addUser(userInput);
-    }
-
     @QueryMapping
     public Iterable<User> getAllUsers() {
         return _userService.getAllUsers();

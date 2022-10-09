@@ -27,12 +27,15 @@ public class AuthService {
     private UserService _userService;
     @Autowired
     private FundService _fundService;
+    @Autowired
+    private BalanceService _balanceService;
 
     public Auth registerAuth(@Argument final AuthInput authInput, @Argument final UserInput userInput) throws NoSuchAlgorithmException {
         Properties properties = ProjectProperties.getProperties();
         String url = properties.getProperty("main.url");
         if (getAuthByLogin(authInput.getLogin()) == null && _userService.getUserByEmail(userInput.getEmail()) == null) {
-            final var user = _userService.addUser(userInput);
+            final var balance = _balanceService.createBalance();
+            final var user = _userService.addUser(userInput, balance.getId());
             final var auth = new Auth(authInput, user.getId(), 1);
             Auth authOb = _authRepository.save(auth);
             if (authOb.getId() != null) {
@@ -56,7 +59,8 @@ public class AuthService {
         Properties properties = ProjectProperties.getProperties();
         String url = properties.getProperty("main.url");
         if (getAuthByLogin(authInput.getLogin()) == null && _fundService.getFundByEmail(fundInput.getEmail()) == null) {
-            final var fund = _fundService.addFund(fundInput);
+            final var balance = _balanceService.createBalance();
+            final var fund = _fundService.addFund(fundInput, balance.getId());
             final var auth = new Auth(authInput, fund.getId(), 2);
             Auth authOb = _authRepository.save(auth);
             if (authOb.getId() != null) {
