@@ -442,8 +442,8 @@ body {
         display: contents;
     }
 
-    .header.fixed .header__inner {
-        margin: 0 30px 0 10px;
+    .header__inner {
+        margin: 0 15px;
     }
 
     /* ======= Intro ====== */
@@ -456,7 +456,7 @@ body {
 
     .intro__block {
         width: 100%;
-        padding-top: 40px;
+        padding-top: 30px;
     }
     
     .intro__block h1 {
@@ -522,6 +522,10 @@ body {
         margin: 0 auto;
         width: 90%;
         font-size: 16px;
+    }
+
+    .team__inner {
+        margin: 0;
     }
 
     .social {
