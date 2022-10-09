@@ -4,4 +4,5 @@ type Mutation {
     addNews(newsInput: NewsInput): News
     addFees(feesInput: FeesInput): Fees
     addEvent(eventInput: EventInput): Event
+    addTransaction(transactionInput: TransactionInput): Transaction
 }

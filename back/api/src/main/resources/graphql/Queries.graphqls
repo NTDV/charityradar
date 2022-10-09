@@ -11,4 +11,6 @@ type Query {
     getFeesByFundId(fundId: Int!): Fees!
     getAllEvents: [Event]!
     getEventsByFundId(fundId: Int!): [Event]!
+    getTransactionsByUserId(userId: Int!): [Transaction]!
+    getTransactionsByFundId(fundId: Int!): [Transaction]!
 }
