@@ -67,7 +67,7 @@ jobs:
           to: ${{ secrets.TG_BOT_CHATID }}
           token: ${{ secrets.TG_BOT_TOKEN }}
           message: | 
-            ✅ New build has realeased!
+            ✅ New build has been realeased!
             🔗 Href: https://github.com/NTDV/charityradar/releases/tag/latest-build
           format: markdown
           disable_web_page_preview: true
