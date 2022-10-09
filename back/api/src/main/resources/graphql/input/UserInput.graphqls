@@ -2,6 +2,6 @@ input UserInput {
     name: String!
     surname: String!
     patronymic: String
-    phone: String!
+    phone: String
     email: String!
 }
