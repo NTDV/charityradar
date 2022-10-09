@@ -9,7 +9,7 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-latest
-    steps:
+    steps:          
       - name: 🏗 Setup repo 1/2
         uses: actions/checkout@v3
         
@@ -59,3 +59,28 @@ jobs:
           asset_name: charity-radar.apk
           tag: refs/tags/latest-build
           body: "The latest build of application for android!"
+          
+      - name: New build released notification
+        if: ${{ success() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TG_BOT_CHATID }}
+          token: ${{ secrets.TG_BOT_TOKEN }}
+          message: | 
+            ✅ New build has been realeased!
+            🔗 Href: https://github.com/NTDV/charityradar/releases/tag/latest-build
+          format: markdown
+          disable_web_page_preview: true
+          document: charity-radar.apk
+          
+      - name: New build corrupted notification
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TG_BOT_CHATID }}
+          token: ${{ secrets.TG_BOT_TOKEN }}
+          message: |
+            ❌ *Failed to release new build!*
+            🔗 Href: https://github.com/NTDV/charityradar/actions/workflows/build_mobile.yml
+          format: markdown
+          disable_web_page_preview: true

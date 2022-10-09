@@ -8,7 +8,6 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import ru.charityradar.api.input.UserInput;
 import ru.charityradar.api.model.User;
-import ru.charityradar.api.repository.UserRepository;
 import ru.charityradar.api.service.UserService;
 
 @AllArgsConstructor
