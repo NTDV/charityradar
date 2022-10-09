@@ -14,3 +14,16 @@ export const settingsToast = {
   textColor: COLOR_WHITE,
   opacity: 1,
 };
+
+export const settingsToastDelay = {
+  duration: 1500,
+  position: Toast.positions.TOP + 25,
+  shadow: true,
+  shadowColor: 'rgba(0, 0, 0, 0.2)',
+  animation: true,
+  hideOnPress: true,
+  delay: 500,
+  backgroundColor: COLOR_PRIMARY,
+  textColor: COLOR_WHITE,
+  opacity: 1,
+};

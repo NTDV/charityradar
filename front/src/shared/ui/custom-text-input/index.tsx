@@ -21,6 +21,7 @@ export type CustomTextInputProps = {
   textContentType?: any;
   blurOnSubmit?: boolean;
   onSubmitEditing?: () => void;
+  multiline?: boolean;
 };
 
 /**

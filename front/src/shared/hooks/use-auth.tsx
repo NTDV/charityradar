@@ -112,8 +112,10 @@ export const useProvideAuth = (): UseProvideAuthExit => {
   };
 
   // Авторизация гостя
-  const signInGuest = () => {
-    setUser({ type: UserType.guest });
+  const signInGuest = async () => {
+    const user = { type: UserType.guest };
+    await SecureStore.setItemAsync('user', JSON.stringify(user));
+    setUser(user);
   };
 
   // Регистрация через форму
