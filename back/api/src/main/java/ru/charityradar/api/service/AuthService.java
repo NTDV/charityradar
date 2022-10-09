@@ -11,6 +11,8 @@ import ru.charityradar.api.input.AuthInput;
 import ru.charityradar.api.input.FundInput;
 import ru.charityradar.api.input.UserInput;
 import ru.charityradar.api.model.Auth;
+import ru.charityradar.api.model.Fund;
+import ru.charityradar.api.model.User;
 import ru.charityradar.api.repository.AuthRepository;
 
 import java.security.NoSuchAlgorithmException;
@@ -78,7 +80,7 @@ public class AuthService {
         return _authRepository.getAuthByLogin(login);
     }
 
-    public String authByLoginPass(String login, String pass) throws NoSuchAlgorithmException {
+    public Auth authByLoginPass(String login, String pass) throws NoSuchAlgorithmException {
         Auth auth = getAuthByLogin(login);
         return setNewUUIDToken(auth, login, pass);
     }
@@ -96,14 +98,14 @@ public class AuthService {
         return _authRepository.save(auth);
     }
 
-    public String setNewUUIDToken(Auth auth, String login, String pass) throws NoSuchAlgorithmException {
+    public Auth setNewUUIDToken(Auth auth, String login, String pass) throws NoSuchAlgorithmException {
         if (AuthHash.getSecureHash(pass, login).equals(auth.getPassword())) {
             String token = UUID.randomUUID().toString();
             auth.setToken(token);
             _authRepository.save(auth);
-            return token;
+            return auth;
         } else {
-            return Helper.getErrorJson("Incorrect login or password!");
+            return null;
         }
     }
 

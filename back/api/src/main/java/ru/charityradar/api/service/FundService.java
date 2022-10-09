@@ -17,6 +17,10 @@ public class FundService {
     }
 
     public Fund getFundByEmail(String email) {
-        return _fundRepository.getAuthByEmail(email);
+        return _fundRepository.getFundByEmail(email);
+    }
+
+    public Fund getFundById(Integer id) {
+        return _fundRepository.getFundById(id);
     }
 }

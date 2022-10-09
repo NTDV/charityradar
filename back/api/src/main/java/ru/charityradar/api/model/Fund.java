@@ -22,6 +22,7 @@ public class Fund {
     private Integer id;
     private String name;
     private String email;
+    private String phone;
     private String image;
     private String description;
     private Float rating;
@@ -29,6 +30,7 @@ public class Fund {
     public Fund(final FundInput fundInput) {
         this.name = fundInput.getName();
         this.email = fundInput.getEmail();
+        this.phone = fundInput.getPhone();
         this.image= fundInput.getImage();
         this.description = fundInput.getDescription();
         this.rating = fundInput.getRating();

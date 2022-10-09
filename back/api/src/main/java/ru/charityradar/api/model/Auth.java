@@ -15,17 +15,15 @@ import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
+@Getter
 public class Auth {
 
-    @Getter
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private String login;
-    @Getter
     private String password;
     @Setter
-    @Getter
     private String token;
     private Integer type;
     private Integer link;
