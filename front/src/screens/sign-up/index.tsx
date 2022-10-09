@@ -3,9 +3,8 @@ import { ScrollView, Text, View } from 'react-native';
 import { styles } from './styles';
 
 import { SignUpProps } from '../../navigation';
-import { HeaderLogo } from '../../widgets/header/header-logo';
-import { IdSignUpForm } from '../../widgets/id-sign-up-form';
-import { SimpleSignUpForm } from '../../widgets/simple-sign-up-form';
+import { HeaderLogo } from '../../widgets/header';
+import { IdSignUpForm, SimpleSignUpForm } from '../../widgets/sign-up';
 import { KeyboardShift } from '../../shared/ui/keyboard-shift';
 import { stylesGlobal } from '../../shared/constants/styles-global';
 

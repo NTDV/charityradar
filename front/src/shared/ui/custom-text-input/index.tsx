@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { forwardRef, Ref, useState } from 'react';
+import { FieldError } from 'react-hook-form';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import { styles } from './styles';
@@ -13,6 +14,13 @@ export type CustomTextInputProps = {
   placeholder?: string;
   isPassword?: boolean;
   editable?: boolean;
+  value: string;
+  onChangeText: () => void;
+  onBlur?: () => void;
+  errorMessage?: string | FieldError | any;
+  textContentType?: any;
+  blurOnSubmit?: boolean;
+  onSubmitEditing?: () => void;
 };
 
 /**
@@ -21,36 +29,39 @@ export type CustomTextInputProps = {
  * @param isRequired - обязательное заполнение поля в форме
  * @param isPassword - является ли форма паролем
  * @param editable - readonly
+ * @param errorMessage - текст ошибки
  */
 
-export const CustomTextInput = ({
-  name,
-  isRequired = false,
-  isPassword = false,
-  ...props
-}: CustomTextInputProps) => {
-  const [passwordVisible, setPasswordVisible] = useState(isPassword);
+export const CustomTextInput = forwardRef(
+  (
+    { name, errorMessage, isRequired = false, isPassword = false, ...props }: CustomTextInputProps,
+    ref: Ref<TextInput>,
+  ) => {
+    const [passwordVisible, setPasswordVisible] = useState(isPassword);
 
-  const passwordVisibleHandler = () => setPasswordVisible((prev) => !prev);
+    const passwordVisibleHandler = () => setPasswordVisible((prev) => !prev);
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.name}>
-        {name} {isRequired && <Text style={styles.isRequired}>*</Text>}
-      </Text>
-      <TextInput
-        placeholderTextColor={COLOR_PLACEHOLDER}
-        {...props}
-        secureTextEntry={passwordVisible}
-        style={[styles.textField]}
-      />
+    return (
+      <View style={styles.container}>
+        <Text style={styles.name}>
+          {name} {isRequired && <Text style={styles.isRequired}>*</Text>}
+        </Text>
+        <TextInput
+          ref={ref}
+          placeholderTextColor={COLOR_PLACEHOLDER}
+          {...props}
+          secureTextEntry={passwordVisible}
+          style={[styles.textField, !!errorMessage ? styles.textFieldError : {}]}
+        />
 
-      <TouchableOpacity onPress={passwordVisibleHandler}>
-        <View style={styles.inputIcon}>
-          {isPassword && !passwordVisible && <IconEye />}
-          {isPassword && passwordVisible && <IconEye2 />}
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
+        <TouchableOpacity onPress={passwordVisibleHandler}>
+          <View style={styles.inputIcon}>
+            {isPassword && !passwordVisible && <IconEye />}
+            {isPassword && passwordVisible && <IconEye2 />}
+          </View>
+        </TouchableOpacity>
+        {!!errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
+      </View>
+    );
+  },
+);

@@ -2,16 +2,16 @@ import { View } from 'react-native';
 
 import { styles } from './styles';
 
-import { IconSber } from '../../shared/icons/icon-sber';
-import { CustomButton } from '../../shared/ui/custom-button';
-import { IconTinkoff } from '../../shared/icons/icon-tinkoff';
-import { IconVtb } from '../../shared/icons/icon-vtb';
+import { IconSber } from '../../../shared/icons/icon-sber';
+import { CustomButton } from '../../../shared/ui/custom-button';
+import { IconTinkoff } from '../../../shared/icons/icon-tinkoff';
+import { IconVtb } from '../../../shared/icons/icon-vtb';
 
 /**
  * widget авторизации через внешнее api
  */
 
-export const IdSignInForm = () => {
+export const IdForm = () => {
   return (
     <View style={styles.container}>
       <View style={styles.row}>

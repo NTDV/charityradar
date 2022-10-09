@@ -1,4 +1,4 @@
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 
 import { HeaderLogo } from '../../../widgets/header';
 import { COLOR_WHITE } from '../../../shared/constants/style-variables';
@@ -6,9 +6,13 @@ import { MAIN_PADDING } from '../../../shared/constants/styles-global';
 
 export const UnAuthUserCabinet = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: COLOR_WHITE }}>
+    <View>
       <HeaderLogo />
-      <ScrollView style={{ flexGrow: 1, paddingHorizontal: MAIN_PADDING }}></ScrollView>
+      <ScrollView style={{ flexGrow: 1 }}>
+        <View style={{ backgroundColor: COLOR_WHITE, flex: 1 }}>
+          <Text>123</Text>
+        </View>
+      </ScrollView>
     </View>
   );
 };
