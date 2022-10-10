@@ -18,12 +18,20 @@ public class FeesService {
         return _feesRepository.save(fees);
     }
 
+    public Fees setImage(Fees fees, String image) {
+        fees.setImage(image);
+        return _feesRepository.save(fees);
+    }
+
     public Iterable<Fees> getAllFees() {
         return _feesRepository.findAll();
     }
 
     public Iterable<Fees> getFeesByFundId(Integer fundId) {
         return _feesRepository.findFeesByFundId(fundId);
+    }
+    public Fees getFeesById(Integer feesId) {
+        return _feesRepository.findFeesById(feesId);
     }
 
 }

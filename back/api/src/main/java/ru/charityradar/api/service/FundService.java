@@ -11,9 +11,15 @@ public class FundService {
 
     @Autowired
     private FundRepository _fundRepository;
+    private FundService _fundService;
     public Fund addFund(FundInput fundInput, String balanceId) {
         final var fund = new Fund(fundInput);
         fund.setBalanceId(balanceId);
+        return _fundRepository.save(fund);
+    }
+
+    public Fund setImage(Fund fund, String image) {
+        fund.setImage(image);
         return _fundRepository.save(fund);
     }
 

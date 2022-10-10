@@ -13,4 +13,5 @@ public class FeesInput {
     private FeeStatus status;
     private Integer collected;
     private Integer fundId;
+    private String image;
 }

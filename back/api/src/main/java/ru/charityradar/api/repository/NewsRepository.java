@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface NewsRepository  extends CrudRepository<News, Integer> {
     Iterable<News> findNewsByFundId(Integer fundId);
+
+    News findNewsById(Integer newsId);
 }

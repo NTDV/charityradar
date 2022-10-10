@@ -17,8 +17,13 @@ public class UploadController {
     @Autowired
     private UploadService _uploadService;
 
+
     @PostMapping("/upload")
-    public ResponseEntity<Object> uploadImage(Model model, @RequestParam("image") MultipartFile file) {
-        return _uploadService.uploadImage(model, file);
+    public ResponseEntity<Object> uploadImage(Model model, @RequestParam("image") MultipartFile file, @RequestParam("type") int type,
+                                              @RequestParam("id") Integer id) {
+        if (id == null)
+            return _uploadService.uploadImage(model, file, type);
+        else
+            return _uploadService.uploadImage(model, file, type, id);
     }
 }

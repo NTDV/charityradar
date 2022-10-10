@@ -20,6 +20,9 @@ public class FeesController {
     public Fees addFees(@Argument final FeesInput feesInput) {
         return _feesService.addFees(feesInput);
     }
+    public Fees setImage(@Argument final Fees fees, @Argument final  String image) {
+        return _feesService.setImage(fees, image);
+    }
     @QueryMapping
     public Iterable<Fees> getAllFees() {
         return _feesService.getAllFees();
@@ -28,5 +31,9 @@ public class FeesController {
     @QueryMapping
     public Iterable<Fees> getFeesByFundId(@Argument final Integer fundId) {
         return _feesService.getFeesByFundId(fundId);
+    }
+
+    public Fees getFeesById(@Argument final Integer feesId) {
+        return _feesService.getFeesById(feesId);
     }
 }

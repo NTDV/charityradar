@@ -7,4 +7,5 @@ input FeesInput {
     status: FeeStatus!
     collected: Int!
     fundId: Int!
+    image: String
 }
