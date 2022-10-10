@@ -21,6 +21,10 @@ public class NewsController {
     public News addNews(@Argument final NewsInput newsInput) {
         return _newsService.addNews(newsInput);
     }
+
+    public News setImage(@Argument final News news,@Argument final String image) {
+        return _newsService.setImage(news, image);
+    }
     @QueryMapping
     public Iterable<News> getAllNews() {
         return _newsService.getAllNews();
@@ -28,5 +32,9 @@ public class NewsController {
     @QueryMapping
     public Iterable<News> getNewsByFundId(@Argument final Integer fundId) {
         return _newsService.getNewsByFundId(fundId);
+    }
+
+    public News getNewsById(@Argument final Integer newsId){
+        return _newsService.getNewsById(newsId);
     }
 }

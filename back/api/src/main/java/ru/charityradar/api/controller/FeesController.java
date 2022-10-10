@@ -34,4 +34,8 @@ public class FeesController {
     public Iterable<Fees> getTopFees() {
         return _feesService.getTopFees();
     }
+
+    public Fees getFeesById(@Argument final Integer feesId) {
+        return _feesService.getFeesById(feesId);
+    }
 }

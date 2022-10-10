@@ -28,6 +28,7 @@ public class Fees {
     private FeeStatus status;
     private Integer collected;
     private Integer fundId;
+    private String image;
 
 
     public Fees(FeesInput feesInput) {
@@ -39,5 +40,6 @@ public class Fees {
         this.status = feesInput.getStatus();
         this.collected = feesInput.getCollected();
         this.fundId = feesInput.getFundId();
+        this.image = feesInput.getImage();
     }
 }

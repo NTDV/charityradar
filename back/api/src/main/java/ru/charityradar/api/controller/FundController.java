@@ -1,6 +1,7 @@
 package ru.charityradar.api.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -20,6 +21,10 @@ public class FundController {
     @QueryMapping
     public Iterable<Fund> getAllFunds() {
         return _fundService.getAllFunds();
+    }
+
+    public Fund setImage(@Argument final Fund fund, @Argument final String image) {
+        return _fundService.setImage(fund, image);
     }
 
     @QueryMapping

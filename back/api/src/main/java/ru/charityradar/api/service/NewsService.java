@@ -17,6 +17,10 @@ public class NewsService {
         return _newsRepository.save(news);
     }
 
+    public News setImage(News news, String image) {
+        news.setImage(image);
+        return _newsRepository.save(news);
+    }
     public Iterable<News> getAllNews() {
         return _newsRepository.findAll();
     }
@@ -24,5 +28,9 @@ public class NewsService {
 
     public Iterable<News> getNewsByFundId(Integer fundId) {
         return _newsRepository.findNewsByFundId(fundId);
+    }
+
+    public News getNewsById(Integer newsId) {
+        return _newsRepository.findNewsById(newsId);
     }
 }
