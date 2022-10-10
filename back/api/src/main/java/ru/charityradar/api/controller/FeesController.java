@@ -29,4 +29,9 @@ public class FeesController {
     public Iterable<Fees> getFeesByFundId(@Argument final Integer fundId) {
         return _feesService.getFeesByFundId(fundId);
     }
+
+    @QueryMapping
+    public Iterable<Fees> getTopFees() {
+        return _feesService.getTopFees();
+    }
 }

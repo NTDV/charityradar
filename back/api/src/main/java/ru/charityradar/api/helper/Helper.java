@@ -11,6 +11,7 @@ public class Helper {
         return "{\"error\":{\"" + errorText + "\"}";
     }
     public static SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    public static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
 
     public static Date[] getMonthStartEndNow() {
         Calendar calendar = Calendar.getInstance();

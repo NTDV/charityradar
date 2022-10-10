@@ -8,27 +8,27 @@ import org.springframework.stereotype.Controller;
 import ru.charityradar.api.input.FundInput;
 import ru.charityradar.api.model.Fund;
 import ru.charityradar.api.repository.FundRepository;
+import ru.charityradar.api.service.FundService;
 
 import java.util.Optional;
 
 @AllArgsConstructor
 @Controller
 public class FundController {
-    private final FundRepository _fundRepository;
-
-    @MutationMapping
-    public Fund addFund(@Argument final FundInput fundInput) {
-        final var fund = new Fund(fundInput);
-        return _fundRepository.save(fund);
-    }
+    private final FundService _fundService;
 
     @QueryMapping
     public Iterable<Fund> getAllFunds() {
-        return _fundRepository.findAll();
+        return _fundService.getAllFunds();
     }
 
     @QueryMapping
-    public Optional<Fund> getFundById(@Argument final Integer id) {
-        return _fundRepository.findById(id);
+    public Fund getFundById(@Argument final Integer id) {
+        return _fundService.getFundById(id);
+    }
+
+    @QueryMapping
+    public Iterable<Fund> getTopFund() {
+        return _fundService.getTopFund();
     }
 }
