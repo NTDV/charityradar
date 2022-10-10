@@ -1,4 +1,6 @@
-import { Dimensions, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Dimensions, TouchableOpacity, View, Text } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import { Controller, useForm } from 'react-hook-form';
 
 import { styles } from './styles';
@@ -11,6 +13,8 @@ import { Avatar } from '../../../shared/ui/avatar';
 import { MAIN_PADDING } from '../../../shared/constants/styles-global';
 
 export const InfoForm = () => {
+  const [photo, setPhoto] = useState<null | object>(null);
+
   const {
     control,
     handleSubmit,
@@ -21,11 +25,56 @@ export const InfoForm = () => {
 
   const onSubmit = () => {};
 
+  const choosePhoto = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      // @ts-ignore
+      setPhoto(result.uri);
+    }
+  };
+
+  const launchImage = async () => {
+    if (photo === null) return;
+
+    let filename = photo.split('/').pop();
+
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    let formData = new FormData();
+    formData.append('photo', { uri: photo, name: filename, type });
+
+    console.log(formData);
+    // return await fetch(YOUR_SERVER_URL, {
+    //   method: 'POST',
+    //   body: formData,
+    //   headers: {
+    //     'content-type': 'multipart/form-data',
+    //   },
+    // });
+  };
+
+  useEffect(() => {
+    (async () => {
+      await launchImage();
+    })();
+  }, [photo]);
+
   return (
     <View style={styles.container}>
-      <View style={[styles.row, styles.rowAvatar]}>
-        <Avatar height={180} width={Dimensions.get('window').width - MAIN_PADDING * 2} />
-      </View>
+      <TouchableOpacity onPress={choosePhoto} activeOpacity={0.8}>
+        <View style={[styles.row, styles.rowAvatar]}>
+          <Avatar height={180} width={Dimensions.get('window').width - MAIN_PADDING * 2} />
+          <View style={styles.photo} />
+        </View>
+        <Text style={styles.photoText}>Выберите фотографию</Text>
+      </TouchableOpacity>
       <View style={styles.row}>
         <Controller
           control={control}
