@@ -6,14 +6,12 @@ import ru.charityradar.api.input.FundInput;
 import ru.charityradar.api.model.Fund;
 import ru.charityradar.api.repository.FundRepository;
 
-import java.util.UUID;
-
 @Service
 public class FundService {
 
     @Autowired
     private FundRepository _fundRepository;
-    public Fund addFund(FundInput fundInput, UUID balanceId) {
+    public Fund addFund(FundInput fundInput, String balanceId) {
         final var fund = new Fund(fundInput);
         fund.setBalanceId(balanceId);
         return _fundRepository.save(fund);

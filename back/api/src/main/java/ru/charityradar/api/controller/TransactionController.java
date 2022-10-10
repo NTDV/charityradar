@@ -9,6 +9,8 @@ import ru.charityradar.api.input.TransactionInput;
 import ru.charityradar.api.model.Transaction;
 import ru.charityradar.api.service.TransactionService;
 
+import java.text.ParseException;
+
 @Controller
 public class TransactionController {
 
@@ -17,7 +19,7 @@ public class TransactionController {
     private TransactionService _transactionService;
 
     @MutationMapping
-    public Transaction addTransaction(@Argument final TransactionInput transactionInput) {
+    public Transaction addTransaction(@Argument final TransactionInput transactionInput) throws ParseException {
         return  _transactionService.addTransaction(transactionInput);
     }
 

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.charityradar.api.model.Balance;
 import ru.charityradar.api.repository.BalanceRepository;
 
-import java.util.UUID;
-
 @Service
 public class BalanceService {
     @Autowired
@@ -27,8 +25,12 @@ public class BalanceService {
         return _balanceRepository.save(balance);
     }
 
-    public Balance getBalanceById(UUID id){
+    public Balance getBalanceById(String id) {
         return _balanceRepository.getBalanceById(id);
+    }
+
+    public Float getBalanceAmountById(String id) {
+        return _balanceRepository.getBalanceById(id).getBalance();
     }
 
 }

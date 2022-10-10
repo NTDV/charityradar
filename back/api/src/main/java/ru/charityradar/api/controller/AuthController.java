@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import ru.charityradar.api.input.AuthInput;
 import ru.charityradar.api.input.FundInput;
 import ru.charityradar.api.input.UserInput;
+import ru.charityradar.api.mixed.BalanceMixed;
 import ru.charityradar.api.model.Auth;
 import ru.charityradar.api.service.AuthService;
 
@@ -52,6 +53,13 @@ public class AuthController {
     @QueryMapping
     public Iterable<Auth> getAllAuth() {
         return _authService.getAllAuth();
+    }
+
+
+
+    @QueryMapping
+    public BalanceMixed getBalanceInfo(@Argument final String token) {
+        return _authService.getBalanceInfo(token);
     }
 
 

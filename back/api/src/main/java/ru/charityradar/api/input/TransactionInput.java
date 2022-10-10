@@ -8,6 +8,7 @@ import ru.charityradar.api.constant.TransactionStatus;
 public class TransactionInput {
     private TransactionType type;
     private Float amount;
+    private String dateTime;
     private TransactionStatus status;
     private Integer feesId;
     private Integer fundId;

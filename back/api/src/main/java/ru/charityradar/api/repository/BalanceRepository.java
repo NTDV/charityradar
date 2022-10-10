@@ -8,5 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface BalanceRepository extends CrudRepository<Balance, UUID> {
-    Balance getBalanceById(UUID id);
+    Balance getBalanceById(String id);
 }

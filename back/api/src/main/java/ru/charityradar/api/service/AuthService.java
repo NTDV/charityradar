@@ -10,12 +10,13 @@ import ru.charityradar.api.helper.ProjectProperties;
 import ru.charityradar.api.input.AuthInput;
 import ru.charityradar.api.input.FundInput;
 import ru.charityradar.api.input.UserInput;
+import ru.charityradar.api.mixed.BalanceMixed;
 import ru.charityradar.api.model.Auth;
-import ru.charityradar.api.model.Fund;
 import ru.charityradar.api.model.User;
 import ru.charityradar.api.repository.AuthRepository;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -29,6 +30,9 @@ public class AuthService {
     private FundService _fundService;
     @Autowired
     private BalanceService _balanceService;
+
+    @Autowired
+    private TransactionService _transactionService;
 
     public Auth registerAuth(@Argument final AuthInput authInput, @Argument final UserInput userInput) throws NoSuchAlgorithmException {
         Properties properties = ProjectProperties.getProperties();
@@ -91,6 +95,14 @@ public class AuthService {
 
     public Iterable<Auth> getAllAuth() {
         return _authRepository.findAll();
+    }
+
+    public BalanceMixed getBalanceInfo(String token) {
+        Auth auth = _authRepository.getAuthByToken(token);
+        User  user = _userService.getUserById(auth.getLink());
+        Date[] dates = Helper.getMonthStartEndNow();
+        return new BalanceMixed(_balanceService.getBalanceAmountById(user.getBalanceId()),
+                _transactionService.getMonthTransactionsByUserId(user.getId(), dates[0], dates[1]));
     }
 
     public Auth getAuthByToken(String token) {

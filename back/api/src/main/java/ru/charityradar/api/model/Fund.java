@@ -27,7 +27,7 @@ public class Fund {
     private String image;
     private String description;
     private Float rating;
-    private UUID balanceId;
+    private String balanceId;
 
     public Fund(final FundInput fundInput) {
         this.name = fundInput.getName();

@@ -29,7 +29,7 @@ public class User {
 
     private String phone;
     private String email;
-    private UUID balanceId;
+    private String balanceId;
 
     public User(final UserInput userInput) {
         this.name = userInput.getName();

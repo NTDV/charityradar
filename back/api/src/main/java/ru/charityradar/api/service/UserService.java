@@ -7,15 +7,13 @@ import ru.charityradar.api.input.UserInput;
 import ru.charityradar.api.model.User;
 import ru.charityradar.api.repository.UserRepository;
 
-import java.util.UUID;
-
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository _userRepository;
 
-    public User addUser(@Argument final UserInput userInput, @Argument final UUID balanceId) {
+    public User addUser(@Argument final UserInput userInput, @Argument final String balanceId) {
         final var user = new User(userInput);
         user.setBalanceId(balanceId);
         return _userRepository.save(user);
