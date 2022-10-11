@@ -1,16 +1,24 @@
 type Query {
     getAllNews: [News]!
-    getAllFunds: [Fund]!
     getNewsByFundId(fundId: Int!): [News]!
+
+    getAllFunds: [Fund]!
+
     getAllFees: [Fees]!
     getFeesByFundId(fundId: Int!): Fees!
+
     getAllEvents: [Event]!
     getEventsByFundId(fundId: Int!): [Event]!
+
     getTransactionsByUserId(userId: Int!): [Transaction]!
     getTransactionsByFundId(fundId: Int!): [Transaction]!
+
     authByLoginPass(login: String!, password: String!): Auth
+    authByVTBId(login: String!, password: String!): VTBAccessToken
+
     sendLetterToConfirmEmail(token: String!): Boolean!
     sendLetterToResetPassword(login: String!): Boolean!
+
     getBalanceInfo(token: String!): BalanceMixed!
     getAllBalance: [Balance]!
 

@@ -1,0 +1,6 @@
+type VTBAccessToken {
+    access_token: String!
+    refresh_token: String!
+    scope: String!
+    id_token: String!
+}
