@@ -1,33 +1,34 @@
+import { useState } from 'react';
 import { View } from 'react-native';
-import { WebView } from 'react-native-webview';
 
 import { styles } from './styles';
 
 import { CustomButton } from '../../../shared/ui/custom-button';
 import { IconVtb } from '../../../shared/icons/icon-vtb';
+import { VtbModal } from '../vtb-modal';
+import { validationSchemaVtbFormProps } from '../vtb-modal/validation-schema';
 import { getToken } from '../../../shared/api/sign-in/get-token';
-import { AuthVtb } from '../../../shared/api/sign-in/auth-vtb';
-import { useState } from 'react';
 
 /**
  * widget авторизации через внешнее api
  */
 
 export const IdForm = () => {
-  const [html, setHtml] = useState(null);
-  // const [];
-  const authHandler = async () => {
-    const payload = await getToken();
-    const html = await AuthVtb(payload);
-    setHtml(html);
+  const [visible, setVisible] = useState(false);
+  const [error, setError] = useState('');
+
+  const openPopup = () => setVisible(true);
+  const closePopup = () => setVisible(false);
+
+  const onSubmit = async (value: validationSchemaVtbFormProps) => {
+    const payload = await getToken(value);
+    console.log(payload, value);
   };
 
   return (
     <View style={styles.container}>
-      <CustomButton name="Войти по ВТБ ID" onPress={authHandler} icon={<IconVtb />} />
-      {/*{html && (*/}
-      {/*  <WebView style={{ width: 300, height: 300 }} originWhitelist={['*']} source={{ html }} />*/}
-      {/*)}*/}
+      <VtbModal visibility={visible} onClose={closePopup} onSubmit={onSubmit} error={error} />
+      <CustomButton name="Войти по ВТБ ID" onPress={openPopup} icon={<IconVtb />} />
     </View>
   );
 };
