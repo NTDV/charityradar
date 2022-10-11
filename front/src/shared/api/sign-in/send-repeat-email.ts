@@ -14,7 +14,7 @@ export const sendRepeatEmail = async (token: string) => {
   };
 
   return await axios({
-    url: `${BASE_URL}`,
+    url: `${BASE_URL}/graphql`,
     method: 'POST',
     headers: headers,
     data: graphqlQuery,

@@ -25,7 +25,7 @@ export const AuthFund: AuthFundType = async (id: string) => {
   };
 
   return await axios({
-    url: `${BASE_URL}`,
+    url: `${BASE_URL}/graphql`,
     method: 'POST',
     headers: headers,
     data: graphqlQuery,

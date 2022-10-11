@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { BASE_URL } from '../general';
 import { validationSchemaSimpleFormProps } from '../../../widgets/sign-up/lib/validation-schema';
+import { ERRORS, ERRORS_MESSAGE } from '../../constants/types';
 
 export const signUpFormApi = async ({
   email,
@@ -36,9 +37,11 @@ export const signUpFormApi = async ({
   };
 
   return await axios({
-    url: `${BASE_URL}`,
+    url: `${BASE_URL}/graphql`,
     method: 'POST',
     headers: headers,
     data: graphqlQuery,
-  }).then(({ data }) => data);
+  })
+    .then(({ data }) => data)
+    .catch((err) => ({ err: { message: ERRORS_MESSAGE.server, type: ERRORS.server } }));
 };

@@ -1,6 +1,6 @@
 import { forwardRef, Ref, useState } from 'react';
 import { FieldError } from 'react-hook-form';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardTypeOptions } from 'react-native';
 
 import { styles } from './styles';
 
@@ -22,6 +22,7 @@ export type CustomTextInputProps = {
   blurOnSubmit?: boolean;
   onSubmitEditing?: () => void;
   multiline?: boolean;
+  keyboardType?: KeyboardTypeOptions;
 };
 
 /**

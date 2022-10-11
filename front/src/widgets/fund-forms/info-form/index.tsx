@@ -11,6 +11,7 @@ import { CustomTextInput } from '../../../shared/ui/custom-text-input';
 import { CustomButton } from '../../../shared/ui/custom-button';
 import { Avatar } from '../../../shared/ui/avatar';
 import { MAIN_PADDING } from '../../../shared/constants/styles-global';
+import { uploadImg } from '../../../shared/api/fund-admin/upload-img';
 
 export const InfoForm = () => {
   const [photo, setPhoto] = useState<null | object>(null);
@@ -29,7 +30,7 @@ export const InfoForm = () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
 
@@ -48,9 +49,9 @@ export const InfoForm = () => {
     let type = match ? `image/${match[1]}` : `image`;
 
     let formData = new FormData();
-    formData.append('photo', { uri: photo, name: filename, type });
+    formData.append('image', { uri: photo, name: filename, type });
 
-    console.log(formData);
+    await uploadImg(formData);
     // return await fetch(YOUR_SERVER_URL, {
     //   method: 'POST',
     //   body: formData,

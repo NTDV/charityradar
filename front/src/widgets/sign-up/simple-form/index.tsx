@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { View, Text, Keyboard } from 'react-native';
+import Toast from 'react-native-root-toast';
 import MaskInput from 'react-native-mask-input';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,7 +17,7 @@ import {
 } from '../lib/validation-schema';
 import { COLOR_PLACEHOLDER } from '../../../shared/constants/style-variables';
 import { useAuth } from '../../../shared/hooks/use-auth';
-import { useState } from 'react';
+import { settingsToastError } from '../../../shared/constants/settings-toast';
 /**
  * widget регистрации через форму
  */
@@ -27,7 +29,7 @@ const defaultValues = __DEV__
       patronymic: '123',
       phone: '89998670934',
       birthday: '29.10.1999',
-      email: 'asafohin55@gmail.com',
+      email: 'asafohin987@gmail.com',
       password: 'qwerty123QQW',
       passwordRepeat: 'qwerty123QQW',
     }
@@ -62,9 +64,14 @@ export const SimpleForm = ({ successCallback }: SimpleFormProps) => {
     if (auth.signUpSimple !== null) {
       setLoading(true);
       const payload = await auth.signUpSimple(values);
+
       // Если регистрация прошла успешно, то уведомляем popup-ом и переносим на авторизацию
       if (payload?.['err'] === null) {
         successCallback();
+      }
+
+      if (payload?.['err']?.['message']) {
+        Toast.show(payload['err']['message'], settingsToastError);
       }
 
       setLoading(false);
@@ -174,6 +181,7 @@ export const SimpleForm = ({ successCallback }: SimpleFormProps) => {
               name="Дата рождения"
               placeholder="Выберите дату рождения"
               errorMessage={errors?.['birthday']?.message}
+              maximumDate={new Date()}
             />
           )}
         />

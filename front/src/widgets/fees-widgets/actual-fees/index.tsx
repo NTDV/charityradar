@@ -4,13 +4,13 @@ import { styles } from './styles';
 
 import { TitleMore } from '../../../shared/ui/title-more';
 import { FeesPreview } from '../../../entities/fees/fees-preview';
+import { useEffect, useState } from 'react';
+import { Fees, getActualFees } from '../../../shared/api/fund/get-actual-fees';
 
 type ActualFeesListProps = {
   onPressAll: () => void;
   onPressFees: () => void;
 };
-
-const testData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 /**
  * Список из 10 элементов для актуальных сборов
@@ -19,6 +19,15 @@ const testData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
  */
 
 export const ActualFees = ({ onPressFees, onPressAll }: ActualFeesListProps) => {
+  const [fees, setFees] = useState<[] | Fees[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const payload = await getActualFees();
+      setFees(payload);
+    })();
+  }, []);
+
   return (
     <View>
       <View style={styles.titleContainer}>
@@ -27,17 +36,17 @@ export const ActualFees = ({ onPressFees, onPressAll }: ActualFeesListProps) => 
       <View style={styles.container}>
         <FlatList
           horizontal
-          data={testData}
+          data={fees}
           renderItem={({ item }) => (
             <View style={styles.item}>
               <FeesPreview
                 onPress={onPressFees}
-                fundName={'Фонд "Время жизни"'}
+                fundName={item.name}
                 coefficient={'3.5'}
-                fundDescription={'Помогаем детям с онкологи-ческими заболеваниями'}
+                fundDescription={item.description}
                 fundraising={{
-                  allMoney: 20000,
-                  currentMoney: 5000,
+                  allMoney: item.goal,
+                  currentMoney: item.collected,
                   deadline: 1,
                 }}
               />
