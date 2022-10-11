@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://iotachi.ru/graphql';
+export const BASE_URL = 'http://iotachi.ru';

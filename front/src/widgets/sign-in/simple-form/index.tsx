@@ -16,9 +16,10 @@ import { useState } from 'react';
 import { sendRepeatEmail } from '../../../shared/api/sign-in/send-repeat-email';
 import { settingsToast } from '../../../shared/constants/settings-toast';
 import Toast from 'react-native-root-toast';
+import { ERRORS } from '../../../shared/constants/types';
 
 const defaultValues = __DEV__
-  ? { email: 'asafohin55@gmail.com', password: 'qwerty123QQW' }
+  ? { email: 'asafohin987@gmail.com', password: 'qwerty123QQW' }
   : { email: '', password: '' };
 
 /**
@@ -70,7 +71,10 @@ export const SimpleForm = () => {
       let err = '';
       const payload = await auth.signInSimple(values);
 
-      if (payload?.['err']?.['type'] === 'incorrect') {
+      if (
+        payload?.['err']?.['type'] === 'incorrect' ||
+        payload?.['err']?.['type'] === ERRORS.server // Сервер пал
+      ) {
         err = payload['err']['message'];
         showButtonRepeatMail = false;
       } else if (payload?.['err']?.['type'] === 'noConfirmed') {

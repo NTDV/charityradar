@@ -5,11 +5,13 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { CustomTextInput, CustomTextInputProps } from '../custom-text-input';
 
-interface DatePicker extends CustomTextInputProps {}
+interface DatePicker extends CustomTextInputProps {
+  maximumDate?: any;
+}
 
 export const DatePicker = forwardRef(
   (
-    { name, isRequired, placeholder, onChangeText, value, errorMessage }: DatePicker,
+    { name, isRequired, placeholder, onChangeText, value, errorMessage, maximumDate }: DatePicker,
     ref: Ref<TextInput>,
   ) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -49,6 +51,7 @@ export const DatePicker = forwardRef(
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
+          maximumDate={maximumDate}
         />
       </View>
     );

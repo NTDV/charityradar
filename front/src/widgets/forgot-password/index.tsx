@@ -12,6 +12,7 @@ import { forgotPassword } from '../../shared/api/sign-in/forgot-password';
 import { useState } from 'react';
 import Toast from 'react-native-root-toast';
 import { settingsToastDelay } from '../../shared/constants/settings-toast';
+import { ERRORS } from '../../shared/constants/types';
 
 const defaultValues = __DEV__ ? { email: 'asafohin55@gmail.com' } : { email: '' };
 
@@ -43,7 +44,10 @@ export const ForgotPassword = ({ visibility, onClose }: ForgotPasswordProps) => 
     setLoading(true);
     const isSuccess: boolean = await forgotPassword(values.email);
 
-    if (isSuccess) {
+    if (isSuccess?.['err']?.['type'] === ERRORS.server) {
+      // Сервер пал
+      err = isSuccess['err']['message'];
+    } else if (isSuccess) {
       onClose();
       Toast.show('На вашу почту отправлено письмо для восстановления пароля', settingsToastDelay);
       err = '';

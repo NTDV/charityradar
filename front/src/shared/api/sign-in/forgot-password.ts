@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { BASE_URL } from '../general';
+import { ERRORS, ERRORS_MESSAGE } from '../../constants/types';
 
 export const forgotPassword = async (login: string) => {
   const headers = {
@@ -14,9 +15,11 @@ export const forgotPassword = async (login: string) => {
   };
 
   return await axios({
-    url: `${BASE_URL}`,
+    url: `${BASE_URL}/graphql`,
     method: 'POST',
     headers: headers,
     data: graphqlQuery,
-  }).then(({ data }) => data['data']['sendLetterToResetPassword']);
+  })
+    .then(({ data }) => data['data']['sendLetterToResetPassword'])
+    .catch((err) => ({ err: { message: ERRORS_MESSAGE.server, type: ERRORS.server } }));
 };

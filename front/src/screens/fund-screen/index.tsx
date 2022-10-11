@@ -6,8 +6,13 @@ import testPhoto from '../../static/testImg.png';
 import { CustomButton } from '../../shared/ui/custom-button';
 import { TitleMore } from '../../shared/ui/title-more';
 import { FeesPreviewInsideFund } from '../../entities/fees/fees-preview-inside-fund';
+import { AppNavigationProps } from '../../navigation';
 
-export const FundScreen = () => {
+export const FundScreen = (appNavigation: AppNavigationProps) => {
+  const openTransactionHistory = () => {
+    appNavigation.navigation.push('TransactionHistory');
+  };
+
   return (
     <ScrollView style={styles.containerScroll}>
       <View style={styles.container}>
@@ -24,7 +29,7 @@ export const FundScreen = () => {
           <Text style={styles.reportingText}>Тут будет какой-то умный текст про отчетность</Text>
           <CustomButton
             name="Посмотреть историю платежей"
-            onPress={() => {}}
+            onPress={openTransactionHistory}
             primary={true}
             rect={true}
           />

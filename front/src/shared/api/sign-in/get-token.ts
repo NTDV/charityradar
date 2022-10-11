@@ -2,14 +2,21 @@ import axios from 'axios';
 
 import { BASE_URL } from '../general';
 
-export const sendRepeatEmail = async (token: string) => {
+type GetToken = ({ login, password }: { login: string; password: string }) => void;
+
+export const getToken: GetToken = async ({ login, password }) => {
   const headers = {
     'content-type': 'application/json',
   };
 
   const graphqlQuery = {
-    query: `query{
-      sendLetterToConfirmEmail(token: "${token}")
+    query: `{ authByVTBId(login: "${login}", password: "${password}")
+      {
+        access_token
+        refresh_token
+        scope
+        id_token
+      }
     }`,
   };
 

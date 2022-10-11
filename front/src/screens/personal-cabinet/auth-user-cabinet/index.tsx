@@ -6,30 +6,41 @@ import { HeaderLogo } from '../../../widgets/header';
 import { PreviewCard } from '../../../entities/bank-card';
 import { CabinetButtonList } from '../ui/cabinet-button-list';
 import { useAuth } from '../../../shared/hooks/use-auth';
-import { ConfirmedEmail } from '../../../widgets/confirmed-email';
+import { useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
+import { bankCardStore } from '../../../stores/bank-card-store';
 
-export const AuthUserCabinet = () => {
+export const AuthUserCabinet = observer(() => {
+  const [fio, setFio] = useState('');
+  const [email, setEmail] = useState('');
   const { logout, user } = useAuth();
 
   const exitAccount = () => {
     if (logout !== null) logout();
   };
 
+  useEffect(() => {
+    if (user !== null && user !== undefined) {
+      setFio(`${user.user.name} ${user.user.surname} ${user.user.patronymic}`);
+      setEmail(user.user.email);
+    }
+  }, [user]);
+
   return (
     <View style={styles.container}>
       <HeaderLogo />
       <ScrollView style={styles.wrapper}>
-        <View style={styles.header}>
-          <Text style={styles.headerName}>Сафохин Артем</Text>
-          <Text style={styles.headerEmail}>asafohin@test.com</Text>
-        </View>
-        <View>
-          <PreviewCard />
-        </View>
+        {(!!fio || !!email) && (
+          <View style={styles.header}>
+            <Text style={styles.headerName}>{fio}</Text>
+            <Text style={styles.headerEmail}>{email}</Text>
+          </View>
+        )}
+        {bankCardStore.amount !== null && <PreviewCard />}
         <View style={styles.buttons}>
           <CabinetButtonList buttons={[{ name: 'Выйти', onPress: exitAccount, isWarning: true }]} />
         </View>
       </ScrollView>
     </View>
   );
-};
+});
