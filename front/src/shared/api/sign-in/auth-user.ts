@@ -5,6 +5,7 @@ import { User } from '../../hooks/use-auth';
 
 type AuthUserType = (id: string) => Promise<User['user']>;
 
+// Авторзация пользователя
 export const AuthUser: AuthUserType = async (id: string) => {
   const headers = {
     'content-type': 'application/json',
@@ -24,7 +25,7 @@ export const AuthUser: AuthUserType = async (id: string) => {
   };
 
   return await axios({
-    url: `${BASE_URL}`,
+    url: `${BASE_URL}/graphql`,
     method: 'POST',
     headers: headers,
     data: graphqlQuery,

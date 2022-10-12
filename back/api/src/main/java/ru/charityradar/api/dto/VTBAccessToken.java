@@ -2,29 +2,44 @@ package ru.charityradar.api.dto;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.security.sasl.AuthenticationException;
 import java.util.List;
-import java.util.Optional;
 
-public record VTBAccessToken(String access_token, Integer expires_in, String token_type, String scope) {
-    public static Optional<String> generate() {
+public record VTBAccessToken(String access_token, String refresh_token, String scope, String id_token) {
+    @SuppressWarnings("CopyConstructorMissesField")
+    public VTBAccessToken(final VTBAccessToken accessToken) throws NullPointerException {
+        this(accessToken.access_token(), accessToken.refresh_token(), accessToken.scope(), accessToken.id_token());
+    }
+
+    public static VTBAccessToken generate(final VTBMasterToken masterToken) throws AuthenticationException {
         final var headers = new HttpHeaders();
-        headers.setBasicAuth("e3tjbGllbnRfaWR9fTp7e2NsaWVudF9zZWNyZXR9fQ==");
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setBearerAuth(masterToken.access_token());
+        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-        final var body = new LinkedMultiValueMap<>();
-        body.add("client_id","team13");
-        body.add("client_secret","NhwqcMQLDovYSQbj7TyyfS5PvhmLTMAQ");
-        body.add("grant_type","client_credentials");
+        final var body = "{\"grant_type\": \"code\"}";
         final var response = new RestTemplate()
-                .postForEntity("https://auth.bankingapi.ru/auth/realms/kubernetes/protocol/openid-connect/token", new HttpEntity<>(body, headers) , VTBAccessToken.class);
+                .postForEntity("https://hackaton.bankingapi.ru/api/vtbid/v1/oauth2/token", new HttpEntity<>(body, headers) , VTBAccessToken.class);
         if (response.getStatusCode().is2xxSuccessful()) {
-            final var responseBody = response.getBody();
-            if (responseBody != null) return Optional.ofNullable(responseBody.access_token());
+            final var accessToken = response.getBody();
+            if (accessToken != null) {
+                try {
+                    return new VTBAccessToken(accessToken);
+                } catch (final NullPointerException e) {
+                    throw new AuthenticationException(HttpStatus.BAD_REQUEST.getReasonPhrase());
+                }
+            } else {
+                throw new AuthenticationException(HttpStatus.UNAUTHORIZED.getReasonPhrase());
+            }
+        } else {
+            throw new AuthenticationException(response.getStatusCode().getReasonPhrase());
         }
-        return Optional.empty();
+    }
+
+    public static VTBAccessToken generate(final String login, final String password) throws AuthenticationException {
+        return generate(VTBMasterToken.generate(login, password));
     }
 }

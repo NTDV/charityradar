@@ -13,6 +13,7 @@ import { FundScreen } from '../screens/fund-screen';
 import { FeesAllScreen } from '../screens/fees-all-screen';
 import { FeesFullScreen } from '../screens/fees-full-screen';
 import { View } from 'react-native';
+import { TransactionHistory } from '../screens/transaction-history';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ type RootStackParamList = {
   FundScreen: undefined;
   FeesAllScreen: undefined;
   FeesFullScreen: undefined;
+  TransactionHistory: undefined;
 };
 
 export type SignInProps = {
@@ -107,6 +109,15 @@ export const Provider = () => {
               component={FundScreen}
               options={{
                 title: 'Информация о фонде',
+                headerBackTitle: () => null,
+                headerTintColor: COLOR_BLACK,
+              }}
+            />
+            <Stack.Screen
+              name="TransactionHistory"
+              component={TransactionHistory}
+              options={{
+                title: 'История транзакций',
                 headerBackTitle: () => null,
                 headerTintColor: COLOR_BLACK,
               }}

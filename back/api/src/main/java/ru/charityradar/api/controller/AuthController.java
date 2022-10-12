@@ -6,6 +6,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import ru.charityradar.api.dto.VTBAccessToken;
 import ru.charityradar.api.input.AuthInput;
 import ru.charityradar.api.input.FundInput;
 import ru.charityradar.api.input.UserInput;
@@ -13,6 +14,7 @@ import ru.charityradar.api.mixed.BalanceMixed;
 import ru.charityradar.api.model.Auth;
 import ru.charityradar.api.service.AuthService;
 
+import javax.security.sasl.AuthenticationException;
 import java.security.NoSuchAlgorithmException;
 
 @Controller
@@ -41,6 +43,12 @@ public class AuthController {
     public Auth authByLoginPass(@Argument final String login, @Argument final String password) throws NoSuchAlgorithmException {
         return _authService.authByLoginPass(login, password);
     }
+
+    @QueryMapping
+    public VTBAccessToken authByVTBId(@Argument final String login, @Argument final String password) throws AuthenticationException {
+        return _authService.authByVTBId(login, password);
+    }
+
     @QueryMapping
     public Boolean sendLetterToConfirmEmail(@Argument final String token) {
         return _authService.sendLetterToConfirmEmail(token);

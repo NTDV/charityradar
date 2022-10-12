@@ -1,4 +1,5 @@
 import { ScrollView, View } from 'react-native';
+import { observer } from 'mobx-react';
 
 import { styles } from './styles';
 import { stylesGlobal } from '../../shared/constants/styles-global';
@@ -10,13 +11,36 @@ import { YouHelpList } from '../../widgets/you-help';
 import { PopularFundsList } from '../../widgets/fund-widgets';
 import { AppNavigationProps } from '../../navigation';
 import { ActualFees } from '../../widgets/fees-widgets';
+import { useAuth, UserType } from '../../shared/hooks/use-auth';
+import { useEffect } from 'react';
+import { getBalance } from '../../shared/api/bank-card/get-balance';
+import { bankCardStore } from '../../stores/bank-card-store';
 
-export const Home = ({ appNavigation }: { appNavigation: AppNavigationProps }) => {
+export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationProps }) => {
+  const { user } = useAuth();
   const openAllListPopularFund = () => appNavigation.navigation.push('PopularFundScreen');
   const openFund = () => appNavigation.navigation.push('FundScreen');
 
   const openActualFeesAll = () => appNavigation.navigation.push('FeesAllScreen');
   const onPressFees = () => appNavigation.navigation.push('FeesFullScreen');
+
+  const getBalanceCard = async () => {
+    if (!!user && !!user.token) {
+      const payload = await getBalance(user.token);
+
+      if (payload !== null) {
+        bankCardStore.setCurrentBalance(payload.amount);
+        bankCardStore.setDonations(payload.monthDonations);
+      }
+    }
+  };
+
+  // Если загружаем страницу в первый раз, то отправляем запрос на баланс карты
+  useEffect(() => {
+    (async () => {
+      await getBalanceCard();
+    })();
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
@@ -25,9 +49,11 @@ export const Home = ({ appNavigation }: { appNavigation: AppNavigationProps }) =
         <View style={[styles.rowSection, styles.rowCard]}>
           <Search placeholder="Введите название фонда или сбора" />
         </View>
-        <View style={styles.rowSection}>
-          <PreviewCard />
-        </View>
+        {user?.type === UserType.user && bankCardStore.amount !== null && (
+          <View style={styles.rowSection}>
+            <PreviewCard />
+          </View>
+        )}
         <View style={styles.rowSection}>
           <YouHelpList onPressFund={openFund} />
         </View>
@@ -40,4 +66,4 @@ export const Home = ({ appNavigation }: { appNavigation: AppNavigationProps }) =
       </ScrollView>
     </View>
   );
-};
+});

@@ -7,6 +7,7 @@ import { validationSchemaSimpleFormSignInProps } from '../../widgets/sign-in/lib
 import { signInFormApi } from '../api/sign-in/sign-in-form-api';
 import { AuthUser } from '../api/sign-in/auth-user';
 import { AuthFund } from '../api/sign-in/auth-fund';
+import { ERRORS } from '../constants/types';
 
 export enum UserType {
   'guest',
@@ -21,8 +22,8 @@ interface UserDynamic {
 export type User =
   | {
       type: UserType;
+      token?: string;
       user?: {
-        token: string;
         email: string;
         id: string;
         name: string;
@@ -81,7 +82,10 @@ export const useProvideAuth = (): UseProvideAuthExit => {
     const user: User | UserDynamic = {};
     const payload = await signInFormApi(values);
 
-    if (payload?.['data']?.['authByLoginPass'] === null) {
+    if (payload?.['err']?.['type'] === ERRORS.server) {
+      // Сервер пал
+      return payload;
+    } else if (payload?.['data']?.['authByLoginPass'] === null) {
       return { err: { message: 'Логин или пароль введены неверно', type: 'incorrect' } };
     } else if (payload?.['data']?.['authByLoginPass']?.['confirmed'] === false) {
       return {
@@ -92,9 +96,11 @@ export const useProvideAuth = (): UseProvideAuthExit => {
       // Если успешно, то отправляем запрос на получение данных у фонда или физ лица
       const type: UserType = payload['data']['authByLoginPass']['type'];
       const link = payload['data']['authByLoginPass']['link'];
+      const token = payload['data']['authByLoginPass']['token'];
 
       // Присваиваем тип
       user['type'] = type;
+      user['token'] = token;
 
       if (type === UserType.fund) {
         const fundData = await AuthFund(link);
@@ -126,7 +132,7 @@ export const useProvideAuth = (): UseProvideAuthExit => {
     if (payload?.['data']?.['addUserAuth']) {
       return { err: null };
     } else {
-      return { err: { message: 'Что-то пошло не так' } };
+      return { err: { message: payload?.['err']?.['message'] ?? 'Что-то пошло не так' } };
     }
   };
 
