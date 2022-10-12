@@ -6,4 +6,5 @@ type Fund {
     phone: String
     description: String
     rating: Float
+    fees: [Fees]
 }

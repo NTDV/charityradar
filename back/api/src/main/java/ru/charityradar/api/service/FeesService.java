@@ -57,4 +57,8 @@ public class FeesService {
         }).limit(10).toList();
     }
 
+    public Fees findFirstByFundId(Integer fundId) {
+        return _feesRepository.findFirstByFundId(fundId);
+    }
+
 }
