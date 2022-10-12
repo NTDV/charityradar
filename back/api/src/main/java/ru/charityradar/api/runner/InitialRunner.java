@@ -17,7 +17,7 @@ import java.util.Random;
 
 @AllArgsConstructor
 @Component
-public class InitialLoader implements ApplicationRunner {
+public class InitialRunner implements ApplicationRunner {
     @Autowired
     final BalanceService _balanceService;
     @Autowired
