@@ -26,7 +26,7 @@ public record VTBMasterToken(String access_token, Integer expires_in, Integer re
         final var body = new LinkedMultiValueMap<>();
         body.add("grant_type", "client_credentials");
         final var response = new RestTemplate()
-                .postForEntity(ProjectProperty.AUTH_VTBID_MASTERTOKEN_URL.getCachedValue(), new HttpEntity<>(body, headers) , VTBMasterToken.class);
+                .postForEntity(ProjectProperty.AUTH_VTBID_MASTER_TOKEN_URL.getCachedValue(), new HttpEntity<>(body, headers) , VTBMasterToken.class);
         if (response.getStatusCode().is2xxSuccessful()) {
             final var masterToken = response.getBody();
             if (masterToken != null) {

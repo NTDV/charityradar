@@ -8,5 +8,4 @@ import ru.charityradar.api.model.Fund;
 public interface FundRepository extends CrudRepository<Fund, Integer> {
     Fund getFundByEmail(String login);
     Fund getFundById(Integer id);
-
 }

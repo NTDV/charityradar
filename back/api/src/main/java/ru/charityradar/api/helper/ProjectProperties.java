@@ -13,12 +13,13 @@ public class ProjectProperties {
         MAIL_SENDER_PASSWORD("mail.sender.password"),
         PROGRAMMERS_MAILS("programmers.mails"),
 
+        DEVELOPMENT_DB_INIT("development.db.init"),
+        DEVELOPMENT_DB_INIT_FUND_IMAGES_PATH("development.db.init.fundimagespath"),
         IMAGE_UPLOAD_PATH("image.upload.path"),
         MAIN_URL("main.url"),
 
-        AUTH_VTBID_MASTERTOKEN_URL("auth.vtbid.mastertoken.url"),
-        AUTH_VTBID_ACCESSTOKEN_URL("auth.vtbid.accesstoken.url"),
-        ;
+        AUTH_VTBID_MASTER_TOKEN_URL("auth.vtbid.mastertoken.url"),
+        AUTH_VTBID_ACCESS_TOKEN_URL("auth.vtbid.accesstoken.url");
 
         private final String _key;
         private String _cachedValue;

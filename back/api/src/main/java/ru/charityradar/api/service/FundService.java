@@ -8,10 +8,9 @@ import ru.charityradar.api.repository.FundRepository;
 
 @Service
 public class FundService {
-
     @Autowired
     private FundRepository _fundRepository;
-    private FundService _fundService;
+
     public Fund addFund(FundInput fundInput, String balanceId) {
         final var fund = new Fund(fundInput);
         fund.setBalanceId(balanceId);

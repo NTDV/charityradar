@@ -32,5 +32,4 @@ public class BalanceService {
     public Float getBalanceAmountById(String id) {
         return _balanceRepository.getBalanceById(id).getBalance();
     }
-
 }

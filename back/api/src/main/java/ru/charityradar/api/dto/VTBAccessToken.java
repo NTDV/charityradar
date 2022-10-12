@@ -23,7 +23,7 @@ public record VTBAccessToken(String access_token, String refresh_token, String s
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         final var body = "{\"grant_type\": \"code\"}";
         final var response = new RestTemplate()
-                .postForEntity(ProjectProperties.ProjectProperty.AUTH_VTBID_ACCESSTOKEN_URL.getCachedValue(), new HttpEntity<>(body, headers) , VTBAccessToken.class);
+                .postForEntity(ProjectProperties.ProjectProperty.AUTH_VTBID_ACCESS_TOKEN_URL.getCachedValue(), new HttpEntity<>(body, headers) , VTBAccessToken.class);
         if (response.getStatusCode().is2xxSuccessful()) {
             final var accessToken = response.getBody();
             if (accessToken != null) {
