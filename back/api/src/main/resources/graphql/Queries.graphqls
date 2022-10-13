@@ -14,7 +14,7 @@ type Query {
     getTransactionsByFundId(fundId: Int!): [Transaction]!
 
     authByLoginPass(login: String!, password: String!): Auth
-    authByVTBId(login: String!, password: String!): VTBAccessToken
+    authByVTBId(login: String!, password: String!): Auth
 
     sendLetterToConfirmEmail(token: String!): Boolean!
     sendLetterToResetPassword(login: String!): Boolean!

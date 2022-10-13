@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
+import ru.charityradar.api.helper.ProjectProperties;
 
 import javax.security.sasl.AuthenticationException;
 import java.util.List;
@@ -22,7 +23,7 @@ public record VTBAccessToken(String access_token, String refresh_token, String s
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         final var body = "{\"grant_type\": \"code\"}";
         final var response = new RestTemplate()
-                .postForEntity("https://hackaton.bankingapi.ru/api/vtbid/v1/oauth2/token", new HttpEntity<>(body, headers) , VTBAccessToken.class);
+                .postForEntity(ProjectProperties.ProjectProperty.AUTH_VTBID_ACCESS_TOKEN_URL.getCachedValue(), new HttpEntity<>(body, headers) , VTBAccessToken.class);
         if (response.getStatusCode().is2xxSuccessful()) {
             final var accessToken = response.getBody();
             if (accessToken != null) {

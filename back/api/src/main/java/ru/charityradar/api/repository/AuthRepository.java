@@ -9,4 +9,5 @@ import ru.charityradar.api.model.Auth;
 public interface AuthRepository extends CrudRepository<Auth, Integer> {
     Auth getAuthByLogin(String login);
     Auth getAuthByToken(String token);
+    Auth getAuthByVtbMdmId(String mdmId);
 }

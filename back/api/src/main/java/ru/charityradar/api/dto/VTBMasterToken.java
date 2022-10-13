@@ -10,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.security.sasl.AuthenticationException;
 import java.util.List;
 
+import static ru.charityradar.api.helper.ProjectProperties.ProjectProperty;
+
 public record VTBMasterToken(String access_token, Integer expires_in, Integer refresh_expires_in, String token_type, String scope) {
     @SuppressWarnings("CopyConstructorMissesField")
     public VTBMasterToken(final VTBMasterToken masterToken) throws NullPointerException {
@@ -24,7 +26,7 @@ public record VTBMasterToken(String access_token, Integer expires_in, Integer re
         final var body = new LinkedMultiValueMap<>();
         body.add("grant_type", "client_credentials");
         final var response = new RestTemplate()
-                .postForEntity("https://auth.bankingapi.ru/auth/realms/kubernetes/protocol/openid-connect/token", new HttpEntity<>(body, headers) , VTBMasterToken.class);
+                .postForEntity(ProjectProperty.AUTH_VTBID_MASTER_TOKEN_URL.getCachedValue(), new HttpEntity<>(body, headers) , VTBMasterToken.class);
         if (response.getStatusCode().is2xxSuccessful()) {
             final var masterToken = response.getBody();
             if (masterToken != null) {

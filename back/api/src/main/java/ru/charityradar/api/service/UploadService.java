@@ -5,12 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import ru.charityradar.api.constant.ModelWithImageType;
 import ru.charityradar.api.helper.ProjectProperties;
 import ru.charityradar.api.helper.ResponseHandler;
-import ru.charityradar.api.model.Fund;
-import ru.charityradar.api.repository.AuthRepository;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,6 +34,7 @@ public class UploadService {
                                               Integer type) {
         return uploadImage(model, file, type, -1);
     }
+
     public ResponseEntity<Object> uploadImage(Model model, MultipartFile file,
                                               int type, Integer id) { //TODO: проверка авторизации
         try {
@@ -54,9 +53,7 @@ public class UploadService {
                     Files.createDirectories(parentDir);
                 }
                 Files.write(fileNameAndPath, file.getBytes());
-                if (id > -1)
-                    setImage(type, id, fileNameAndPath.toString());
-
+                if (id > -1) setImage(ModelWithImageType.parse(type), id, fileNameAndPath.toString());
             }
 
             return ResponseHandler.generateUploadResponse(message, httpStatus, fileNameAndPath.toString());
@@ -66,14 +63,11 @@ public class UploadService {
         }
     }
 
-    public void setImage(int type, int id, String fileNameAndPath) {
-        if (type == 0) {
-            _fundService.setImage(_fundService.getFundById(id), fileNameAndPath);
-        } else if (type == 1) {
-            _newsService.setImage(_newsService.getNewsById(id), fileNameAndPath);
-        } else if (type == 2) {
-            _feesService.setImage(_feesService.getFeesById(id), fileNameAndPath);
-        }
+    public void setImage(ModelWithImageType type, int id, String fileNameAndPath) {
+        fileNameAndPath = fileNameAndPath.substring(ProjectProperties.ProjectProperty.IMAGE_UPLOAD_PATH.getCachedValue().length());
+        if      (type == ModelWithImageType.FUND) _fundService.setImage(_fundService.getFundById(id), fileNameAndPath);
+        else if (type == ModelWithImageType.NEWS) _newsService.setImage(_newsService.getNewsById(id), fileNameAndPath);
+        else if (type == ModelWithImageType.FEES) _feesService.setImage(_feesService.getFeesById(id), fileNameAndPath);
     }
 
     public Boolean isRightImageType (String contentType) {

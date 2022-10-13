@@ -2,6 +2,7 @@ package ru.charityradar.api.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import ru.charityradar.api.dto.VTBMe;
 import ru.charityradar.api.input.UserInput;
 
 import javax.persistence.Entity;
@@ -9,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -37,6 +37,14 @@ public class User {
         this.patronymic = userInput.getPatronymic();
         this.email = userInput.getEmail();
         this.phone = userInput.getPhone();
+    }
+
+    public User(final VTBMe me) {
+        this.name = me.name();
+        this.surname = me.surname();
+        this.patronymic = me.patronymic();
+        this.email = me.email();
+        this.phone = me.mainMobilePhone();
     }
 
     @Override

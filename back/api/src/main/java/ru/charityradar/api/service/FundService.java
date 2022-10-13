@@ -14,11 +14,9 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class FundService {
-
     @Autowired
     private FundRepository _fundRepository;
-    @Autowired
-    private FeesService _feesService;
+
     public Fund addFund(FundInput fundInput, String balanceId) {
         final var fund = new Fund(fundInput);
         fund.setBalanceId(balanceId);
