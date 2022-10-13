@@ -88,7 +88,7 @@ export const AppNavigation = (appNavigation: AppNavigationProps) => {
         name="News"
         children={(props) => <News appNavigation={appNavigation} {...props} />}
       />
-      <Tab.Screen name="Search" component={Search} />
+      {/*<Tab.Screen name="Search" component={Search} />*/}
       <Tab.Screen name="FundAdmin" component={FundAdmin} />
       <Tab.Screen name="PersonalCabinet" component={PersonalCabinet} />
     </Tab.Navigator>
