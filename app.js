@@ -1,5 +1,4 @@
 $(function() {
-
     // Fixed Header
 
     let header = $("#header");
