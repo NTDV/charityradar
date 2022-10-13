@@ -19,7 +19,9 @@ public class ProjectProperties {
         MAIN_URL("main.url"),
 
         AUTH_VTBID_MASTER_TOKEN_URL("auth.vtbid.mastertoken.url"),
-        AUTH_VTBID_ACCESS_TOKEN_URL("auth.vtbid.accesstoken.url");
+        AUTH_VTBID_ACCESS_TOKEN_URL("auth.vtbid.accesstoken.url"),
+        AUTH_VTBID_ME_URL("auth.vtbid.me.url"),
+        ;
 
         private final String _key;
         private String _cachedValue;
@@ -28,6 +30,7 @@ public class ProjectProperties {
             _key = key;
         }
 
+        @SuppressWarnings("unused")
         public String getKey() {
             return _key;
         }
@@ -37,6 +40,7 @@ public class ProjectProperties {
             return _cachedValue = properties.getProperty(_key);
         }
 
+        @SuppressWarnings("unused")
         public String getValue() {
             return getValue(_properties);
         }

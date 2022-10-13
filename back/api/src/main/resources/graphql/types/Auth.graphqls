@@ -1,8 +1,10 @@
 type Auth {
     id: ID!
-    login: String!
-    password: String!
+    login: String
+    #password: String
+    vtbMdmId: String
     token: String
+    vtbToken: String
     confirmed: Boolean!
     type: Int!
     link: Int!

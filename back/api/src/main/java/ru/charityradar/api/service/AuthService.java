@@ -3,7 +3,6 @@ package ru.charityradar.api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.stereotype.Service;
-import ru.charityradar.api.dto.VTBAccessToken;
 import ru.charityradar.api.helper.AuthHash;
 import ru.charityradar.api.helper.Helper;
 import ru.charityradar.api.helper.MailSender;
@@ -16,7 +15,6 @@ import ru.charityradar.api.model.Auth;
 import ru.charityradar.api.model.User;
 import ru.charityradar.api.repository.AuthRepository;
 
-import javax.security.sasl.AuthenticationException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Properties;
@@ -88,10 +86,6 @@ public class AuthService {
     }
     public Auth getAuthByLogin(String login) {
         return _authRepository.getAuthByLogin(login);
-    }
-
-    public VTBAccessToken authByVTBId(String login, String pass) throws AuthenticationException {
-        return VTBAccessToken.generate(login, pass);
     }
 
     public Auth authByLoginPass(String login, String pass) throws NoSuchAlgorithmException {
