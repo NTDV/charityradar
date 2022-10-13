@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLOR_WHITE,
   },
   section: {
-    marginBottom: 30,
+    flex: 1,
     backgroundColor: COLOR_WHITE,
   },
   containerTitle: {

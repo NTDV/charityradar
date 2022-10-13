@@ -30,7 +30,7 @@ export const getFeesByIdFund: GetFundById = async (id) => {
         description
         status
         collected
-        foundId
+        fundId
         image
       }
     }`,

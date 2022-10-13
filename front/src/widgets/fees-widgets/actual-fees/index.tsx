@@ -4,12 +4,13 @@ import { styles } from './styles';
 
 import { TitleMore } from '../../../shared/ui/title-more';
 import { FeesPreview } from '../../../entities/fees/fees-preview';
-import { useEffect, useState } from 'react';
-import { Fees, getActualFees } from '../../../shared/api/fund/get-actual-fees';
+import { Fees } from '../../../shared/api/fund/get-actual-fees';
+import { intervalToDuration } from 'date-fns';
 
 type ActualFeesListProps = {
   onPressAll: () => void;
   onPressFees: () => void;
+  feesList: Fees[];
 };
 
 /**
@@ -18,15 +19,10 @@ type ActualFeesListProps = {
  * @param onPressFund - callback при выборе фонда
  */
 
-export const ActualFees = ({ onPressFees, onPressAll }: ActualFeesListProps) => {
-  const [fees, setFees] = useState<[] | Fees[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      const payload = await getActualFees();
-      setFees(payload);
-    })();
-  }, []);
+export const ActualFees = ({ onPressFees, onPressAll, feesList }: ActualFeesListProps) => {
+  const getDeadline = (startDate: Date, endDate: Date) => {
+    return intervalToDuration({ start: new Date(startDate), end: new Date(endDate) }).days;
+  };
 
   return (
     <View>
@@ -36,18 +32,19 @@ export const ActualFees = ({ onPressFees, onPressAll }: ActualFeesListProps) => 
       <View style={styles.container}>
         <FlatList
           horizontal
-          data={fees}
+          data={feesList}
           renderItem={({ item }) => (
             <View style={styles.item}>
               <FeesPreview
-                onPress={onPressFees}
-                fundName={item.name}
-                coefficient={'3.5'}
+                onPress={() => onPressFees(item)}
+                fundName={item.fund.name}
+                coefficient={item.fund.rating}
                 fundDescription={item.description}
+                image={item.image}
                 fundraising={{
                   allMoney: item.goal,
                   currentMoney: item.collected,
-                  deadline: 1,
+                  deadline: getDeadline(item.startDate, item.endDate) ?? null,
                 }}
               />
             </View>

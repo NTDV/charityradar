@@ -42,7 +42,6 @@ export const getAllFunds = async () => {
     data: graphqlQuery,
   })
     .then(({ data }) => {
-      console.log(data);
       if (data?.['data']?.['getAllFunds']) {
         return data['data']['getAllFunds'];
       } else {
