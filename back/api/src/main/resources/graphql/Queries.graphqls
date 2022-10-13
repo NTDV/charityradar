@@ -1,17 +1,17 @@
 type Query {
     getAllNews: [News]!
-    getNewsByFundId(fundId: Int!): [News]!
+    getNewsByFundId(fundId: Int!): [News]
 
     getAllFunds: [Fund]!
 
     getAllFees: [Fees]!
-    getFeesByFundId(fundId: Int!): Fees!
+    getFeesByFundId(fundId: Int!): [Fees]
 
     getAllEvents: [Event]!
-    getEventsByFundId(fundId: Int!): [Event]!
+    getEventsByFundId(fundId: Int!): [Event]
 
-    getTransactionsByUserId(userId: Int!): [Transaction]!
-    getTransactionsByFundId(fundId: Int!): [Transaction]!
+    getTransactionsByUserId(userId: Int!): [Transaction]
+    getTransactionsByFundId(fundId: Int!): [Transaction]
 
     authByLoginPass(login: String!, password: String!): Auth
     authByVTBId(login: String!, password: String!): Auth
@@ -19,7 +19,7 @@ type Query {
     sendLetterToConfirmEmail(token: String!): Boolean!
     sendLetterToResetPassword(login: String!): Boolean!
 
-    getBalanceInfo(token: String!): BalanceMixed!
+    getBalanceInfo(token: String!): BalanceMixed
     getAllBalance: [Balance]!
 
 # Delete before deploying production

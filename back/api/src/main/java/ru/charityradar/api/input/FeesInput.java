@@ -1,8 +1,12 @@
 package ru.charityradar.api.input;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.charityradar.api.constant.FeeStatus;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class FeesInput {
     private String name;
