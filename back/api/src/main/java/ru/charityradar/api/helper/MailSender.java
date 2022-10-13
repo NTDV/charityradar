@@ -39,12 +39,12 @@ public class MailSender {
                 });
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
-        ArrayList<InternetAddress> programmersAddresses = new ArrayList<>();
+        ArrayList<InternetAddress> receiversAddresses = new ArrayList<>();
         for (String mail : receiver) {
-            programmersAddresses.add(new InternetAddress(mail));
+            receiversAddresses.add(new InternetAddress(mail));
         }
-        InternetAddress[] addresses = new InternetAddress[programmersAddresses.size()];
-        programmersAddresses.toArray(addresses);
+        InternetAddress[] addresses = new InternetAddress[receiversAddresses.size()];
+        receiversAddresses.toArray(addresses);
 
         message.setRecipients(MimeMessage.RecipientType.TO, addresses);
         message.setSubject(subject);

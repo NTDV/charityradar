@@ -49,7 +49,7 @@ public class AuthService {
                                     "Нажмите на ссылку ниже, чтобы подтвердить ваш адрес электронной почты.<br><br>" +
                                     "<a target='_blank' href='" + url + "activate_email/" + authOb.getToken() + "'>" +
                                     url + "activate_email/" + authOb.getToken() + "</a><br><br>" +
-                                    "С наилучшими пожеланиями,<br>Команда Charity Radar", "mail@sganiev.ru");
+                                    "С наилучшими пожеланиями,<br>Команда Charity Radar", user.getEmail());
                 } catch (Exception e) {
                     System.out.println("MailSender.sendLetterToSomebodyFromRobot : ERROR");
                 }
@@ -74,7 +74,7 @@ public class AuthService {
                                     "Нажмите на ссылку ниже, чтобы подтвердить адрес электронной почты.<br><br>" +
                                     "<a target='_blank' href='" + url + "activate_email/" + authOb.getToken() + "'>" +
                                     url + "activate_email/" + authOb.getToken() + "</a><br><br>" +
-                                    "С наилучшими пожеланиями,<br>Команда Charity Radar", "mail@sganiev.ru");
+                                    "С наилучшими пожеланиями,<br>Команда Charity Radar", fund.getEmail());
                 } catch (Exception e) {
                     System.out.println("MailSender.sendLetterToSomebodyFromRobot : ERROR");
                 }
@@ -123,14 +123,14 @@ public class AuthService {
         Properties properties = ProjectProperties.getProperties();
         String url = properties.getProperty("main.url");
         Auth auth = getAuthByToken(token);
-        if (auth!= null && auth.getId() > 0){
+        if (auth!= null && auth.getId() > 0 && auth.getLogin() != null){
             try {
                 MailSender.sendLetterToSomebodyFromRobot("Регистрация в Charity Radar",
                         "Благодарим вас за регистрацию в системе Charity Radar.<br><br>" +
                                 "Нажмите на ссылку ниже, чтобы подтвердить адрес электронной почты.<br><br>" +
                                 "<a target='_blank' href='" + url + "activate_email/" + auth.getToken() + "'>" +
                                 url + "activate_email/" + auth.getToken() + "</a><br><br>" +
-                                "С наилучшими пожеланиями,<br>Команда Charity Radar", "mail@sganiev.ru");
+                                "С наилучшими пожеланиями,<br>Команда Charity Radar", auth.getLogin());
             } catch (Exception e) {
                 System.out.println("MailSender.sendLetterToSomebodyFromRobot : ERROR");
             }
@@ -153,7 +153,7 @@ public class AuthService {
                                 url + "reset_password/" + auth.getToken() + "</a><br><br>" +
                                 "Если вы не подавали этот запрос, не беспокойтесь! Ваш пароль в безопасности. " +
                                 "Вы можете просто удалить это сообщение c электронной почты.<br><br>" +
-                                "С наилучшими пожеланиями,<br>Команда Charity Radar", "mail@sganiev.ru");
+                                "С наилучшими пожеланиями,<br>Команда Charity Radar", auth.getLogin());
             } catch (Exception e) {
                 System.out.println("MailSender.sendLetterToSomebodyFromRobot : ERROR");
             }
