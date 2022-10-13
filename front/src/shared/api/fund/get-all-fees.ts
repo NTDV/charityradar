@@ -8,17 +8,17 @@ export enum FeesStatus {
   INITIATED, // Еще не начался
 }
 
-export type Fees = {
+export interface Fees {
   collected: number;
   description: string;
-  endDate: string;
-  startDate: string;
+  endDate: Date;
+  startDate: Date;
   fundId: number;
   name: string;
   goal: number;
   id: number;
   status: FeesStatus;
-};
+}
 type GetAllFees = () => Promise<Fees[]>;
 
 export const getAllFees: GetAllFees = async () => {

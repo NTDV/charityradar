@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   coefficientTitle: {
-    fontSize: 14,
+    fontSize: 12,
     textDecorationLine: 'underline',
   },
   coefficient: {

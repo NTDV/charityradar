@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://iotachi.ru';
+export const BASE_URL = 'https://iotachi.ru';

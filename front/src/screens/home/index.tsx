@@ -5,7 +5,6 @@ import { observer } from 'mobx-react';
 import { styles } from './styles';
 
 import { HeaderLogo } from '../../widgets/header';
-import { YouHelpList } from '../../widgets/you-help';
 import { PopularFundsList } from '../../widgets/fund-widgets';
 import { ActualFees } from '../../widgets/fees-widgets';
 import { PreviewCard } from '../../entities/bank-card';
@@ -28,21 +27,27 @@ export interface FundPreviewType extends SuccessResponseGetAllFunds {
   };
 }
 
+export interface FeesPreviewType extends Fees {
+  fund: FundPreviewType;
+}
+
 export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationProps }) => {
   const [fundsList, setFundsList] = useState<null | FundPreviewType[]>(null);
-  const [feesList, setFeesList] = useState<null | Fees[]>(null);
+  const [feesList, setFeesList] = useState<null | FeesPreviewType[]>(null);
 
   // После рефреша обновляем данные страницы (делаем повторные запросы)
   const [refreshing, setRefreshing] = useState(false);
   const { user } = useAuth();
 
   const openAllListPopularFund = () => appNavigation.navigation.push('PopularFundScreen');
-  const openFund = (id: string) => {
+
+  const openFund = (id: string | number) => {
     appNavigation.navigation.push('FundScreen', { id });
   };
 
   const openActualFeesAll = () => appNavigation.navigation.push('FeesAllScreen');
-  const onPressFees = () => appNavigation.navigation.push('FeesFullScreen');
+  const onPressFees = (fees: FeesPreviewType) =>
+    appNavigation.navigation.push('FeesFullScreen', { fees });
 
   // Получение баланса карты у авторизованного пользователя и не фонда
   const getBalanceCard = async () => {
@@ -59,6 +64,7 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
   // Получение данный для всей страницы
   const getDatePage = async () => {
     const fundListPreview: FundPreviewType[] = [];
+    const feesListPreview: FeesPreviewType[] = [];
     // Получаем все фонды (так как их мало) и сортируем.
     const payloadFunds = await getAllFunds();
     const payloadFees = await getAllFees();
@@ -72,6 +78,15 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
       });
 
       setFundsList(fundListPreview.slice(0, 10));
+    }
+
+    if (Array.isArray(payloadFees)) {
+      payloadFees.forEach((fees) => {
+        const fund = payloadFunds.find((fund) => fund.id == fees.fundId);
+        feesListPreview.push({ ...fees, fund });
+      });
+
+      setFeesList(feesListPreview.slice(0, 10));
     }
   };
 
@@ -109,12 +124,22 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
         {/*</View>*/}
         {fundsList !== null && (
           <View style={styles.rowSection}>
-            <PopularFundsList onPressAll={() => {}} onPressFund={() => {}} fundsList={fundsList} />
+            <PopularFundsList
+              onPressAll={openAllListPopularFund}
+              onPressFund={openFund}
+              fundsList={fundsList}
+            />
           </View>
         )}
-        {/*<View style={styles.rowSection}>*/}
-        {/*  <ActualFees onPressAll={openActualFeesAll} onPressFees={onPressFees} />*/}
-        {/*</View>*/}
+        {feesList !== null && (
+          <View style={styles.rowSection}>
+            <ActualFees
+              onPressAll={openActualFeesAll}
+              onPressFees={onPressFees}
+              feesList={feesList}
+            />
+          </View>
+        )}
       </ScrollView>
     </View>
   );

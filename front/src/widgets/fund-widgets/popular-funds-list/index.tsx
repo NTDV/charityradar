@@ -8,7 +8,7 @@ import { SuccessResponseGetAllFunds } from '../../../shared/api/fund/get-all-fun
 
 type PopularFundsListProps = {
   onPressAll: () => void;
-  onPressFund: () => void;
+  onPressFund: (id: number | string) => void;
   fundsList: SuccessResponseGetAllFunds[];
 };
 
@@ -25,7 +25,7 @@ export const PopularFundsList = ({ onPressAll, onPressFund, fundsList }: Popular
       <View style={styles.titleContainer}>
         <TitleMore
           title="Популярные фонды"
-          nameLink={fundsList.length > 10 ? 'Смотреть все' : ''}
+          nameLink={fundsList.length >= 10 ? 'Смотреть все' : ''}
           onPress={onPressAll}
         />
       </View>
@@ -36,7 +36,7 @@ export const PopularFundsList = ({ onPressAll, onPressFund, fundsList }: Popular
           renderItem={({ item }) => (
             <View style={styles.item}>
               <FundPreview
-                onPress={() => {}}
+                onPress={() => onPressFund(item.id)}
                 coefficient={item.rating}
                 fundName={item.name}
                 fundDescription={item.description}

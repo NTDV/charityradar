@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { format, intervalToDuration, parse } from 'date-fns';
+import { intervalToDuration } from 'date-fns';
 
 import { styles } from './styles';
 
@@ -35,11 +35,8 @@ export const FundPreview = ({
   isLarge,
   fees,
 }: FundPreviewProps) => {
-  const getDeadline = (startDate: Date, endDate: Date): number | undefined => {
-    const start = format(new Date(startDate), 'dd.MM.yyyy', new Date());
-    const end = parse(new Date(endDate), 'dd.MM.yyyy', new Date());
-
-    // return intervalToDuration({ start, end }).days;
+  const getDeadline = (startDate: Date, endDate: Date) => {
+    return intervalToDuration({ start: new Date(startDate), end: new Date(endDate) }).days;
   };
 
   return (
@@ -66,7 +63,7 @@ export const FundPreview = ({
       </View>
       {fundDescription !== null && <Text style={styles.info}>{fundDescription}</Text>}
       <Text style={styles.nameFund}>{fundName}</Text>
-      {fees !== undefined && (
+      {fees !== undefined ? (
         <View style={styles.fee}>
           <Text style={styles.feeText}>Текущий сбор:</Text>
           <ProgressBar
@@ -75,6 +72,8 @@ export const FundPreview = ({
             deadline={getDeadline(fees.startDate, fees.endDate) ?? null}
           />
         </View>
+      ) : (
+        <Text style={{ marginTop: 10 }}>Нет сборов</Text>
       )}
     </TouchableOpacity>
   );
