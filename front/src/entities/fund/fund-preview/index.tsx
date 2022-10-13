@@ -1,21 +1,21 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { format, intervalToDuration, parse } from 'date-fns';
 
 import { styles } from './styles';
 
-import testPhoto from '../../../static/testImg.png';
 import { ProgressBar } from '../../../shared/ui/progress-bar';
+import { IconNullPhoto } from '../../../shared/icons/icon-null-photo';
+import { FundPreviewType } from '../../../screens/home';
+import { BASE_URL } from '../../../shared/api/general';
 
 type FundPreviewProps = {
   onPress: () => void;
-  coefficient: string;
+  coefficient: number | null; // rating
   fundName: string;
-  fundDescription: string;
+  fundDescription: string | null;
+  image: string | null;
   isLarge?: boolean;
-  fundraising?: {
-    allMoney: number;
-    currentMoney: number;
-    deadline: number;
-  };
+  fees?: FundPreviewType['fees'];
 };
 
 /**
@@ -30,10 +30,18 @@ export const FundPreview = ({
   onPress,
   coefficient,
   fundName,
-  fundraising,
+  image,
   fundDescription,
   isLarge,
+  fees,
 }: FundPreviewProps) => {
+  const getDeadline = (startDate: Date, endDate: Date): number | undefined => {
+    const start = format(new Date(startDate), 'dd.MM.yyyy', new Date());
+    const end = parse(new Date(endDate), 'dd.MM.yyyy', new Date());
+
+    // return intervalToDuration({ start, end }).days;
+  };
+
   return (
     <TouchableOpacity
       style={[styles.container, isLarge && styles.containerLarge]}
@@ -41,21 +49,30 @@ export const FundPreview = ({
       activeOpacity={0.8}
     >
       <View style={styles.containerImg}>
-        <Image source={testPhoto} style={[styles.img, isLarge && styles.imgLarge]} />
+        {image === null ? (
+          <View style={[styles.img, styles.imgEmpty, isLarge && styles.imgLarge]}>
+            <IconNullPhoto />
+          </View>
+        ) : (
+          <Image
+            source={{ uri: `${BASE_URL}/images/${image}` }}
+            style={[styles.img, isLarge && styles.imgLarge]}
+          />
+        )}
       </View>
       <View style={styles.coefficientRow}>
         <Text style={styles.coefficientTitle}>Коэффициент доверия</Text>
-        <Text style={styles.coefficient}>{coefficient}</Text>
+        {coefficient !== null && <Text style={styles.coefficient}>{coefficient}</Text>}
       </View>
-      <Text style={styles.info}>{fundDescription}</Text>
+      {fundDescription !== null && <Text style={styles.info}>{fundDescription}</Text>}
       <Text style={styles.nameFund}>{fundName}</Text>
-      {!!fundraising && (
+      {fees !== undefined && (
         <View style={styles.fee}>
           <Text style={styles.feeText}>Текущий сбор:</Text>
           <ProgressBar
-            allMoney={fundraising.allMoney}
-            currentMoney={fundraising.currentMoney}
-            deadline={fundraising.deadline}
+            allMoney={fees.goal}
+            currentMoney={fees.collected}
+            deadline={getDeadline(fees.startDate, fees.endDate) ?? null}
           />
         </View>
       )}

@@ -33,6 +33,10 @@ export const styles = StyleSheet.create({
   imgLarge: {
     height: 160,
   },
+  imgEmpty: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   containerImg: {},
   coefficientRow: {
     flexDirection: 'row',
@@ -52,13 +56,14 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   info: {
-    marginVertical: 10,
+    marginTop: 10,
   },
   nameFund: {
     color: COLOR_BLACK,
     opacity: 0.9,
     fontWeight: 'bold',
     fontSize: 16,
+    marginTop: 10,
   },
   fee: {
     marginTop: 10,

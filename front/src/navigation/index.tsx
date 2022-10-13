@@ -14,6 +14,7 @@ import { FeesAllScreen } from '../screens/fees-all-screen';
 import { FeesFullScreen } from '../screens/fees-full-screen';
 import { View } from 'react-native';
 import { TransactionHistory } from '../screens/transaction-history';
+import { BalanceIncrease } from '../screens/balance-increase';
 
 const Stack = createStackNavigator();
 
@@ -26,10 +27,11 @@ type RootStackParamList = {
   SignUp: undefined;
   AppNavigation: undefined;
   PopularFundScreen: undefined;
-  FundScreen: undefined;
+  FundScreen: { id: string | number };
   FeesAllScreen: undefined;
   FeesFullScreen: undefined;
   TransactionHistory: undefined;
+  BalanceIncrease: undefined;
 };
 
 export type SignInProps = {
@@ -42,6 +44,7 @@ export type SignUpProps = {
 
 export type AppNavigationProps = {
   navigation: NativeStackScreenProps<RootStackParamList, 'AppNavigation'>['navigation'];
+  route: NativeStackScreenProps<RootStackParamList, 'AppNavigation'>['route'];
 };
 
 export type PopularFundScreenProps = {
@@ -82,7 +85,7 @@ export const Provider = () => {
               component={PopularFundScreen}
               options={{
                 title: 'Популярные фонды',
-                headerBackTitle: () => null,
+                headerBackTitle: 'Назад',
                 headerTintColor: COLOR_BLACK,
               }}
             />
@@ -91,7 +94,7 @@ export const Provider = () => {
               component={FeesAllScreen}
               options={{
                 title: 'Актуальные сборы',
-                headerBackTitle: () => null,
+                headerBackTitle: 'Назад',
                 headerTintColor: COLOR_BLACK,
               }}
             />
@@ -100,7 +103,7 @@ export const Provider = () => {
               component={FeesFullScreen}
               options={{
                 title: 'Информация о сборе',
-                headerBackTitle: () => null,
+                headerBackTitle: 'Назад',
                 headerTintColor: COLOR_BLACK,
               }}
             />
@@ -109,7 +112,7 @@ export const Provider = () => {
               component={FundScreen}
               options={{
                 title: 'Информация о фонде',
-                headerBackTitle: () => null,
+                headerBackTitle: 'Назад',
                 headerTintColor: COLOR_BLACK,
               }}
             />
@@ -118,7 +121,16 @@ export const Provider = () => {
               component={TransactionHistory}
               options={{
                 title: 'История транзакций',
-                headerBackTitle: () => null,
+                headerBackTitle: 'Назад',
+                headerTintColor: COLOR_BLACK,
+              }}
+            />
+            <Stack.Screen
+              name="BalanceIncrease"
+              component={BalanceIncrease}
+              options={{
+                title: 'Пополнение баланса',
+                headerBackTitle: 'Назад',
                 headerTintColor: COLOR_BLACK,
               }}
             />

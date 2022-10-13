@@ -23,6 +23,10 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: 150,
     resizeMode: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomColor: COLOR_GREY_LIGHT,
+    borderBottomWidth: 1,
   },
   containerImg: {},
   coefficientTitle: {
@@ -30,7 +34,7 @@ export const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   coefficient: {
-    fontSize: 20,
+    fontSize: 16,
     color: COLOR_GOLD,
     fontWeight: 'bold',
   },
@@ -50,16 +54,6 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderBottomColor: COLOR_GREY_LIGHT,
     borderBottomWidth: 1,
-  },
-  headerLeftColumn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  headerRightColumn: {
-    marginLeft: 20,
-  },
-  headerFund: {
-    marginLeft: 10,
   },
   headerFundName: {
     fontSize: 16,

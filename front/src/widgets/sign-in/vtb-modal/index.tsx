@@ -11,6 +11,7 @@ import { CustomButton } from '../../../shared/ui/custom-button';
 
 type VtbModalProps = {
   visibility: boolean;
+  loading: boolean;
   error: string;
   onClose: () => void;
   onSubmit: (value: validationSchemaVtbFormProps) => void;
@@ -18,15 +19,15 @@ type VtbModalProps = {
 
 const defaultValues = __DEV__
   ? {
-      login: 'team13',
-      password: 'NhwqcMQLDovYSQbj7TyyfS5PvhmLTMAQ',
+      login: '',
+      password: '',
     }
   : {
       login: '',
       password: '',
     };
 
-export const VtbModal = ({ visibility, onClose, onSubmit, error }: VtbModalProps) => {
+export const VtbModal = ({ visibility, onClose, onSubmit, error, loading }: VtbModalProps) => {
   const {
     control,
     handleSubmit,
@@ -75,7 +76,12 @@ export const VtbModal = ({ visibility, onClose, onSubmit, error }: VtbModalProps
           />
         </View>
         {!!error && <Text style={styles.errorText}>{error}</Text>}
-        <CustomButton name={'Войти'} onPress={handleSubmit(onSubmit)} primary={true} />
+        <CustomButton
+          name={'Войти'}
+          onPress={handleSubmit(onSubmit)}
+          primary={true}
+          loading={loading}
+        />
       </View>
     </CustomModal>
   );

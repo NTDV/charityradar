@@ -6,7 +6,7 @@ import { numberWithSpaces } from '../../utils/number-with-spaces';
 import { useEffect, useState } from 'react';
 
 type ProgressBarProps = {
-  deadline: number;
+  deadline: number | null;
   allMoney: number;
   currentMoney: number;
 };
@@ -37,9 +37,13 @@ export const ProgressBar = ({ deadline, allMoney, currentMoney }: ProgressBarPro
       <Text style={styles.currentMoney}>
         {numberWithSpaces(currentMoney)} ₽ / {numberWithSpaces(allMoney)} ₽
       </Text>
-      <Text style={styles.deadline}>
-        Осталось {`${deadline} ${declOfNum(deadline, ['день', 'дня', 'дней'])}`}
-      </Text>
+      {deadline === null ? (
+        <Text style={styles.deadline}>Не установлен период</Text>
+      ) : (
+        <Text style={styles.deadline}>
+          Осталось {`${deadline} ${declOfNum(deadline, ['день', 'дня', 'дней'])}`}
+        </Text>
+      )}
     </View>
   );
 };

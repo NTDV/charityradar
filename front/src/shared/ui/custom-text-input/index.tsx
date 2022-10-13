@@ -23,6 +23,7 @@ export type CustomTextInputProps = {
   onSubmitEditing?: () => void;
   multiline?: boolean;
   keyboardType?: KeyboardTypeOptions;
+  styles?: object;
 };
 
 /**
@@ -53,7 +54,11 @@ export const CustomTextInput = forwardRef(
           placeholderTextColor={COLOR_PLACEHOLDER}
           {...props}
           secureTextEntry={passwordVisible}
-          style={[styles.textField, !!errorMessage ? styles.textFieldError : {}]}
+          style={[
+            styles.textField,
+            !!errorMessage ? styles.textFieldError : {},
+            props.styles && props.styles,
+          ]}
         />
 
         <TouchableOpacity onPress={passwordVisibleHandler}>

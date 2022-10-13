@@ -2,7 +2,13 @@ import axios from 'axios';
 
 import { BASE_URL } from '../general';
 
-type GetToken = ({ login, password }: { login: string; password: string }) => void;
+type GetToken = ({
+  login,
+  password,
+}: {
+  login: string;
+  password: string;
+}) => Promise<{ id: string; link: number; type: number; token: string }>;
 
 export const getToken: GetToken = async ({ login, password }) => {
   const headers = {
@@ -12,10 +18,10 @@ export const getToken: GetToken = async ({ login, password }) => {
   const graphqlQuery = {
     query: `{ authByVTBId(login: "${login}", password: "${password}")
       {
-        access_token
-        refresh_token
-        scope
-        id_token
+        id
+        link
+        type
+        token
       }
     }`,
   };
@@ -25,5 +31,5 @@ export const getToken: GetToken = async ({ login, password }) => {
     method: 'POST',
     headers: headers,
     data: graphqlQuery,
-  }).then(({ data }) => data);
+  }).then(({ data }) => data['data']['authByVTBId']);
 };

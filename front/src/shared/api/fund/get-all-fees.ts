@@ -19,25 +19,27 @@ export type Fees = {
   id: number;
   status: FeesStatus;
 };
-type GetActualFees = () => Promise<Fees[]>;
+type GetAllFees = () => Promise<Fees[]>;
 
-export const getActualFees: GetActualFees = async () => {
+export const getAllFees: GetAllFees = async () => {
   const headers = {
     'content-type': 'application/json',
   };
 
   const graphqlQuery = {
     query: `query{
-      getTopFees{
+      getAllFees {
         id
         name
         goal
         startDate
         endDate
         description
+        endDate
         status
         collected
         fundId
+        image
       }
     }`,
   };
@@ -47,5 +49,5 @@ export const getActualFees: GetActualFees = async () => {
     method: 'POST',
     headers: headers,
     data: graphqlQuery,
-  }).then(({ data }) => data['data']['getTopFees']);
+  }).then(({ data }) => data['data']['getAllFees']);
 };

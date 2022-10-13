@@ -2,7 +2,6 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 
 import { styles } from './styles';
 
-import testPhoto from '../../../static/testImg.png';
 import { ProgressBar } from '../../../shared/ui/progress-bar';
 
 type FundPreviewProps = {
@@ -33,7 +32,7 @@ export const FeesFull = ({
   return (
     <View style={styles.containerLarge}>
       <View style={styles.containerImg}>
-        <Image source={testPhoto} style={styles.imgLarge} />
+        <Image source={{ uri: '' }} style={styles.imgLarge} />
       </View>
       <View style={styles.coefficientRow}>
         <Text style={styles.nameFund}>{fundName}</Text>

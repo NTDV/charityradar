@@ -6,7 +6,7 @@ import { User } from '../../hooks/use-auth';
 type AuthUserType = (id: string) => Promise<User['user']>;
 
 // Авторзация пользователя
-export const AuthUser: AuthUserType = async (id: string) => {
+export const authUser: AuthUserType = async (id: string | number) => {
   const headers = {
     'content-type': 'application/json',
   };

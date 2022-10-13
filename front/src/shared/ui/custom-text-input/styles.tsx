@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
     borderBottomColor: COLOR_GREY,
     paddingVertical: 8,
     paddingHorizontal: 10,
+    paddingRight: 40,
   },
   textFieldError: {
     borderBottomColor: COLOR_ERROR,
