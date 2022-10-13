@@ -47,11 +47,16 @@ public class RestController {
     public String resetPasswordConfirm(@RequestParam String token, @RequestParam String pass1, @RequestParam String pass2, Model model) throws NoSuchAlgorithmException {
         if (pass1.equals(pass2) && pass1.matches(Helper.passRegex)) {
             Auth auth = _authService.getAuthByToken(token);
-            _authService.setNewPassword(auth, pass1);
-            return "reset_success";
+            if (auth != null && auth.getLogin() != null) {
+                _authService.setNewPassword(auth, pass1);
+                return "reset_success";
+            } else {
+                model.addAttribute("token", token);
+                return "negativePassword";
+            }
         } else {
             model.addAttribute("token", token);
-            return "reset_password";
+            return "negativePassword";
         }
     }
 
