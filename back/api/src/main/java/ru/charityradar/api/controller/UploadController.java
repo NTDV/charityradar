@@ -20,7 +20,7 @@ public class UploadController {
 
     @PostMapping("/upload")
     public ResponseEntity<Object> uploadImage(Model model, @RequestParam("image") MultipartFile file, @RequestParam("type") int type,
-                                              @RequestParam("id") Integer id) {
+                                              @RequestParam(value = "id", required = false) Integer id) {
         if (id == null)
             return _uploadService.uploadImage(model, file, type);
         else
