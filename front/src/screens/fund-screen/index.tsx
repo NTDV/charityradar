@@ -1,88 +1,99 @@
-import { useEffect } from 'react';
-import { ScrollView, View, Text, Image, FlatList } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, Text, Image, FlatList } from 'react-native';
 
 import { styles } from './styles';
 
-import testPhoto from '../../static/testImg.png';
 import { CustomButton } from '../../shared/ui/custom-button';
 import { TitleMore } from '../../shared/ui/title-more';
 import { FeesPreviewInsideFund } from '../../entities/fees/fees-preview-inside-fund';
 import { AppNavigationProps } from '../../navigation';
-import { getFundById } from '../../shared/api/fund/get-fund-by-id';
+import { FondType, getFundById } from '../../shared/api/fund/get-fund-by-id';
+import { IconNullPhoto } from '../../shared/icons/icon-null-photo';
+import { BASE_URL } from '../../shared/api/general';
+import { getFeesByIdFund } from '../../shared/api/fund/get-fees-by-id-fund';
 
 export const FundScreen = (appNavigation: AppNavigationProps) => {
+  const [fund, setFund] = useState<FondType | null>(null);
+  const [feesList, setFeesList] = useState([]);
   const params = appNavigation.route.params;
 
   const openTransactionHistory = () => {
     appNavigation.navigation.push('TransactionHistory');
   };
 
+  const getInfoPage = async () => {
+    if (params !== undefined) {
+      const fund = await getFundById(params.id);
+      const fees = await getFeesByIdFund(fund.id);
+      console.log(fees);
+      setFund(fund);
+    }
+  };
+
   useEffect(() => {
     (async () => {
-      const fund = await getFundById();
-      console.log(fund);
+      await getInfoPage();
     })();
   }, []);
 
+  if (fund === null) return <View />;
+
   return (
-    <ScrollView style={styles.containerScroll}>
-      {/*<View style={styles.container}>*/}
-      {/*  <Text style={styles.name}>Фонд «Время жизни»</Text>*/}
-      {/*  <View style={styles.containerImg}>*/}
-      {/*    <Image source={testPhoto} style={styles.img} />*/}
-      {/*  </View>*/}
-      {/*  <View style={styles.coefficientRow}>*/}
-      {/*    <Text style={styles.coefficientTitle}>Коэффициент доверия</Text>*/}
-      {/*    <Text style={styles.coefficient}>4.5</Text>*/}
-      {/*  </View>*/}
-      {/*  <View style={styles.reporting}>*/}
-      {/*    <Text style={styles.reportingTitle}>Отчетность организации:</Text>*/}
-      {/*    <Text style={styles.reportingText}>Тут будет какой-то умный текст про отчетность</Text>*/}
-      {/*    <CustomButton*/}
-      {/*      name="Посмотреть историю платежей"*/}
-      {/*      onPress={openTransactionHistory}*/}
-      {/*      primary={true}*/}
-      {/*      rect={true}*/}
-      {/*    />*/}
-      {/*  </View>*/}
-      {/*  <View style={styles.description}>*/}
-      {/*    <View style={styles.descriptionTitle}>*/}
-      {/*      <TitleMore title="Описание" />*/}
-      {/*    </View>*/}
-      {/*    <Text style={styles.descriptionText}>*/}
-      {/*      Программа фонда «Время помогать» призвана поддержать детей с онкологическими*/}
-      {/*      заболеваниями. Порой требуется провести срочную процедуру, сдать анализы, приобрести*/}
-      {/*      лекарства, улучшить бытовые условия или купить билеты к месту лечения. Фонд оказывает*/}
-      {/*      адресную поддержку семьям, имеющим финансовые трудности для того, чтобы процесс лечения*/}
-      {/*      протекал эффективно. В рамках программы фонд предоставляет также бесплатное жилье семьям*/}
-      {/*      с детьми на время перерыва в лечении и оказывает психологическую поддержку.*/}
-      {/*    </Text>*/}
-      {/*  </View>*/}
-      {/*  <View style={styles.fees}>*/}
-      {/*    <View style={styles.feesTitle}>*/}
-      {/*      <TitleMore title="Текущие сборы:" />*/}
-      {/*    </View>*/}
-      {/*    <View style={styles.containerFees}>*/}
-      {/*      <FlatList*/}
-      {/*        data={[1]}*/}
-      {/*        renderItem={({ item }) => (*/}
-      {/*          <View style={styles.itemFees}>*/}
-      {/*            <FeesPreviewInsideFund*/}
-      {/*              onPress={() => {}}*/}
-      {/*              fundDescription={'Помогаем детям с онкологи-ческими заболеваниями'}*/}
-      {/*              fundraising={{*/}
-      {/*                allMoney: 20000,*/}
-      {/*                currentMoney: 5000,*/}
-      {/*                deadline: 1,*/}
-      {/*              }}*/}
-      {/*            />*/}
-      {/*          </View>*/}
-      {/*        )}*/}
-      {/*        initialNumToRender={3}*/}
-      {/*      />*/}
-      {/*    </View>*/}
-      {/*  </View>*/}
-      {/*</View>*/}
-    </ScrollView>
+    <View style={styles.container}>
+      <FlatList
+        data={feesList}
+        ListHeaderComponent={
+          <>
+            <Text style={styles.name}>{fund.name}</Text>
+            <View style={styles.containerImg}>
+              {!fund.image ? (
+                <IconNullPhoto />
+              ) : (
+                <Image source={{ uri: `${BASE_URL}/images/${fund.image}` }} style={styles.img} />
+              )}
+            </View>
+            <View style={styles.coefficientRow}>
+              <Text style={styles.coefficientTitle}>Коэффициент доверия</Text>
+              {fund.rating && <Text style={styles.coefficient}>{fund.rating}</Text>}
+            </View>
+            <View style={styles.reporting}>
+              <Text style={styles.reportingTitle}>Отчетность организации:</Text>
+              <CustomButton
+                name="Посмотреть историю платежей"
+                onPress={openTransactionHistory}
+                primary={true}
+                rect={true}
+              />
+            </View>
+            <View style={styles.description}>
+              <View style={styles.descriptionTitle}>
+                <TitleMore title="Описание" />
+              </View>
+              <Text style={styles.descriptionText}>
+                {!!fund.description ? fund.description : 'Описание отсутствует'}
+              </Text>
+            </View>
+            <View style={styles.feesTitle}>
+              <TitleMore title="Текущие сборы:" />
+            </View>
+          </>
+        }
+        ListEmptyComponent={<Text>Нет активных сборов</Text>}
+        renderItem={({ item }) => (
+          <View style={styles.itemFees}>
+            <FeesPreviewInsideFund
+              onPress={() => {}}
+              fundDescription={'Помогаем детям с онкологи-ческими заболеваниями'}
+              fundraising={{
+                allMoney: 20000,
+                currentMoney: 5000,
+                deadline: 1,
+              }}
+            />
+          </View>
+        )}
+        initialNumToRender={3}
+      />
+    </View>
   );
 };

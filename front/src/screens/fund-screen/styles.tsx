@@ -8,13 +8,10 @@ import {
 import { MAIN_PADDING } from '../../shared/constants/styles-global';
 
 export const styles = StyleSheet.create({
-  containerScroll: {
-    flexGrow: 1,
-    backgroundColor: COLOR_WHITE,
-  },
   container: {
     flex: 1,
     padding: MAIN_PADDING,
+    backgroundColor: COLOR_WHITE,
   },
   name: {
     fontSize: 20,
@@ -24,6 +21,10 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
   containerImg: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: 180,
     alignSelf: 'stretch',
     flex: 1,
   },

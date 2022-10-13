@@ -36,7 +36,7 @@ export const PopularFundsList = ({ onPressAll, onPressFund, fundsList }: Popular
           renderItem={({ item }) => (
             <View style={styles.item}>
               <FundPreview
-                onPress={() => onPressFund(item.id)}
+                onPress={() => {}}
                 coefficient={item.rating}
                 fundName={item.name}
                 fundDescription={item.description}

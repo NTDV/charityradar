@@ -1,11 +1,12 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { intervalToDuration, parse } from 'date-fns';
+import { format, intervalToDuration, parse } from 'date-fns';
 
 import { styles } from './styles';
 
 import { ProgressBar } from '../../../shared/ui/progress-bar';
 import { IconNullPhoto } from '../../../shared/icons/icon-null-photo';
-import { SuccessResponseGetAllFunds } from '../../../shared/api/fund/get-all-funds';
+import { FundPreviewType } from '../../../screens/home';
+import { BASE_URL } from '../../../shared/api/general';
 
 type FundPreviewProps = {
   onPress: () => void;
@@ -14,7 +15,7 @@ type FundPreviewProps = {
   fundDescription: string | null;
   image: string | null;
   isLarge?: boolean;
-  fees: SuccessResponseGetAllFunds['fees'][] | null;
+  fees?: FundPreviewType['fees'];
 };
 
 /**
@@ -34,11 +35,11 @@ export const FundPreview = ({
   isLarge,
   fees,
 }: FundPreviewProps) => {
-  const getDeadline = (startDate: string, endDate: string): number | undefined => {
-    const start = parse(startDate, 'dd.MM.yyyy', new Date());
-    const end = parse(endDate, 'dd.MM.yyyy', new Date());
+  const getDeadline = (startDate: Date, endDate: Date): number | undefined => {
+    const start = format(new Date(startDate), 'dd.MM.yyyy', new Date());
+    const end = parse(new Date(endDate), 'dd.MM.yyyy', new Date());
 
-    return intervalToDuration({ start, end }).days;
+    // return intervalToDuration({ start, end }).days;
   };
 
   return (
@@ -53,7 +54,10 @@ export const FundPreview = ({
             <IconNullPhoto />
           </View>
         ) : (
-          <Image source={image} style={[styles.img, isLarge && styles.imgLarge]} />
+          <Image
+            source={{ uri: `${BASE_URL}/images/${image}` }}
+            style={[styles.img, isLarge && styles.imgLarge]}
+          />
         )}
       </View>
       <View style={styles.coefficientRow}>
@@ -62,13 +66,13 @@ export const FundPreview = ({
       </View>
       {fundDescription !== null && <Text style={styles.info}>{fundDescription}</Text>}
       <Text style={styles.nameFund}>{fundName}</Text>
-      {fees !== null && (
+      {fees !== undefined && (
         <View style={styles.fee}>
           <Text style={styles.feeText}>Текущий сбор:</Text>
           <ProgressBar
-            allMoney={fees[0].goal}
-            currentMoney={fees[0].collected}
-            deadline={getDeadline(fees[0].startDate, fees[0].endDate) ?? null}
+            allMoney={fees.goal}
+            currentMoney={fees.collected}
+            deadline={getDeadline(fees.startDate, fees.endDate) ?? null}
           />
         </View>
       )}

@@ -14,13 +14,6 @@ export type SuccessResponseGetAllFunds = {
   phone: string | null;
   description: string | null;
   rating: number | null;
-  fees: {
-    id: number;
-    goal: number;
-    collected: number;
-    endDate: string;
-    startDate: string;
-  };
 };
 
 export const getAllFunds = async () => {
@@ -38,13 +31,6 @@ export const getAllFunds = async () => {
         phone
         description
         rating
-        fees {
-          id
-          goal
-          collected
-          endDate
-          startDate
-        }
       }
     }`,
   };

@@ -18,8 +18,18 @@ import { bankCardStore } from '../../stores/bank-card-store';
 import { getAllFunds, SuccessResponseGetAllFunds } from '../../shared/api/fund/get-all-funds';
 import { Fees, getAllFees } from '../../shared/api/fund/get-all-fees';
 
+export interface FundPreviewType extends SuccessResponseGetAllFunds {
+  fees?: {
+    id: number;
+    goal: number;
+    collected: number;
+    endDate: string;
+    startDate: string;
+  };
+}
+
 export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationProps }) => {
-  const [fundsList, setFundsList] = useState<null | SuccessResponseGetAllFunds[]>(null);
+  const [fundsList, setFundsList] = useState<null | FundPreviewType[]>(null);
   const [feesList, setFeesList] = useState<null | Fees[]>(null);
 
   // После рефреша обновляем данные страницы (делаем повторные запросы)
@@ -48,14 +58,21 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
 
   // Получение данный для всей страницы
   const getDatePage = async () => {
+    const fundListPreview: FundPreviewType[] = [];
     // Получаем все фонды (так как их мало) и сортируем.
     const payloadFunds = await getAllFunds();
     const payloadFees = await getAllFees();
-    console.log(payloadFees, 'payloadFunds');
+
     // Если нет ошибок
-    // if (Array.isArray(payloadFunds)) {
-    //   setFundsList(payloadFunds);
-    // }
+    if (Array.isArray(payloadFunds)) {
+      payloadFunds.forEach((fund) => {
+        // Достаем последний сбор
+        const fees = payloadFees.find((fees) => fees.fundId == fund.id);
+        fundListPreview.push({ ...fund, fees });
+      });
+
+      setFundsList(fundListPreview.slice(0, 10));
+    }
   };
 
   const onRefresh = useCallback(async () => {
@@ -92,11 +109,7 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
         {/*</View>*/}
         {fundsList !== null && (
           <View style={styles.rowSection}>
-            <PopularFundsList
-              onPressAll={openAllListPopularFund}
-              onPressFund={openFund}
-              fundsList={fundsList}
-            />
+            <PopularFundsList onPressAll={() => {}} onPressFund={() => {}} fundsList={fundsList} />
           </View>
         )}
         {/*<View style={styles.rowSection}>*/}

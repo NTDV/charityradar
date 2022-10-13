@@ -20,7 +20,7 @@ export const News = ({ appNavigation }: { appNavigation: AppNavigationProps }) =
   const [newsList, setNewsList] = useState<NewsWithFundType[]>([]);
 
   const openFund = (id: string | number) => {
-    appNavigation.navigation.push('FundScreen');
+    appNavigation.navigation.push('FundScreen', { id });
   };
 
   const setListHandler = async () => {
