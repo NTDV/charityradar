@@ -1,9 +1,10 @@
+import { observer } from 'mobx-react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
 
 import { IconCard } from '../../../shared/icons/icon-card';
-import { observer } from 'mobx-react';
 import { bankCardStore } from '../../../stores/bank-card-store';
 import { numberWithSpaces } from '../../../shared/utils/number-with-spaces';
 
@@ -12,7 +13,10 @@ import { numberWithSpaces } from '../../../shared/utils/number-with-spaces';
  */
 
 export const PreviewCard = observer(() => {
+  const navigation = useNavigation();
   const { amount, monthDonations } = bankCardStore;
+
+  const onPress = () => navigation.navigate('BalanceIncrease');
 
   return (
     <View style={styles.container}>
@@ -31,7 +35,7 @@ export const PreviewCard = observer(() => {
         </View>
       </View>
       <View style={styles.rightColumn}>
-        <TouchableOpacity style={styles.button} activeOpacity={0.9}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.9} onPress={onPress}>
           <Text style={styles.buttonName}>Пополнить</Text>
         </TouchableOpacity>
       </View>

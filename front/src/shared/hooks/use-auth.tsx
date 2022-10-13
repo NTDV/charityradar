@@ -5,9 +5,12 @@ import { signUpFormApi } from '../api/sign-up/sign-up-form-api';
 import { validationSchemaSimpleFormProps } from '../../widgets/sign-up/lib/validation-schema';
 import { validationSchemaSimpleFormSignInProps } from '../../widgets/sign-in/lib/validation-schema';
 import { signInFormApi } from '../api/sign-in/sign-in-form-api';
-import { AuthUser } from '../api/sign-in/auth-user';
+import { authUser } from '../api/sign-in/auth-user';
 import { AuthFund } from '../api/sign-in/auth-fund';
 import { ERRORS } from '../constants/types';
+import { validationSchemaVtbFormProps } from '../../widgets/sign-in/vtb-modal/validation-schema';
+import { getToken } from '../api/sign-in/get-token';
+import { SERVER_ERROR } from '../constants/variables';
 
 export enum UserType {
   'guest',
@@ -50,6 +53,7 @@ type AuthContextDefault = {
   signInGuest: null;
   signUpSimple: null;
   logout: null;
+  signInVtbId: null;
 };
 
 // После того, как сработал хук
@@ -59,6 +63,7 @@ export type UseProvideAuthExit = {
   signInGuest: () => void;
   logout: () => void;
   signUpSimple: (values: validationSchemaSimpleFormProps) => void;
+  signInVtbId: (values: validationSchemaVtbFormProps) => void;
 };
 
 // Контекст
@@ -68,6 +73,7 @@ const authContext = createContext<UseProvideAuthExit | AuthContextDefault>({
   signInGuest: null,
   signUpSimple: null,
   logout: null,
+  signInVtbId: null,
 });
 
 // Хук, который создает пользователя и обрабатывает состояние
@@ -108,13 +114,35 @@ export const useProvideAuth = (): UseProvideAuthExit => {
       }
 
       if (type === UserType.user) {
-        const userData = await AuthUser(link);
+        const userData = await authUser(link);
         user['user'] = userData;
       }
     }
 
     await SecureStore.setItemAsync('user', JSON.stringify(user));
     setUser(user);
+  };
+
+  const signInVtbId = async (value: validationSchemaVtbFormProps) => {
+    const user: User | UserDynamic = {};
+    const userVtb = await getToken(value);
+
+    user['type'] = userVtb.type;
+    user['token'] = userVtb.token;
+
+    if (!!userVtb['link']) {
+      const userData = await authUser(userVtb.link);
+      // пользователь пришел
+      if (userData.id) {
+        user['user'] = userData;
+
+        setUser(user);
+        await SecureStore.setItemAsync('user', JSON.stringify(user));
+        return user;
+      }
+    }
+
+    return SERVER_ERROR;
   };
 
   // Авторизация гостя
@@ -156,7 +184,7 @@ export const useProvideAuth = (): UseProvideAuthExit => {
     })();
   }, []);
 
-  return { user, signUpSimple, signInSimple, signInGuest, logout };
+  return { user, signUpSimple, signInSimple, signInGuest, logout, signInVtbId };
 };
 
 // Обертка приложения

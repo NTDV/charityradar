@@ -14,6 +14,7 @@ import { FeesAllScreen } from '../screens/fees-all-screen';
 import { FeesFullScreen } from '../screens/fees-full-screen';
 import { View } from 'react-native';
 import { TransactionHistory } from '../screens/transaction-history';
+import { BalanceIncrease } from '../screens/balance-increase';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ type RootStackParamList = {
   FeesAllScreen: undefined;
   FeesFullScreen: undefined;
   TransactionHistory: undefined;
+  BalanceIncrease: undefined;
 };
 
 export type SignInProps = {
@@ -118,6 +120,15 @@ export const Provider = () => {
               component={TransactionHistory}
               options={{
                 title: 'История транзакций',
+                headerBackTitle: () => null,
+                headerTintColor: COLOR_BLACK,
+              }}
+            />
+            <Stack.Screen
+              name="BalanceIncrease"
+              component={BalanceIncrease}
+              options={{
+                title: 'Пополнение баланса',
                 headerBackTitle: () => null,
                 headerTintColor: COLOR_BLACK,
               }}
