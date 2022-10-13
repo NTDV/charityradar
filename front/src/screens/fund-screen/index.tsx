@@ -24,7 +24,9 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
   };
 
   const openTransactionHistory = () => {
-    appNavigation.navigation.push('TransactionHistory');
+    if (fund !== null) {
+      appNavigation.navigation.push('TransactionHistory', { fundId: fund.id });
+    }
   };
 
   const onPressFees = (fees: FeesPreviewType) =>
@@ -51,62 +53,67 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
   }, []);
 
   if (fund === null) return <View />;
-  console.log(feesList);
+
   return (
-    <FlatList
-      data={feesList}
-      style={styles.container}
-      ListHeaderComponent={
-        <>
-          <Text style={styles.name}>{fund.name}</Text>
-          <View style={styles.containerImg}>
-            {!fund.image ? (
-              <IconNullPhoto />
-            ) : (
-              <Image source={{ uri: `${BASE_URL}/images/${fund.image}` }} style={styles.img} />
-            )}
-          </View>
-          <View style={styles.coefficientRow}>
-            <Text style={styles.coefficientTitle}>Коэффициент доверия</Text>
-            {fund.rating && <Text style={styles.coefficient}>{fund.rating}</Text>}
-          </View>
-          <View style={styles.reporting}>
-            <Text style={styles.reportingTitle}>Отчетность организации:</Text>
-            <CustomButton
-              name="Посмотреть историю платежей"
-              onPress={openTransactionHistory}
-              primary={true}
-              rect={true}
+    <View style={{ flex: 1 }}>
+      <FlatList
+        data={feesList}
+        style={styles.container}
+        ListHeaderComponent={
+          <>
+            <Text style={styles.name}>{fund.name}</Text>
+            <View style={styles.containerImg}>
+              {!fund.image ? (
+                <IconNullPhoto />
+              ) : (
+                <Image source={{ uri: `${BASE_URL}/images/${fund.image}` }} style={styles.img} />
+              )}
+            </View>
+            <View style={styles.coefficientRow}>
+              <Text style={styles.coefficientTitle}>Коэффициент доверия</Text>
+              {fund.rating && <Text style={styles.coefficient}>{fund.rating}</Text>}
+            </View>
+            <View style={styles.reporting}>
+              <Text style={styles.reportingTitle}>Отчетность организации:</Text>
+              <CustomButton
+                name="Посмотреть историю платежей"
+                onPress={openTransactionHistory}
+                primary={true}
+                rect={true}
+              />
+            </View>
+            <View style={styles.description}>
+              <View style={styles.descriptionTitle}>
+                <TitleMore title="Описание" />
+              </View>
+              <Text style={styles.descriptionText}>
+                {!!fund.description ? fund.description : 'Описание отсутствует'}
+              </Text>
+            </View>
+            <View style={styles.feesTitle}>
+              <TitleMore title="Текущие сборы:" />
+            </View>
+          </>
+        }
+        ListEmptyComponent={<Text>Нет активных сборов</Text>}
+        renderItem={({ item }) => (
+          <View style={styles.itemFees}>
+            <FeesPreviewInsideFund
+              onPress={() => onPressFees(item)}
+              fundDescription={item.description}
+              fundraising={{
+                allMoney: item.goal,
+                currentMoney: item.collected,
+                deadline: getDeadline(item.startDate, item.endDate) ?? null,
+              }}
             />
           </View>
-          <View style={styles.description}>
-            <View style={styles.descriptionTitle}>
-              <TitleMore title="Описание" />
-            </View>
-            <Text style={styles.descriptionText}>
-              {!!fund.description ? fund.description : 'Описание отсутствует'}
-            </Text>
-          </View>
-          <View style={styles.feesTitle}>
-            <TitleMore title="Текущие сборы:" />
-          </View>
-        </>
-      }
-      ListEmptyComponent={<Text>Нет активных сборов</Text>}
-      renderItem={({ item }) => (
-        <View style={styles.itemFees}>
-          <FeesPreviewInsideFund
-            onPress={() => onPressFees(item)}
-            fundDescription={item.description}
-            fundraising={{
-              allMoney: item.goal,
-              currentMoney: item.collected,
-              deadline: getDeadline(item.startDate, item.endDate) ?? null,
-            }}
-          />
-        </View>
-      )}
-      initialNumToRender={3}
-    />
+        )}
+        initialNumToRender={3}
+      />
+      <View style={styles.footer}>
+        <CustomButton name="Пожертвовать" onPress={() => {}} primary={true} />
+      </View>
+    </View>
   );
 };

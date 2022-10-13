@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import {
   COLOR_BLACK,
   COLOR_GOLD,
+  COLOR_GREY,
   COLOR_GREY_LIGHT,
   COLOR_WHITE,
 } from '../../shared/constants/style-variables';
@@ -82,5 +83,12 @@ export const styles = StyleSheet.create({
     color: COLOR_BLACK,
     textAlign: 'justify',
     lineHeight: 20,
+  },
+  footer: {
+    paddingVertical: 25,
+    paddingHorizontal: 15,
+    backgroundColor: COLOR_WHITE,
+    borderTopWidth: 1,
+    borderTopColor: COLOR_GREY,
   },
 });
