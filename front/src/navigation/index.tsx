@@ -31,7 +31,7 @@ type RootStackParamList = {
   FundScreen: { id: string | number };
   FeesAllScreen: undefined;
   FeesFullScreen: { fees: FeesPreviewType };
-  TransactionHistory: undefined;
+  TransactionHistory: { fundId: number | string };
   BalanceIncrease: undefined;
 };
 

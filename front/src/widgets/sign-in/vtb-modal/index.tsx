@@ -38,7 +38,7 @@ export const VtbModal = ({ visibility, onClose, onSubmit, error, loading }: VtbM
   });
 
   return (
-    <CustomModal title="Регистрация ВТБ" visibility={visibility} onClose={onClose}>
+    <CustomModal title="Авторизация ВТБ" visibility={visibility} onClose={onClose}>
       <View>
         <View style={styles.row}>
           <Controller
@@ -50,8 +50,8 @@ export const VtbModal = ({ visibility, onClose, onSubmit, error, loading }: VtbM
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                name="Отчество"
-                placeholder="Введите отчество"
+                name="Логин"
+                placeholder="Введите логин"
                 errorMessage={errors?.['login']?.message}
               />
             )}
@@ -67,8 +67,8 @@ export const VtbModal = ({ visibility, onClose, onSubmit, error, loading }: VtbM
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
-                name="Отчество"
-                placeholder="Введите отчество"
+                name="Пароль"
+                placeholder="Введите пароль"
                 errorMessage={errors?.['password']?.message}
                 isPassword={true}
               />

@@ -142,7 +142,7 @@ export const useProvideAuth = (): UseProvideAuthExit => {
       }
     }
 
-    return SERVER_ERROR;
+    return userVtb;
   };
 
   // Авторизация гостя
