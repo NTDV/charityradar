@@ -15,6 +15,7 @@ import { FeesFullScreen } from '../screens/fees-full-screen';
 import { View } from 'react-native';
 import { TransactionHistory } from '../screens/transaction-history';
 import { BalanceIncrease } from '../screens/balance-increase';
+import { FeesPreviewType } from '../screens/home';
 
 const Stack = createStackNavigator();
 
@@ -29,8 +30,8 @@ type RootStackParamList = {
   PopularFundScreen: undefined;
   FundScreen: { id: string | number };
   FeesAllScreen: undefined;
-  FeesFullScreen: undefined;
-  TransactionHistory: undefined;
+  FeesFullScreen: { fees: FeesPreviewType };
+  TransactionHistory: { fundId: number | string };
   BalanceIncrease: undefined;
 };
 

@@ -52,13 +52,6 @@ export const InfoForm = () => {
     formData.append('image', { uri: photo, name: filename, type });
 
     await uploadImg(formData);
-    // return await fetch(YOUR_SERVER_URL, {
-    //   method: 'POST',
-    //   body: formData,
-    //   headers: {
-    //     'content-type': 'multipart/form-data',
-    //   },
-    // });
   };
 
   useEffect(() => {

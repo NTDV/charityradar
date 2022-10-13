@@ -11,21 +11,37 @@ import { FondType, getFundById } from '../../shared/api/fund/get-fund-by-id';
 import { IconNullPhoto } from '../../shared/icons/icon-null-photo';
 import { BASE_URL } from '../../shared/api/general';
 import { getFeesByIdFund } from '../../shared/api/fund/get-fees-by-id-fund';
+import { intervalToDuration } from 'date-fns';
+import { FeesPreviewType } from '../home';
 
 export const FundScreen = (appNavigation: AppNavigationProps) => {
   const [fund, setFund] = useState<FondType | null>(null);
-  const [feesList, setFeesList] = useState([]);
+  const [feesList, setFeesList] = useState<FeesPreviewType[]>([]);
   const params = appNavigation.route.params;
 
-  const openTransactionHistory = () => {
-    appNavigation.navigation.push('TransactionHistory');
+  const getDeadline = (startDate: Date, endDate: Date) => {
+    return intervalToDuration({ start: new Date(startDate), end: new Date(endDate) }).days;
   };
+
+  const openTransactionHistory = () => {
+    if (fund !== null) {
+      appNavigation.navigation.push('TransactionHistory', { fundId: fund.id });
+    }
+  };
+
+  const onPressFees = (fees: FeesPreviewType) =>
+    appNavigation.navigation.push('FeesFullScreen', { fees });
 
   const getInfoPage = async () => {
     if (params !== undefined) {
       const fund = await getFundById(params.id);
       const fees = await getFeesByIdFund(fund.id);
-      console.log(fees);
+
+      fees.forEach((fees) => {
+        fees['fund'] = fund;
+      });
+
+      setFeesList(fees);
       setFund(fund);
     }
   };
@@ -39,9 +55,10 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
   if (fund === null) return <View />;
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={feesList}
+        style={styles.container}
         ListHeaderComponent={
           <>
             <Text style={styles.name}>{fund.name}</Text>
@@ -82,18 +99,21 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
         renderItem={({ item }) => (
           <View style={styles.itemFees}>
             <FeesPreviewInsideFund
-              onPress={() => {}}
-              fundDescription={'Помогаем детям с онкологи-ческими заболеваниями'}
+              onPress={() => onPressFees(item)}
+              fundDescription={item.description}
               fundraising={{
-                allMoney: 20000,
-                currentMoney: 5000,
-                deadline: 1,
+                allMoney: item.goal,
+                currentMoney: item.collected,
+                deadline: getDeadline(item.startDate, item.endDate) ?? null,
               }}
             />
           </View>
         )}
         initialNumToRender={3}
       />
+      <View style={styles.footer}>
+        <CustomButton name="Пожертвовать" onPress={() => {}} primary={true} />
+      </View>
     </View>
   );
 };

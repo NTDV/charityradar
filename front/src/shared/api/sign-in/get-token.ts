@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { BASE_URL } from '../general';
+import { ERRORS, ERRORS_MESSAGE } from '../../constants/types';
 
 type GetToken = ({
   login,
@@ -12,7 +13,7 @@ type GetToken = ({
 
 export const getToken: GetToken = async ({ login, password }) => {
   const headers = {
-    'content-type': 'application/json',
+    'content-type': 'application/json; charset=utf-8',
   };
 
   const graphqlQuery = {
@@ -31,5 +32,13 @@ export const getToken: GetToken = async ({ login, password }) => {
     method: 'POST',
     headers: headers,
     data: graphqlQuery,
-  }).then(({ data }) => data['data']['authByVTBId']);
+  })
+    .then(({ data }) => {
+      if (data?.['data']?.['authByVTBId']) {
+        return data['data']['authByVTBId'];
+      } else {
+        return { err: { message: 'Пользователь не найден', type: ERRORS.server } };
+      }
+    })
+    .catch((err) => ({ err: { message: ERRORS_MESSAGE.server, type: ERRORS.server } }));
 };

@@ -3,17 +3,19 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 
 import { ProgressBar } from '../../../shared/ui/progress-bar';
+import { BASE_URL } from '../../../shared/api/general';
 
 type FundPreviewProps = {
   onPress: () => void;
-  coefficient: string;
+  coefficient: string | number | null;
   fundName: string;
   fundDescription: string;
   isLarge?: boolean;
-  fundraising: {
+  image: string;
+  fundraising?: {
     allMoney: number;
     currentMoney: number;
-    deadline: number;
+    deadline: number | null;
   };
 };
 
@@ -34,6 +36,7 @@ export const FeesPreview = ({
   fundraising,
   fundDescription,
   isLarge,
+  image,
 }: FundPreviewProps) => {
   return (
     <TouchableOpacity
@@ -42,21 +45,26 @@ export const FeesPreview = ({
       activeOpacity={0.8}
     >
       <View style={styles.containerImg}>
-        <Image source={{ uri: '' }} style={[styles.img, isLarge && styles.imgLarge]} />
+        <Image
+          source={{ uri: `${BASE_URL}/images/${image}` }}
+          style={[styles.img, isLarge && styles.imgLarge]}
+        />
       </View>
       <View style={styles.coefficientRow}>
         <Text style={styles.nameFund}>{fundName}</Text>
-        <Text style={styles.coefficient}>{coefficient}</Text>
+        {!!coefficient && <Text style={styles.coefficient}>{coefficient}</Text>}
       </View>
       <Text style={styles.info}>{fundDescription}</Text>
 
-      <View style={styles.fee}>
-        <ProgressBar
-          allMoney={fundraising.allMoney}
-          currentMoney={fundraising.currentMoney}
-          deadline={fundraising.deadline}
-        />
-      </View>
+      {!!fundraising && (
+        <View style={styles.fee}>
+          <ProgressBar
+            allMoney={fundraising.allMoney}
+            currentMoney={fundraising.currentMoney}
+            deadline={fundraising.deadline}
+          />
+        </View>
+      )}
     </TouchableOpacity>
   );
 };

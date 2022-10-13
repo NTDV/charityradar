@@ -6,7 +6,7 @@ import Toast from 'react-native-root-toast';
 import { ERRORS_MESSAGE } from '../../constants/types';
 import { settingsToastError } from '../../constants/settings-toast';
 
-export type SuccessResponseGetAllFunds = {
+export type Transaction = {
   id: string;
   name: string;
   image: string | null;
@@ -16,21 +16,22 @@ export type SuccessResponseGetAllFunds = {
   rating: number | null;
 };
 
-export const getAllFunds = async () => {
+export const getTransaction: Transaction = async (id: string | number) => {
   const headers = {
     'content-type': 'application/json',
   };
 
   const graphqlQuery = {
-    query: `query{
-      getAllFunds {
+    query: `query {
+      getTransactionsByFundId(fundId: ${id}) {
         id
-        name
-        image
-        email
-        phone
-        description
-        rating
+        type
+        amount
+        status
+        feesId
+        fundId
+        userId
+        document
       }
     }`,
   };
@@ -42,8 +43,8 @@ export const getAllFunds = async () => {
     data: graphqlQuery,
   })
     .then(({ data }) => {
-      if (data?.['data']?.['getAllFunds']) {
-        return data['data']['getAllFunds'];
+      if (data?.['data']?.['getTransactionsByFundId']) {
+        return data['data']['getTransactionsByFundId'];
       } else {
         Toast.show(ERRORS_MESSAGE.serverWorksNotStable, settingsToastError);
         return SERVER_ERROR;

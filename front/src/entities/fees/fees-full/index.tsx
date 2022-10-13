@@ -1,17 +1,19 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
 import { styles } from './styles';
 
 import { ProgressBar } from '../../../shared/ui/progress-bar';
+import { BASE_URL } from '../../../shared/api/general';
 
 type FundPreviewProps = {
-  coefficient: string;
-  fundName: string;
-  fundDescription: string;
-  fundraising: {
+  coefficient?: string;
+  fundName?: string;
+  fundDescription?: string;
+  image?: string;
+  fundraising?: {
     allMoney: number;
     currentMoney: number;
-    deadline: number;
+    deadline: number | null;
   };
 };
 
@@ -28,25 +30,29 @@ export const FeesFull = ({
   fundName,
   fundraising,
   fundDescription,
+  image,
 }: FundPreviewProps) => {
   return (
     <View style={styles.containerLarge}>
-      <View style={styles.containerImg}>
-        <Image source={{ uri: '' }} style={styles.imgLarge} />
-      </View>
+      {image && (
+        <View style={styles.containerImg}>
+          <Image source={{ uri: `${BASE_URL}/images/${image}` }} style={styles.imgLarge} />
+        </View>
+      )}
       <View style={styles.coefficientRow}>
         <Text style={styles.nameFund}>{fundName}</Text>
         <Text style={styles.coefficient}>{coefficient}</Text>
       </View>
       <Text style={styles.info}>{fundDescription}</Text>
-
-      <View style={styles.fee}>
-        <ProgressBar
-          allMoney={fundraising.allMoney}
-          currentMoney={fundraising.currentMoney}
-          deadline={fundraising.deadline}
-        />
-      </View>
+      {fundraising && (
+        <View style={styles.fee}>
+          <ProgressBar
+            allMoney={fundraising.allMoney}
+            currentMoney={fundraising.currentMoney}
+            deadline={fundraising.deadline}
+          />
+        </View>
+      )}
     </View>
   );
 };

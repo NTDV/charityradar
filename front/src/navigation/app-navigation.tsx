@@ -10,6 +10,7 @@ import { Search } from '../screens/search';
 import { PersonalCabinet } from '../screens/personal-cabinet';
 import { AppNavigationProps } from './index';
 import { FundAdmin } from '../screens/fund-admin';
+import { useAuth, UserType } from '../shared/hooks/use-auth';
 
 enum iconType {
   home = 'home',
@@ -26,6 +27,8 @@ const Tab = createBottomTabNavigator();
  */
 
 export const AppNavigation = (appNavigation: AppNavigationProps) => {
+  const { user } = useAuth();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -89,7 +92,7 @@ export const AppNavigation = (appNavigation: AppNavigationProps) => {
         children={(props) => <News appNavigation={appNavigation} {...props} />}
       />
       {/*<Tab.Screen name="Search" component={Search} />*/}
-      <Tab.Screen name="FundAdmin" component={FundAdmin} />
+      {user?.type === UserType.fund && <Tab.Screen name="FundAdmin" component={FundAdmin} />}
       <Tab.Screen name="PersonalCabinet" component={PersonalCabinet} />
     </Tab.Navigator>
   );
