@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.charityradar.api.helper.Helper;
 import ru.charityradar.api.input.TransactionInput;
+import ru.charityradar.api.model.Fund;
 import ru.charityradar.api.model.Transaction;
 import ru.charityradar.api.repository.TransactionRepository;
 
@@ -28,6 +29,15 @@ public class TransactionService {
     }
     public Iterable<Transaction> getTransactionsByFundId(Integer fundId) {
         return _transactionRepository.getTransactionsByFundId(fundId);
+    }
+
+    public Transaction getTransactionById(Integer transactionId) {
+        return _transactionRepository.getTransactionById(transactionId);
+    }
+
+    public Transaction setDocument(Transaction transaction, String image) {
+        transaction.setDocument(image);
+        return _transactionRepository.save(transaction);
     }
 
     public Float getMonthTransactionsByUserId(Integer userId, Date start, Date end) {

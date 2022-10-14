@@ -60,7 +60,7 @@ public class InitialRunner implements ApplicationRunner {
                             "Описание фонда №" + I, random.nextFloat(5f)
                     ), _balanceService.createBalance().getId())
                     .getId();
-            _uploadService.setImage(ModelWithImageType.FUND, fundId, fundImagePrefix + I + ".jpg");
+            _uploadService.setFilePath(ModelWithImageType.FUND, fundId, fundImagePrefix + I + ".jpg");
 
             int feesCount = random.nextInt(6);
             for (int j = 0; j <= feesCount; j++) {
@@ -76,7 +76,7 @@ public class InitialRunner implements ApplicationRunner {
                         random.nextBoolean() ? FeeStatus.COLLECTING : FeeStatus.COMPLETED,
                         random.nextInt(600_000),
                         fundId, "")).getId();
-                _uploadService.setImage(ModelWithImageType.FEES, feeId, fundImagePrefix + (feesIndex % 12 + 1) + ".jpg");
+                _uploadService.setFilePath(ModelWithImageType.FEES, feeId, fundImagePrefix + (feesIndex % 12 + 1) + ".jpg");
             }
 
             int newsCount = random.nextInt(6);
@@ -87,7 +87,7 @@ public class InitialRunner implements ApplicationRunner {
                         "Содержание новости " + newsIndex,
                         "",
                         fundId)).getId();
-                _uploadService.setImage(ModelWithImageType.NEWS, newsId, fundImagePrefix + (newsIndex % 12 + 1) + ".jpg");
+                _uploadService.setFilePath(ModelWithImageType.NEWS, newsId, fundImagePrefix + (newsIndex % 12 + 1) + ".jpg");
             }
 
             /*

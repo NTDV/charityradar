@@ -13,5 +13,6 @@ public interface TransactionRepository extends CrudRepository<Transaction, UUID>
 
     Iterable<Transaction> getTransactionsByUserId(Integer userId);
     Iterable<Transaction> getTransactionsByFundId(Integer userId);
+    Transaction getTransactionById(Integer transactionId);
 
 }

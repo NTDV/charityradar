@@ -19,11 +19,12 @@ public class UploadController {
 
 
     @PostMapping("/upload")
-    public ResponseEntity<Object> uploadImage(Model model, @RequestParam("image") MultipartFile file, @RequestParam("type") int type,
+    public ResponseEntity<Object> uploadFile(Model model, @RequestParam("image") MultipartFile file,
+                                              @RequestParam(value = "type", required = false) Integer type,
                                               @RequestParam(value = "id", required = false) Integer id) {
         if (id == null)
-            return _uploadService.uploadImage(model, file, type);
+            return _uploadService.uploadFile(model, file, type);
         else
-            return _uploadService.uploadImage(model, file, type, id);
+            return _uploadService.uploadFile(model, file, type, id);
     }
 }

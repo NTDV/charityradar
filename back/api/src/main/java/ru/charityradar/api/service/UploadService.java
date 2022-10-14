@@ -13,6 +13,7 @@ import ru.charityradar.api.helper.ResponseHandler;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -25,20 +26,35 @@ public class UploadService {
     private NewsService _newsService;
     @Autowired
     private FundService _fundService;
+    @Autowired
+    private TransactionService _transactionService;
     Properties properties = ProjectProperties.getProperties();
     public String UPLOAD_DIRECTORY = properties.getProperty("image.upload.path");
-    public String[] SPECIFIC_DIR = {"fund/", "news/", "fees/"};
+    public String[] SPECIFIC_DIR = {"fund/", "news/", "fees/", "transactions/"};
 
+    final ArrayList<String> allowedContentTypes = new ArrayList<>() {{
+        add("application/msword");
+        add("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        add("application/pdf");
+        add("application/pdf");
+        add("application/vnd.ms-excel");
+        add("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        add("text/rtf");
+        add("image/png");
+        add("image/jpeg");
+    }};
 
-    public ResponseEntity<Object> uploadImage(Model model, MultipartFile file,
+    public ResponseEntity<Object> uploadFile(Model model, MultipartFile file,
                                               Integer type) {
-        return uploadImage(model, file, type, -1);
+        return uploadFile(model, file, type, -1);
     }
 
-    public ResponseEntity<Object> uploadImage(Model model, MultipartFile file,
-                                              int type, Integer id) { //TODO: проверка авторизации
+    public ResponseEntity<Object> uploadFile(Model model, MultipartFile file,
+                                              Integer type, Integer id) { //TODO: проверка авторизации
         try {
-            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY + SPECIFIC_DIR[type], file.getOriginalFilename());
+            System.out.println(file.getContentType());
+            String dir = type != null && SPECIFIC_DIR.length > type ? SPECIFIC_DIR[type] : "default/";
+            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY + dir, file.getOriginalFilename());
             HttpStatus httpStatus = HttpStatus.OK;
             String message = "Successfully uploaded!";
             if(!isRightImageType(Objects.requireNonNull(file.getContentType()))) {
@@ -53,7 +69,7 @@ public class UploadService {
                     Files.createDirectories(parentDir);
                 }
                 Files.write(fileNameAndPath, file.getBytes());
-                if (id > -1) setImage(ModelWithImageType.parse(type), id, fileNameAndPath.toString());
+                if (id > -1) setFilePath(ModelWithImageType.parse(type), id, fileNameAndPath.toString());
             }
 
             return ResponseHandler.generateUploadResponse(message, httpStatus, fileNameAndPath.toString());
@@ -63,15 +79,16 @@ public class UploadService {
         }
     }
 
-    public void setImage(ModelWithImageType type, int id, String fileNameAndPath) {
+    public void setFilePath(ModelWithImageType type, int id, String fileNameAndPath) {
         fileNameAndPath = fileNameAndPath.substring(ProjectProperties.ProjectProperty.IMAGE_UPLOAD_PATH.getCachedValue().length());
         if      (type == ModelWithImageType.FUND) _fundService.setImage(_fundService.getFundById(id), fileNameAndPath);
         else if (type == ModelWithImageType.NEWS) _newsService.setImage(_newsService.getNewsById(id), fileNameAndPath);
         else if (type == ModelWithImageType.FEES) _feesService.setImage(_feesService.getFeesById(id), fileNameAndPath);
+        else if (type == ModelWithImageType.TRANSACTION) _transactionService.setDocument(_transactionService.getTransactionById(id), fileNameAndPath);
     }
 
     public Boolean isRightImageType (String contentType) {
-        return contentType.equals("image/png") || contentType.equals("image/jpeg");
+        return (contentType.equals("image/png") || contentType.equals("image/jpeg") || allowedContentTypes.contains(contentType));
     }
 }
 

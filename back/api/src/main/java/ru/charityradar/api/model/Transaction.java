@@ -2,6 +2,7 @@ package ru.charityradar.api.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.charityradar.api.constant.TransactionType;
 import ru.charityradar.api.constant.TransactionStatus;
 import ru.charityradar.api.input.TransactionInput;
@@ -31,6 +32,7 @@ public class Transaction {
     @Getter
     private Integer fundId;
     private Integer userId;
+    @Setter
     private String document;
 
     public Transaction(TransactionInput transactionInput) {
