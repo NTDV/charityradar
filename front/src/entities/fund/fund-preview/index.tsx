@@ -7,6 +7,7 @@ import { ProgressBar } from '../../../shared/ui/progress-bar';
 import { IconNullPhoto } from '../../../shared/icons/icon-null-photo';
 import { FundPreviewType } from '../../../screens/home';
 import { BASE_URL } from '../../../shared/api/general';
+import { Rating } from '../../../shared/ui/rating';
 
 type FundPreviewProps = {
   onPress: () => void;
@@ -52,14 +53,14 @@ export const FundPreview = ({
           </View>
         ) : (
           <Image
-            source={{ uri: `${BASE_URL}/images/${image}` }}
+            source={{ uri: `${BASE_URL}/${image}` }}
             style={[styles.img, isLarge && styles.imgLarge]}
           />
         )}
       </View>
       <View style={styles.coefficientRow}>
         <Text style={styles.coefficientTitle}>Коэффициент доверия</Text>
-        {coefficient !== null && <Text style={styles.coefficient}>{coefficient}</Text>}
+        {coefficient !== null && <Rating rating={coefficient} styles={styles.coefficient} />}
       </View>
       {fundDescription !== null && <Text style={styles.info}>{fundDescription}</Text>}
       <Text style={styles.nameFund}>{fundName}</Text>

@@ -1,11 +1,11 @@
-import { View, ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 
 import { styles } from './styles';
 
 import { HeaderLogo } from '../../../widgets/header';
 import { PreviewCard } from '../../../entities/bank-card';
 import { CabinetButtonList } from '../ui/cabinet-button-list';
-import { useAuth } from '../../../shared/hooks/use-auth';
+import { useAuth, UserType } from '../../../shared/hooks/use-auth';
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { bankCardStore } from '../../../stores/bank-card-store';
@@ -20,7 +20,7 @@ export const AuthUserCabinet = observer(() => {
   };
 
   useEffect(() => {
-    if (user !== null && user !== undefined) {
+    if (user !== null && user !== undefined && user.type === UserType.user) {
       setFio(`${user.user.name} ${user.user.surname} ${user.user.patronymic}`);
       setEmail(user.user.email);
     }
@@ -30,7 +30,7 @@ export const AuthUserCabinet = observer(() => {
     <View style={styles.container}>
       <HeaderLogo />
       <ScrollView style={styles.wrapper}>
-        {(!!fio || !!email) && (
+        {(!!fio || !!email) && user?.type === UserType.user && (
           <View style={styles.header}>
             <Text style={styles.headerName}>{fio}</Text>
             <Text style={styles.headerEmail}>{email}</Text>

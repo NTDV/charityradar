@@ -13,11 +13,20 @@ import { BASE_URL } from '../../shared/api/general';
 import { getFeesByIdFund } from '../../shared/api/fund/get-fees-by-id-fund';
 import { intervalToDuration } from 'date-fns';
 import { FeesPreviewType } from '../home';
+import { Donation } from '../../widgets/donation';
+import { TYPE_PAYMENT } from '../../shared/constants/types';
+import { useAuth, UserType } from '../../shared/hooks/use-auth';
+import { Rating } from '../../shared/ui/rating';
 
 export const FundScreen = (appNavigation: AppNavigationProps) => {
+  const { user } = useAuth();
+  const [visibleDonationModal, setVisibleDonationModal] = useState(false);
   const [fund, setFund] = useState<FondType | null>(null);
   const [feesList, setFeesList] = useState<FeesPreviewType[]>([]);
   const params = appNavigation.route.params;
+
+  const openDonationModal = () => setVisibleDonationModal(true);
+  const closeDonationModal = () => setVisibleDonationModal(false);
 
   const getDeadline = (startDate: Date, endDate: Date) => {
     return intervalToDuration({ start: new Date(startDate), end: new Date(endDate) }).days;
@@ -56,6 +65,13 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
 
   return (
     <View style={{ flex: 1 }}>
+      <Donation
+        visibility={visibleDonationModal}
+        onClose={closeDonationModal}
+        appNavigation={appNavigation}
+        id={fund.id}
+        typePayment={TYPE_PAYMENT.fondDonation}
+      />
       <FlatList
         data={feesList}
         style={styles.container}
@@ -66,12 +82,12 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
               {!fund.image ? (
                 <IconNullPhoto />
               ) : (
-                <Image source={{ uri: `${BASE_URL}/images/${fund.image}` }} style={styles.img} />
+                <Image source={{ uri: `${BASE_URL}/${fund.image}` }} style={styles.img} />
               )}
             </View>
             <View style={styles.coefficientRow}>
               <Text style={styles.coefficientTitle}>Коэффициент доверия</Text>
-              {fund.rating && <Text style={styles.coefficient}>{fund.rating}</Text>}
+              {fund.rating && <Rating rating={fund.rating} styles={styles.coefficient} />}
             </View>
             <View style={styles.reporting}>
               <Text style={styles.reportingTitle}>Отчетность организации:</Text>
@@ -111,9 +127,11 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
         )}
         initialNumToRender={3}
       />
-      <View style={styles.footer}>
-        <CustomButton name="Пожертвовать" onPress={() => {}} primary={true} />
-      </View>
+      {user?.type === UserType.user && (
+        <View style={styles.footer}>
+          <CustomButton name="Пожертвовать" onPress={openDonationModal} primary={true} />
+        </View>
+      )}
     </View>
   );
 };

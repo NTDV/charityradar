@@ -4,7 +4,7 @@ import { styles } from './styles';
 
 import { SignUpProps } from '../../navigation';
 import { HeaderLogo } from '../../widgets/header';
-import { IdSignUpForm, SimpleSignUpForm } from '../../widgets/sign-up';
+import { SimpleSignUpForm } from '../../widgets/sign-up';
 import { KeyboardShift } from '../../shared/ui/keyboard-shift';
 import { stylesGlobal } from '../../shared/constants/styles-global';
 import { CustomModal } from '../../shared/ui/custom-modal';
@@ -50,14 +50,6 @@ export const SignUp = ({ navigation }: SignUpProps) => {
           <View style={[stylesGlobal.mainContainer, styles.container]}>
             <Text style={styles.title}>Ваша помощь достигнет доброй цели</Text>
             <Text style={[styles.grayColor, styles.subtitle]}>Регистрация</Text>
-            <View style={styles.row}>
-              <IdSignUpForm />
-            </View>
-            <View style={[styles.additionally, styles.row]}>
-              <View style={styles.additionallyLine} />
-              <Text style={styles.additionallyText}>или</Text>
-              <View style={styles.additionallyLine} />
-            </View>
             <View style={styles.row}>
               <SimpleSignUpForm successCallback={successCallback} />
             </View>

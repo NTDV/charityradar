@@ -16,6 +16,7 @@ import { View } from 'react-native';
 import { TransactionHistory } from '../screens/transaction-history';
 import { BalanceIncrease } from '../screens/balance-increase';
 import { FeesPreviewType } from '../screens/home';
+import { TYPE_PAYMENT } from '../shared/constants/types';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,13 @@ type RootStackParamList = {
   FeesAllScreen: undefined;
   FeesFullScreen: { fees: FeesPreviewType };
   TransactionHistory: { fundId: number | string };
-  BalanceIncrease: undefined;
+  BalanceIncrease: {
+    title: string;
+    paramPayment?: {
+      typePayment: TYPE_PAYMENT.fondDonation;
+      idFund: string | number;
+    };
+  };
 };
 
 export type SignInProps = {

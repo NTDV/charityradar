@@ -4,6 +4,7 @@ import { styles } from './styles';
 
 import { ProgressBar } from '../../../shared/ui/progress-bar';
 import { BASE_URL } from '../../../shared/api/general';
+import { Rating } from '../../../shared/ui/rating';
 
 type FundPreviewProps = {
   coefficient?: string;
@@ -36,12 +37,12 @@ export const FeesFull = ({
     <View style={styles.containerLarge}>
       {image && (
         <View style={styles.containerImg}>
-          <Image source={{ uri: `${BASE_URL}/images/${image}` }} style={styles.imgLarge} />
+          <Image source={{ uri: `${BASE_URL}/${image}` }} style={styles.imgLarge} />
         </View>
       )}
       <View style={styles.coefficientRow}>
         <Text style={styles.nameFund}>{fundName}</Text>
-        <Text style={styles.coefficient}>{coefficient}</Text>
+        {coefficient !== null && <Rating rating={coefficient} styles={styles.coefficient} />}
       </View>
       <Text style={styles.info}>{fundDescription}</Text>
       {fundraising && (

@@ -13,10 +13,14 @@ export const signInFormApi = async ({ email, password }: validationSchemaSimpleF
   const graphqlQuery = {
     query: `query {
      authByLoginPass(login: "${email}", password: "${password}") {
+        id
+        login
+        vtbMdmId
+        token
         type
         confirmed
         link
-        token
+        vtbToken
       }
     }`,
   };

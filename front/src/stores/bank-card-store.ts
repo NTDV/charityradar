@@ -12,6 +12,7 @@ class BankCardStore {
 
       setCurrentBalance: action,
       setDonations: action,
+      clearCard: action,
     });
   }
 
@@ -21,6 +22,11 @@ class BankCardStore {
 
   setDonations(donations: number) {
     this.monthDonations = donations;
+  }
+
+  clearCard() {
+    this.amount = null;
+    this.monthDonations = null;
   }
 }
 

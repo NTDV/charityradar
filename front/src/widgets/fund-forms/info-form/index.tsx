@@ -50,6 +50,7 @@ export const InfoForm = () => {
 
     let formData = new FormData();
     formData.append('image', { uri: photo, name: filename, type });
+    formData.append('type', 0);
 
     await uploadImg(formData);
   };

@@ -93,6 +93,7 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await getDatePage();
+    await getBalanceCard();
     setRefreshing(false);
   }, []);
 
@@ -122,7 +123,7 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
         {/*<View style={styles.rowSection}>*/}
         {/*  <YouHelpList onPressFund={openFund} />*/}
         {/*</View>*/}
-        {fundsList !== null && (
+        {fundsList !== null && fundsList.length !== 0 && (
           <View style={styles.rowSection}>
             <PopularFundsList
               onPressAll={openAllListPopularFund}
@@ -131,7 +132,7 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
             />
           </View>
         )}
-        {feesList !== null && (
+        {feesList !== null && feesList.length !== 0 && (
           <View style={styles.rowSection}>
             <ActualFees
               onPressAll={openActualFeesAll}

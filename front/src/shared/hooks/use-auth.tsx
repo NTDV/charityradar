@@ -11,6 +11,7 @@ import { ERRORS } from '../constants/types';
 import { validationSchemaVtbFormProps } from '../../widgets/sign-in/vtb-modal/validation-schema';
 import { getToken } from '../api/sign-in/get-token';
 import { SERVER_ERROR } from '../constants/variables';
+import { bankCardStore } from '../../stores/bank-card-store';
 
 export enum UserType {
   'guest',
@@ -26,6 +27,10 @@ export type User =
   | {
       type: UserType;
       token?: string;
+      id?: string;
+      login?: string;
+      vtbMdmId?: string;
+      vtbToken?: string;
       user?: {
         email: string;
         id: string;
@@ -107,6 +112,10 @@ export const useProvideAuth = (): UseProvideAuthExit => {
       // Присваиваем тип
       user['type'] = type;
       user['token'] = token;
+      user['id'] = payload['data']['authByLoginPass']['id'];
+      user['login'] = payload['data']['authByLoginPass']['login'];
+      user['vtbMdmId'] = payload['data']['authByLoginPass']['vtbMdmId'];
+      user['vtbToken'] = payload['data']['authByLoginPass']['vtbToken'];
 
       if (type === UserType.fund) {
         const fundData = await AuthFund(link);
@@ -129,6 +138,10 @@ export const useProvideAuth = (): UseProvideAuthExit => {
 
     user['type'] = userVtb.type;
     user['token'] = userVtb.token;
+    user['id'] = userVtb.id;
+    user['login'] = userVtb.login;
+    user['vtbMdmId'] = userVtb.vtbMdmId;
+    user['vtbToken'] = userVtb.vtbToken;
 
     if (!!userVtb['link']) {
       const userData = await authUser(userVtb.link);
@@ -149,6 +162,7 @@ export const useProvideAuth = (): UseProvideAuthExit => {
   const signInGuest = async () => {
     const user = { type: UserType.guest };
     await SecureStore.setItemAsync('user', JSON.stringify(user));
+    bankCardStore.clearCard();
     setUser(user);
   };
 

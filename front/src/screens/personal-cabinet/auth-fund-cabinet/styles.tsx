@@ -54,4 +54,17 @@ export const styles = StyleSheet.create({
     color: COLOR_BLACK,
     marginBottom: 15,
   },
+  money: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  moneyTitle: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  moneySubtitle: {
+    fontSize: 22,
+    letterSpacing: 2,
+    fontWeight: '500',
+  },
 });

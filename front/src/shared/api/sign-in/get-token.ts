@@ -3,13 +3,15 @@ import axios from 'axios';
 import { BASE_URL } from '../general';
 import { ERRORS, ERRORS_MESSAGE } from '../../constants/types';
 
-type GetToken = ({
-  login,
-  password,
-}: {
-  login: string;
-  password: string;
-}) => Promise<{ id: string; link: number; type: number; token: string }>;
+type GetToken = ({ login, password }: { login: string; password: string }) => Promise<{
+  id: string;
+  link: number;
+  type: number;
+  token: string;
+  login: string | null;
+  vtbMdmId: string | null;
+  vtbToken: string | null;
+}>;
 
 export const getToken: GetToken = async ({ login, password }) => {
   const headers = {
@@ -20,9 +22,13 @@ export const getToken: GetToken = async ({ login, password }) => {
     query: `{ authByVTBId(login: "${login}", password: "${password}")
       {
         id
-        link
-        type
+        login
+        vtbMdmId
         token
+        type
+        confirmed
+        link
+        vtbToken
       }
     }`,
   };

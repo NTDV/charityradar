@@ -29,7 +29,7 @@ const defaultValues = __DEV__
       patronymic: '123',
       phone: '89998670934',
       birthday: '29.10.1999',
-      email: 'asafohin987@gmail.com',
+      email: 'asafohin1999@gmail.com',
       password: 'qwerty123QQW',
       passwordRepeat: 'qwerty123QQW',
     }
