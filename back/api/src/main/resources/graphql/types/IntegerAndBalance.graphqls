@@ -1,0 +1,4 @@
+type IntegerAndBalance {
+    integer: Int!
+    balance: Balance!
+}

@@ -35,6 +35,7 @@ public class FeesController {
         return _feesService.getTopFees();
     }
 
+    @QueryMapping
     public Fees getFeesById(@Argument final Integer feesId) {
         return _feesService.getFeesById(feesId);
     }

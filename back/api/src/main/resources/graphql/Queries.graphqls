@@ -6,6 +6,7 @@ type Query {
 
     getAllFees: [Fees]!
     getFeesByFundId(fundId: Int!): [Fees]
+    getFeesById(feesId: Int!): Fees
 
     getAllEvents: [Event]!
     getEventsByFundId(fundId: Int!): [Event]
@@ -28,8 +29,12 @@ type Query {
     getTopFees: [Fees]!
 
     getMainCardInfo(token: String!): Card
+    addToUserBalance(token: String!, card: CardInput!, amount: Float!): Balance
+
     payToFund(token: String!, card: CardInput!, amount: Float!, fundId: ID!): Balance
     payToFees(token: String!, card: CardInput!, amount: Int!, feesId: ID!): Int!
+    payToFundByBalance(token: String!, amount: Float!, fundId: ID!): [Balance!]!
+    payToFeesByBalance(token: String!, amount: Float!, feesId: ID!): IntegerAndBalance!
 
 # Delete before deploying production
     getAllUsers: [User]!

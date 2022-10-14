@@ -8,6 +8,9 @@ import ru.charityradar.api.repository.FundRepository;
 
 @Service
 public class BalanceService {
+
+    public class NotEnoughMoneyException extends IllegalArgumentException { }
+
     @Autowired
     private BalanceRepository _balanceRepository;
     @Autowired
@@ -19,7 +22,9 @@ public class BalanceService {
     }
 
     public Balance addExpense(Balance balance, Float amount) {
-        balance.setBalance(balance.getBalance() - amount);
+        final Float currentBalance = balance.getBalance();
+        if (currentBalance < amount) throw new NotEnoughMoneyException();
+        balance.setBalance(currentBalance - amount);
        return  _balanceRepository.save(balance);
     }
 
