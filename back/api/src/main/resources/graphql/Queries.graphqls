@@ -15,14 +15,21 @@ type Query {
 
     authByLoginPass(login: String!, password: String!): Auth
     authByVTBId(login: String!, password: String!): Auth
+    logout(token: String!): Boolean!
 
     sendLetterToConfirmEmail(token: String!): Boolean!
     sendLetterToResetPassword(login: String!): Boolean!
 
     getBalanceInfo(token: String!): BalanceMixed
+    getBalanceByFundId(fundId: ID!): Balance
     getAllBalance: [Balance]!
+
     getTopFund: [Fund]!
     getTopFees: [Fees]!
+
+    getMainCardInfo(token: String!): Card
+    payToFund(token: String!, card: CardInput!, amount: Float!, fundId: ID!): Balance
+    payToFees(token: String!, card: CardInput!, amount: Int!, feesId: ID!): Int!
 
 # Delete before deploying production
     getAllUsers: [User]!

@@ -43,6 +43,11 @@ public class AuthController {
     }
 
     @QueryMapping
+    public Boolean logout(@Argument final String token) {
+        return _authService.logout(token);
+    }
+
+    @QueryMapping
     public Boolean sendLetterToConfirmEmail(@Argument final String token) {
         return _authService.sendLetterToConfirmEmail(token);
     }

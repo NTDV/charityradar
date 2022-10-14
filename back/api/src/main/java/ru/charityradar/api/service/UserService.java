@@ -3,7 +3,7 @@ package ru.charityradar.api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.stereotype.Service;
-import ru.charityradar.api.dto.VTBMe;
+import ru.charityradar.api.dto.VTB.VTBMe;
 import ru.charityradar.api.input.UserInput;
 import ru.charityradar.api.model.Balance;
 import ru.charityradar.api.model.User;
@@ -15,8 +15,8 @@ public class UserService {
     @Autowired
     private UserRepository _userRepository;
 
-    public User addUser(final VTBMe me, final Balance balance) {
-        final var user = new User(me);
+    public User addUser(final VTBMe vtbMe, final Balance balance) {
+        final var user = new User(vtbMe);
         user.setBalanceId(balance.getId());
         return _userRepository.save(user);
     }

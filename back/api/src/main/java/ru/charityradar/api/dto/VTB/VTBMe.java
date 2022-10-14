@@ -1,4 +1,4 @@
-package ru.charityradar.api.dto;
+package ru.charityradar.api.dto.VTB;
 
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -12,11 +12,11 @@ public record VTBMe(String surname, String name, String patronymic, String gende
                     VTBSimpleAddres registrationAddress, VTBSimpleAddres temporaryAddress, VTBSimpleAddres actualAddress,
                     String snils, String inn, VTBRussianPassport rfPassport, String mdmId) {
     @SuppressWarnings("CopyConstructorMissesField")
-    public VTBMe(final VTBMe me) throws NullPointerException {
-        this(me.surname(), me.name(), me.patronymic(), me.gender(), me.birthPlace(),
-                me.birthDate(), me.maritalStatus(), me.mainMobilePhone(), me.mobilePhone(),
-                me.email(), me.registrationAddress(), me.temporaryAddress(), me.actualAddress(),
-                me.snils(), me.inn(), me.rfPassport(), me.mdmId());
+    public VTBMe(final VTBMe vtbMe) throws NullPointerException {
+        this(vtbMe.surname(), vtbMe.name(), vtbMe.patronymic(), vtbMe.gender(), vtbMe.birthPlace(),
+                vtbMe.birthDate(), vtbMe.maritalStatus(), vtbMe.mainMobilePhone(), vtbMe.mobilePhone(),
+                vtbMe.email(), vtbMe.registrationAddress(), vtbMe.temporaryAddress(), vtbMe.actualAddress(),
+                vtbMe.snils(), vtbMe.inn(), vtbMe.rfPassport(), vtbMe.mdmId());
     }
 
     @SuppressWarnings("unused")

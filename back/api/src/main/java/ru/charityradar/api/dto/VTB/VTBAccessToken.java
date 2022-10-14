@@ -1,4 +1,4 @@
-package ru.charityradar.api.dto;
+package ru.charityradar.api.dto.VTB;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,13 +12,13 @@ import java.util.List;
 
 public record VTBAccessToken(String access_token, String refresh_token, String scope, String id_token) {
     @SuppressWarnings("CopyConstructorMissesField")
-    public VTBAccessToken(final VTBAccessToken accessToken) throws NullPointerException {
-        this(accessToken.access_token(), accessToken.refresh_token(), accessToken.scope(), accessToken.id_token());
+    public VTBAccessToken(final VTBAccessToken vtbAccessToken) throws NullPointerException {
+        this(vtbAccessToken.access_token(), vtbAccessToken.refresh_token(), vtbAccessToken.scope(), vtbAccessToken.id_token());
     }
 
-    public static VTBAccessToken generate(final VTBMasterToken masterToken) throws AuthenticationException {
+    public static VTBAccessToken generate(final VTBMasterToken vtbMasterToken) throws AuthenticationException {
         final var headers = new HttpHeaders();
-        headers.setBearerAuth(masterToken.access_token());
+        headers.setBearerAuth(vtbMasterToken.access_token());
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         final var body = "{\"grant_type\": \"code\"}";

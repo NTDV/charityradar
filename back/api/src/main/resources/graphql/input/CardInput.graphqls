@@ -1,0 +1,6 @@
+input CardInput {
+    number: String!
+    expire: String!
+    holder: String!
+    cvc: String
+}

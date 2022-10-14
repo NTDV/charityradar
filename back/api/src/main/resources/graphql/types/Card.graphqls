@@ -1,0 +1,5 @@
+type Card {
+    number: String!
+    expire: String!
+    holder: String!
+}

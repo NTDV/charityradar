@@ -2,7 +2,12 @@ package ru.charityradar.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import ru.charityradar.api.helper.AuthHash;
 import ru.charityradar.api.helper.Helper;
 import ru.charityradar.api.helper.MailSender;
@@ -17,6 +22,7 @@ import ru.charityradar.api.repository.AuthRepository;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -91,6 +97,15 @@ public class AuthService {
     public Auth authByLoginPass(String login, String pass) throws NoSuchAlgorithmException {
         Auth auth = getAuthByLogin(login);
         return setNewUUIDToken(auth, login, pass);
+    }
+
+    public Boolean logout(@Argument final String token) {
+        final var headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        final var response = new RestTemplate()
+                .exchange(ProjectProperties.ProjectProperty.AUTH_VTBID_LOGOUT_URL.getCachedValue(), HttpMethod.GET, new HttpEntity<>(headers), Object.class);
+        return response.getStatusCode().is2xxSuccessful();
     }
 
     public Iterable<Auth> getAllAuth() {
@@ -173,5 +188,4 @@ public class AuthService {
             return null;
         }
     }
-
 }

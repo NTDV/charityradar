@@ -2,7 +2,7 @@ package ru.charityradar.api.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import ru.charityradar.api.dto.VTBMe;
+import ru.charityradar.api.dto.VTB.VTBMe;
 import ru.charityradar.api.input.UserInput;
 
 import javax.persistence.Entity;
@@ -39,12 +39,12 @@ public class User {
         this.phone = userInput.getPhone();
     }
 
-    public User(final VTBMe me) {
-        this.name = me.name();
-        this.surname = me.surname();
-        this.patronymic = me.patronymic();
-        this.email = me.email();
-        this.phone = me.mainMobilePhone();
+    public User(final VTBMe vtbMe) {
+        this.name = vtbMe.name();
+        this.surname = vtbMe.surname();
+        this.patronymic = vtbMe.patronymic();
+        this.email = vtbMe.email();
+        this.phone = vtbMe.mainMobilePhone();
     }
 
     @Override

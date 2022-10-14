@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.charityradar.api.helper.Helper;
 import ru.charityradar.api.input.FeesInput;
 import ru.charityradar.api.model.Fees;
-import ru.charityradar.api.model.Fund;
 import ru.charityradar.api.repository.FeesRepository;
 
 import java.text.ParseException;
@@ -61,4 +60,7 @@ public class FeesService {
         return _feesRepository.findFirstByFundId(fundId);
     }
 
+    public Fees collect(final Fees fees, final Integer amount) {
+        return _feesRepository.save(fees.collect(amount));
+    }
 }

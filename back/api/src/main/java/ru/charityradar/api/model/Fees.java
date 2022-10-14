@@ -42,4 +42,9 @@ public class Fees {
         this.fundId = feesInput.getFundId();
         this.image = feesInput.getImage();
     }
+
+    public Fees collect(final Integer amount) {
+        setCollected(collected + amount);
+        return this;
+    }
 }

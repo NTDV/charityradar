@@ -1,4 +1,4 @@
-package ru.charityradar.api.dto;
+package ru.charityradar.api.dto.VTB;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,8 +14,8 @@ import static ru.charityradar.api.helper.ProjectProperties.ProjectProperty;
 
 public record VTBMasterToken(String access_token, Integer expires_in, Integer refresh_expires_in, String token_type, String scope) {
     @SuppressWarnings("CopyConstructorMissesField")
-    public VTBMasterToken(final VTBMasterToken masterToken) throws NullPointerException {
-        this(masterToken.access_token(), masterToken.expires_in(), masterToken.refresh_expires_in(), masterToken.token_type(), masterToken.scope());
+    public VTBMasterToken(final VTBMasterToken vtbMasterToken) throws NullPointerException {
+        this(vtbMasterToken.access_token(), vtbMasterToken.expires_in(), vtbMasterToken.refresh_expires_in(), vtbMasterToken.token_type(), vtbMasterToken.scope());
     }
 
     public static VTBMasterToken generate(final String login, final String password) throws AuthenticationException {

@@ -13,6 +13,7 @@ public class ProjectProperties {
         MAIL_SENDER_PASSWORD("mail.sender.password"),
         PROGRAMMERS_MAILS("programmers.mails"),
 
+        DEVELOPMENT_TOKEN_AUTOREFRESH("development.token.autorefresh"),
         DEVELOPMENT_DB_INIT("development.db.init"),
         DEVELOPMENT_DB_INIT_FUND_IMAGES_PATH("development.db.init.fundimagespath"),
         IMAGE_UPLOAD_PATH("image.upload.path"),
@@ -21,6 +22,17 @@ public class ProjectProperties {
         AUTH_VTBID_MASTER_TOKEN_URL("auth.vtbid.mastertoken.url"),
         AUTH_VTBID_ACCESS_TOKEN_URL("auth.vtbid.accesstoken.url"),
         AUTH_VTBID_ME_URL("auth.vtbid.me.url"),
+        AUTH_VTBID_LOGOUT_URL("auth.vtbid.logout.url"),
+
+        CARDINFO_VTB_CREDENTIALS_URL("cardinfo.vtb.credentials.url"),
+        CARDINFO_VTB_CVV_URL("cardinfo.vtb.cvv.url"),
+        CARDINFO_VTB_TOKEN_URL("cardinfo.vtb.token.url"),
+        CARDINFO_VTB_TOKENS_URL("cardinfo.vtb.tokens.url"),
+
+        CONSTANT_X_IBM_CLIENT_ID("constant.x-ibm-client-id"),
+        CONSTANT_X_PARTNER_ID("constant.x-partner-id"),
+        CONSTANT_X_CLIENT_CHANNEL_WEB("constant.x-client-channel.web"),
+        CONSTANT_X_CLIENT_CHANNEL_MOBILE("constant.x-client-channel.mobile"),
         ;
 
         private final String _key;

@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.charityradar.api.model.Balance;
 import ru.charityradar.api.repository.BalanceRepository;
+import ru.charityradar.api.repository.FundRepository;
 
 @Service
 public class BalanceService {
     @Autowired
     private BalanceRepository _balanceRepository;
+    @Autowired
+    private FundRepository _fundRepository;
 
     public Balance createBalance(){
         Balance balance = new Balance();
@@ -27,6 +30,10 @@ public class BalanceService {
 
     public Balance getBalanceById(String id) {
         return _balanceRepository.getBalanceById(id);
+    }
+
+    public Balance getBalanceByFundId(final String fundId) {
+        return getBalanceById(_fundRepository.getFundById(Integer.valueOf(fundId)).getBalanceId());
     }
 
     public Float getBalanceAmountById(String id) {
