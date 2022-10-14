@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { FeesPreviewType, FundPreviewType } from '../home';
 import { getAllFunds } from '../../shared/api/fund/get-all-funds';
 import { getAllFees } from '../../shared/api/fund/get-all-fees';
+import { useFocusEffect } from '@react-navigation/native';
 
 /**
  * Страница со списком всех фондов
@@ -38,11 +39,13 @@ export const PopularFundScreen = ({ navigation }: PopularFundScreenProps) => {
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      await getDatePage();
-    })();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        await getDatePage();
+      })();
+    }, []),
+  );
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);

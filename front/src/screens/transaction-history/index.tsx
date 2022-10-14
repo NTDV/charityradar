@@ -14,7 +14,6 @@ export const TransactionHistory = (appNavigation: AppNavigationProps) => {
   const getTransactionData = async () => {
     if (params.fundId !== undefined) {
       const payload = await getTransaction(params.fundId);
-      console.log(payload);
     }
   };
 
