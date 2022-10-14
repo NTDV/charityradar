@@ -10,6 +10,7 @@ import { getAllFees } from '../../shared/api/fund/get-all-fees';
 import { getAllFunds } from '../../shared/api/fund/get-all-funds';
 import { FeesPreviewType } from '../home';
 import { intervalToDuration } from 'date-fns';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const FeesAllScreen = ({ navigation }: FeesAllScreenProps) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -43,11 +44,13 @@ export const FeesAllScreen = ({ navigation }: FeesAllScreenProps) => {
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      await getDatePage();
-    })();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        await getDatePage();
+      })();
+    }, []),
+  );
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);

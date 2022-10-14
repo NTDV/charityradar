@@ -1,4 +1,5 @@
 import { Controller, useForm } from 'react-hook-form';
+import { observer } from 'mobx-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ScrollView, Text, View } from 'react-native';
 
@@ -25,7 +26,7 @@ import Toast from 'react-native-root-toast';
 import { settingsToast } from '../../shared/constants/settings-toast';
 import { payToFees } from '../../shared/api/bank-card/pay-to-fees';
 
-export const BalanceIncrease = (appNavigation: AppNavigationProps) => {
+export const BalanceIncrease = observer((appNavigation: AppNavigationProps) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const params = appNavigation.route.params;
@@ -230,4 +231,4 @@ export const BalanceIncrease = (appNavigation: AppNavigationProps) => {
       </View>
     </View>
   );
-};
+});

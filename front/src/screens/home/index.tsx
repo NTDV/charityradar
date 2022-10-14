@@ -16,6 +16,7 @@ import { AppNavigationProps } from '../../navigation';
 import { bankCardStore } from '../../stores/bank-card-store';
 import { getAllFunds, SuccessResponseGetAllFunds } from '../../shared/api/fund/get-all-funds';
 import { Fees, getAllFees } from '../../shared/api/fund/get-all-fees';
+import { useFocusEffect } from '@react-navigation/native';
 
 export interface FundPreviewType extends SuccessResponseGetAllFunds {
   fees?: {
@@ -102,12 +103,14 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
   }, []);
 
   // Если загружаем страницу в первый раз, то отправляем запрос на баланс карты
-  useEffect(() => {
-    (async () => {
-      await getBalanceCard();
-      await getDatePage();
-    })();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        await getBalanceCard();
+        await getDatePage();
+      })();
+    }, []),
+  );
 
   return (
     <View style={{ flex: 1 }}>

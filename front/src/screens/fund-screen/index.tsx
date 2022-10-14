@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
 import { View, Text, Image, FlatList, RefreshControl } from 'react-native';
 
 import { styles } from './styles';
@@ -18,6 +19,7 @@ import { TYPE_PAYMENT } from '../../shared/constants/types';
 import { useAuth, UserType } from '../../shared/hooks/use-auth';
 import { Rating } from '../../shared/ui/rating';
 import { COLOR_WHITE } from '../../shared/constants/style-variables';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const FundScreen = (appNavigation: AppNavigationProps) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -68,11 +70,13 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
     setRefreshing(false);
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      await getInfoPage();
-    })();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        await getInfoPage();
+      })();
+    }, []),
+  );
 
   if (fund === null) return <View style={{ flex: 1, backgroundColor: COLOR_WHITE }} />;
 

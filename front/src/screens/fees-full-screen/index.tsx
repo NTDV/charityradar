@@ -12,6 +12,7 @@ import { Donation } from '../../widgets/donation';
 import { TYPE_PAYMENT } from '../../shared/constants/types';
 import { useAuth, UserType } from '../../shared/hooks/use-auth';
 import { FeesType, getFeesById } from '../../shared/api/fund/get-fees-by-id';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const FeesFullScreen = (appNavigation: AppNavigationProps) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -42,11 +43,13 @@ export const FeesFullScreen = (appNavigation: AppNavigationProps) => {
     setRefreshing(false);
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      await getData();
-    })();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        await getData();
+      })();
+    }, []),
+  );
 
   if (fees?.id === undefined || fund === null)
     return <View style={{ flex: 1, backgroundColor: COLOR_WHITE }} />;
