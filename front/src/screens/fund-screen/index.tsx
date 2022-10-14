@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { View, Text, Image, FlatList, RefreshControl } from 'react-native';
 
 import { styles } from './styles';
 
@@ -17,8 +17,10 @@ import { Donation } from '../../widgets/donation';
 import { TYPE_PAYMENT } from '../../shared/constants/types';
 import { useAuth, UserType } from '../../shared/hooks/use-auth';
 import { Rating } from '../../shared/ui/rating';
+import { COLOR_WHITE } from '../../shared/constants/style-variables';
 
 export const FundScreen = (appNavigation: AppNavigationProps) => {
+  const [refreshing, setRefreshing] = useState(false);
   const { user } = useAuth();
   const [visibleDonationModal, setVisibleDonationModal] = useState(false);
   const [fund, setFund] = useState<FondType | null>(null);
@@ -38,8 +40,13 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
     }
   };
 
-  const onPressFees = (fees: FeesPreviewType) =>
-    appNavigation.navigation.push('FeesFullScreen', { fees });
+  const onPressFees = (fees: FeesPreviewType) => {
+    appNavigation.navigation.push('FeesFullScreen', {
+      id: fees.id,
+      fondName: fees.fund.name,
+      fondRating: fees.fund.rating,
+    });
+  };
 
   const getInfoPage = async () => {
     if (params !== undefined) {
@@ -55,13 +62,19 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
     }
   };
 
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await getInfoPage();
+    setRefreshing(false);
+  }, []);
+
   useEffect(() => {
     (async () => {
       await getInfoPage();
     })();
   }, []);
 
-  if (fund === null) return <View />;
+  if (fund === null) return <View style={{ flex: 1, backgroundColor: COLOR_WHITE }} />;
 
   return (
     <View style={{ flex: 1 }}>
@@ -75,6 +88,7 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
       <FlatList
         data={feesList}
         style={styles.container}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
           <>
             <Text style={styles.name}>{fund.name}</Text>

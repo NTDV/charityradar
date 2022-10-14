@@ -19,8 +19,8 @@ type VtbModalProps = {
 
 const defaultValues = __DEV__
   ? {
-      login: '',
-      password: '',
+      login: 'team13',
+      password: 'NhwqcMQLDovYSQbj7TyyfS5PvhmLTMAQ',
     }
   : {
       login: '',

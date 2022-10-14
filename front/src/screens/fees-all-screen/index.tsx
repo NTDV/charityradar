@@ -15,7 +15,13 @@ export const FeesAllScreen = ({ navigation }: FeesAllScreenProps) => {
   const [refreshing, setRefreshing] = useState(false);
   const [feesList, setFeesList] = useState<FeesPreviewType[]>([]);
 
-  const openFees = (fees: FeesPreviewType) => navigation.push('FeesFullScreen', { fees });
+  const openFees = (fees: FeesPreviewType) => {
+    navigation.push('FeesFullScreen', {
+      id: fees.id,
+      fondName: fees.fund.name,
+      fondRating: fees.fund.rating,
+    });
+  };
 
   const getDeadline = (startDate: Date, endDate: Date): number | undefined => {
     return intervalToDuration({ start: new Date(startDate), end: new Date(endDate) }).days;

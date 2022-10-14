@@ -47,7 +47,11 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
 
   const openActualFeesAll = () => appNavigation.navigation.push('FeesAllScreen');
   const onPressFees = (fees: FeesPreviewType) =>
-    appNavigation.navigation.push('FeesFullScreen', { fees });
+    appNavigation.navigation.push('FeesFullScreen', {
+      id: fees.id,
+      fondName: fees.fund.name,
+      fondRating: fees.fund.rating,
+    });
 
   // Получение баланса карты у авторизованного пользователя и не фонда
   const getBalanceCard = async () => {

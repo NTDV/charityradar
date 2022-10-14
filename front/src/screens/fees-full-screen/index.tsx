@@ -1,22 +1,24 @@
-import { ScrollView, View } from 'react-native';
+import { RefreshControl, ScrollView, View } from 'react-native';
 
 import { FeesFull } from '../../entities/fees/fees-full';
 import { COLOR_WHITE } from '../../shared/constants/style-variables';
 import { MAIN_PADDING } from '../../shared/constants/styles-global';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AppNavigationProps } from '../../navigation';
-import { FeesPreviewType } from '../home';
 import { intervalToDuration } from 'date-fns';
 import { styles } from './styles';
 import { CustomButton } from '../../shared/ui/custom-button';
 import { Donation } from '../../widgets/donation';
 import { TYPE_PAYMENT } from '../../shared/constants/types';
 import { useAuth, UserType } from '../../shared/hooks/use-auth';
+import { FeesType, getFeesById } from '../../shared/api/fund/get-fees-by-id';
 
 export const FeesFullScreen = (appNavigation: AppNavigationProps) => {
+  const [refreshing, setRefreshing] = useState(false);
   const { user } = useAuth();
   const [visibilityFeesModal, setVisibilityFeesModal] = useState(false);
-  const [fees, setFees] = useState<FeesPreviewType | null>(null);
+  const [fees, setFees] = useState<FeesType | null>(null);
+  const [fund, setFund] = useState(null);
   const params = appNavigation.route.params;
 
   const openFeesModal = () => setVisibilityFeesModal(true);
@@ -26,13 +28,28 @@ export const FeesFullScreen = (appNavigation: AppNavigationProps) => {
     return intervalToDuration({ start: new Date(startDate), end: new Date(endDate) }).days;
   };
 
-  useEffect(() => {
-    if (params && params.fees) {
-      setFees(params.fees);
+  const getData = async () => {
+    if (params?.id !== undefined) {
+      const payload = await getFeesById(params.id);
+      setFees(payload);
+      setFund({ name: params.fondName, rating: params.fondRating });
     }
+  };
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await getData();
+    setRefreshing(false);
   }, []);
 
-  if (fees?.id === undefined) return <View />;
+  useEffect(() => {
+    (async () => {
+      await getData();
+    })();
+  }, []);
+
+  if (fees?.id === undefined || fund === null)
+    return <View style={{ flex: 1, backgroundColor: COLOR_WHITE }} />;
 
   return (
     <View style={{ flex: 1 }}>
@@ -43,12 +60,15 @@ export const FeesFullScreen = (appNavigation: AppNavigationProps) => {
         id={fees.id}
         typePayment={TYPE_PAYMENT.feesDonation}
       />
-      <ScrollView style={{ flexGrow: 1, backgroundColor: COLOR_WHITE }}>
+      <ScrollView
+        style={{ flexGrow: 1, backgroundColor: COLOR_WHITE }}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      >
         <View style={{ flex: 1, padding: MAIN_PADDING }}>
           <FeesFull
             image={fees?.image}
-            fundName={fees?.fund.name}
-            coefficient={fees?.fund.rating}
+            fundName={fund.name}
+            coefficient={fund.rating}
             fundDescription={fees?.description}
             fundraising={{
               allMoney: fees.goal,
