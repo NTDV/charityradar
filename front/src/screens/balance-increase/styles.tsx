@@ -32,6 +32,14 @@ export const styles = StyleSheet.create({
     elevation: 3,
     padding: 20,
   },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  cardHeaderIcon: {
+    marginTop: -17,
+  },
   cardTitle: {
     fontSize: 18,
     fontWeight: '500',
@@ -71,6 +79,7 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
     color: COLOR_ERROR,
     textAlign: 'center',
+    marginHorizontal: 10,
   },
   name: {
     fontSize: 16,

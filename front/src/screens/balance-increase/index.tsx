@@ -25,6 +25,9 @@ import { payToFund } from '../../shared/api/bank-card/pay-to-fund';
 import Toast from 'react-native-root-toast';
 import { settingsToast } from '../../shared/constants/settings-toast';
 import { payToFees } from '../../shared/api/bank-card/pay-to-fees';
+import { addToUserBalance } from '../../shared/api/bank-card/add-to-user-balance';
+import { IconVtb } from '../../shared/icons/icon-vtb';
+import { bankCardStore } from '../../stores/bank-card-store';
 
 export const BalanceIncrease = observer((appNavigation: AppNavigationProps) => {
   const [error, setError] = useState('');
@@ -72,13 +75,28 @@ export const BalanceIncrease = observer((appNavigation: AppNavigationProps) => {
       });
     }
 
+    if (params?.paramPayment?.typePayment === TYPE_PAYMENT.addUserBalance) {
+      balance = await addToUserBalance({
+        token: user?.token,
+        number: value.number,
+        holder: value.personName,
+        expire: value.mmYY,
+        cvc: value.cvv,
+        amount: value.money,
+      });
+
+      if (balance !== null) {
+        bankCardStore.setDonations(balance['Balance']);
+      }
+    }
+
     // Успешно
     if (balance !== null) {
       Toast.show('Оплата прошла успешно', settingsToast);
       setError('');
       appNavigation.navigation.goBack();
     } else {
-      setError('Реквизиты карты введены некорректно');
+      setError('Во время оплаты произошла ошибка, проверьте данные и повторите попытку');
     }
 
     setLoading(false);
@@ -109,7 +127,12 @@ export const BalanceIncrease = observer((appNavigation: AppNavigationProps) => {
       <KeyboardShift>
         <ScrollView style={styles.wrapper}>
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>По карте</Text>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>По карте</Text>
+              <View style={styles.cardHeaderIcon}>
+                <IconVtb />
+              </View>
+            </View>
             <View>
               <Controller
                 control={control}

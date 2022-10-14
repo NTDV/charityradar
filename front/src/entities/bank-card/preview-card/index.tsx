@@ -7,6 +7,7 @@ import { styles } from './styles';
 import { IconCard } from '../../../shared/icons/icon-card';
 import { bankCardStore } from '../../../stores/bank-card-store';
 import { numberWithSpaces } from '../../../shared/utils/number-with-spaces';
+import { TYPE_PAYMENT } from '../../../shared/constants/types';
 
 /**
  * Превьюшка банковской карты
@@ -16,7 +17,11 @@ export const PreviewCard = observer(() => {
   const navigation = useNavigation();
   const { amount, monthDonations } = bankCardStore;
 
-  const onPress = () => navigation.navigate('BalanceIncrease');
+  const onPress = () =>
+    navigation.navigate('BalanceIncrease', {
+      title: 'Пополнение счета',
+      paramPayment: { typePayment: TYPE_PAYMENT.addUserBalance },
+    });
 
   return (
     <View style={styles.container}>

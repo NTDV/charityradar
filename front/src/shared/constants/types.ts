@@ -12,4 +12,5 @@ export type SERVER_ERROR_TYPE = { err: string };
 export enum TYPE_PAYMENT {
   fondDonation, // Пожертвование в фонд
   feesDonation, // Пожертвование в фонд
+  addUserBalance, // Пополнение пользовательского баланса
 }

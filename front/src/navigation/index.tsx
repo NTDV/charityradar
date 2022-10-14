@@ -34,10 +34,10 @@ type RootStackParamList = {
   FeesFullScreen: { id: number | string; fondName: string; fondRating: number | null };
   TransactionHistory: { fundId: number | string };
   BalanceIncrease: {
-    title: string;
+    title?: string;
     paramPayment?: {
       typePayment: TYPE_PAYMENT.fondDonation;
-      idFund: string | number;
+      idFund?: string | number;
     };
   };
 };
