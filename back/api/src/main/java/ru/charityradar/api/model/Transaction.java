@@ -2,6 +2,7 @@ package ru.charityradar.api.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 import lombok.Setter;
 import ru.charityradar.api.constant.TransactionType;
 import ru.charityradar.api.constant.TransactionStatus;
@@ -16,20 +17,21 @@ import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
+@Getter
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private UUID id;
     private TransactionType type;
-    @Getter
+    @Nullable
+    private String name;
+    @Nullable
+    private String category;
     private String dateTime;
-    @Getter
     private Float amount;
     private TransactionStatus status;
-    @Getter
     private Integer feesId;
-    @Getter
     private Integer fundId;
     private Integer userId;
     @Setter
@@ -38,6 +40,8 @@ public class Transaction {
     public Transaction(TransactionInput transactionInput) {
         this.type = transactionInput.getType();
         this.amount = transactionInput.getAmount();
+        this.name = transactionInput.getName();
+        this.category = transactionInput.getCategory();
         this.dateTime = transactionInput.getDateTime();
         this.status = transactionInput.getStatus();
         this.feesId = transactionInput.getFeesId();

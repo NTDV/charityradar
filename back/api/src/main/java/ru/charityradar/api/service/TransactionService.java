@@ -2,6 +2,7 @@ package ru.charityradar.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.charityradar.api.constant.TransactionType;
 import ru.charityradar.api.helper.Helper;
 import ru.charityradar.api.input.TransactionInput;
 import ru.charityradar.api.model.Fund;
@@ -9,6 +10,7 @@ import ru.charityradar.api.model.Transaction;
 import ru.charityradar.api.repository.TransactionRepository;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.StreamSupport;
@@ -20,6 +22,7 @@ public class TransactionService {
     private TransactionRepository _transactionRepository;
 
     public Transaction addTransaction(TransactionInput transactionInput) throws ParseException {
+        transactionInput.setDateTime(LocalDate.now().toString());
         final var transaction = new Transaction(transactionInput);
         return _transactionRepository.save(transaction);
     }
@@ -29,6 +32,9 @@ public class TransactionService {
     }
     public Iterable<Transaction> getTransactionsByFundId(Integer fundId) {
         return _transactionRepository.getTransactionsByFundId(fundId);
+    }
+    public Iterable<Transaction> getExpenseTransactionsByFundId(Integer fundId) {
+        return _transactionRepository.getTransactionsByFundIdAndType(fundId, TransactionType.EXPENSE);
     }
 
     public Transaction getTransactionById(Integer transactionId) {

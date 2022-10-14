@@ -6,4 +6,6 @@ input TransactionInput {
     fundId: Int
     userId: Int
     document: String
+    name: String
+    category: String
 }

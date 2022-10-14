@@ -12,6 +12,7 @@ public class Helper {
     }
     public static SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     public static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+    public static String[] monthsRus = new String[] {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
 
     public static Date[] getMonthStartEndNow() {
         Calendar calendar = Calendar.getInstance();

@@ -13,7 +13,7 @@ type Query {
 
     getTransactionsByUserId(userId: Int!): [Transaction]
     getTransactionsByFundId(fundId: Int!): [Transaction]
-
+    getExpenseTransactionsByFundId(fundId: Int!): [Transaction]
     authByLoginPass(login: String!, password: String!): Auth
     authByVTBId(login: String!, password: String!): Auth
     logout(token: String!): Boolean!
@@ -41,6 +41,7 @@ type Query {
     getAllAuth: [Auth]!
     getFundById(id: Int!): Fund!
     getAuthByLogin(login: String!): Auth!
+    getAuthByToken(token: String!): Auth!
     getUserById(id: Int!): User!
     getUserByEmail(email: String!): User!
 }
