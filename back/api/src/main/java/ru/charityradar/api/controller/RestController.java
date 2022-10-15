@@ -30,7 +30,7 @@ public class RestController {
     public String activateAuth(@PathVariable String token, Model model) {
         Auth auth = _authService.getAuthByToken(token);
 
-        if (auth.getId() > 0) {
+        if (auth != null && auth.getId() > 0) {
             _authService.setConfirmed(auth);
             return "activating_success";
         } else {
