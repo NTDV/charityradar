@@ -1,5 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { COLOR_BLACK, COLOR_WHITE } from '../../../shared/constants/style-variables';
+import {
+  COLOR_BLACK,
+  COLOR_GREY_LIGHT,
+  COLOR_WHITE,
+} from '../../../shared/constants/style-variables';
 
 export const styles = StyleSheet.create({
   container: {
@@ -24,6 +28,11 @@ export const styles = StyleSheet.create({
     opacity: 0.9,
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  nameFundContainer: {
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: COLOR_GREY_LIGHT,
   },
   fee: {
     marginTop: 10,

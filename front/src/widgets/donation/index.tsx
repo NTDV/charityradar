@@ -114,12 +114,14 @@ export const Donation = observer(
         <View>
           {!visiblePaymentBil && (
             <>
-              <CustomButton
-                name="Оплата банковской картой"
-                onPress={openCardPayment}
-                primary={true}
-                stylesButton={{ marginBottom: 15 }}
-              />
+              {user?.type === UserType.user && (
+                <CustomButton
+                  name="Оплата банковской картой"
+                  onPress={openCardPayment}
+                  primary={true}
+                  stylesButton={{ marginBottom: 15 }}
+                />
+              )}
               {id !== undefined && (
                 <CustomButton
                   name="Оплата по счету"

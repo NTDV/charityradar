@@ -30,7 +30,11 @@ export const FeesFull = ({ fundName, fundraising, fundDescription, image }: Fund
     <View style={styles.containerLarge}>
       {image && (
         <View style={styles.containerImg}>
-          <Image source={{ uri: `${BASE_URL}/${image}` }} style={styles.imgLarge} />
+          <Image
+            source={{ uri: `${BASE_URL}/${image}` }}
+            style={styles.imgLarge}
+            resizeMode="cover"
+          />
         </View>
       )}
       <View style={styles.coefficientRow}>

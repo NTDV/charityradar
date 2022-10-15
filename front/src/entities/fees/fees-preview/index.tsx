@@ -46,12 +46,15 @@ export const FeesPreview = ({
         <Image
           source={{ uri: `${BASE_URL}/${image}` }}
           style={[styles.img, isLarge && styles.imgLarge]}
+          resizeMode="cover"
         />
       </View>
       <View style={styles.coefficientRow}>
         <Text style={styles.nameFund}>{fundName}</Text>
       </View>
-      <Text style={styles.info}>{fundDescription}</Text>
+      <Text style={styles.info}>
+        {fundDescription.length >= 99 ? fundDescription.substring(0, 99) + '...' : fundDescription}
+      </Text>
 
       {!!fundraising && (
         <View style={styles.fee}>

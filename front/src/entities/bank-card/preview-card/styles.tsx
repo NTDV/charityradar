@@ -30,12 +30,12 @@ export const styles = StyleSheet.create({
   },
   headerText: {
     color: COLOR_WHITE,
-    fontSize: 20,
+    fontSize: 24,
     marginLeft: 10,
   },
   subtitle: {
     color: COLOR_WHITE,
-    fontSize: 16,
+    fontSize: 18,
     opacity: 0.8,
     flex: 1,
   },

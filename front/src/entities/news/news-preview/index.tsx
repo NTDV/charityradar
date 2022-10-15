@@ -38,7 +38,7 @@ export const NewsPreview = ({
             <IconNullPhoto />
           </View>
         ) : (
-          <Image source={{ uri: `${BASE_URL}/${image}` }} style={styles.img} />
+          <Image source={{ uri: `${BASE_URL}/${image}` }} style={styles.img} resizeMode="cover" />
         )}
       </View>
       <View style={styles.titleContainer}>

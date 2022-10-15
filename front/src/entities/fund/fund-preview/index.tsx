@@ -55,6 +55,7 @@ export const FundPreview = ({
           <Image
             source={{ uri: `${BASE_URL}/${image}` }}
             style={[styles.img, isLarge && styles.imgLarge]}
+            resizeMode="cover"
           />
         )}
       </View>
@@ -62,11 +63,17 @@ export const FundPreview = ({
         <Text style={styles.coefficientTitle}>Коэффициент доверия</Text>
         {coefficient !== null && <Rating rating={coefficient} styles={styles.coefficient} />}
       </View>
-      {fundDescription !== null && <Text style={styles.info}>{fundDescription}</Text>}
+      {fundDescription !== null && (
+        <Text style={styles.info}>
+          {fundDescription.length >= 99
+            ? fundDescription.substring(0, 99) + '...'
+            : fundDescription}
+        </Text>
+      )}
       <Text style={styles.nameFund}>{fundName}</Text>
       {fees !== undefined ? (
         <View style={styles.fee}>
-          <Text style={styles.feeText}>Текущий сбор:</Text>
+          <Text style={styles.feeText}>Информация о сборе:</Text>
           <ProgressBar
             allMoney={fees.goal}
             currentMoney={fees.collected}

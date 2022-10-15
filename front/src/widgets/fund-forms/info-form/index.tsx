@@ -13,9 +13,10 @@ import { Avatar } from '../../../shared/ui/avatar';
 import { MAIN_PADDING } from '../../../shared/constants/styles-global';
 import { uploadImg } from '../../../shared/api/fund-admin/upload-img';
 import { useAuth } from '../../../shared/hooks/use-auth';
+import { editFund } from '../../../shared/api/fund-admin/edit-fund';
 
 export const InfoForm = () => {
-  const { user, setPhotoFond } = useAuth();
+  const { user, editFond } = useAuth();
   const [formDataImg, setFormDataImg] = useState(null);
   const [photo, setPhoto] = useState<null | object>(null);
 
@@ -30,12 +31,24 @@ export const InfoForm = () => {
 
   const onSubmit = async (value) => {
     if (formDataImg !== null) {
+      const data = {
+        name: value.name,
+        description: value.description,
+      };
+
+      let pathPhoto = null;
       const payload = await uploadImg(formDataImg);
 
-      if (payload.path) {
-        const path = payload.path.substring(16);
-        setPhotoFond(path);
+      if (payload !== null && payload.path) {
+        pathPhoto = payload.path.substring(16);
+        data['image'] = pathPhoto;
+        editFond(data);
       }
+
+      await editFund({
+        token: user?.token,
+        data,
+      });
     }
   };
 

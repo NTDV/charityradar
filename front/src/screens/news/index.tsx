@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { FlatList, RefreshControl, Text, View } from 'react-native';
 
 import { styles } from './styles';
 
@@ -9,6 +9,7 @@ import { TitleMore } from '../../shared/ui/title-more';
 import { getAllNews, NewsType } from '../../shared/api/news/get-all-news';
 import { getFundById } from '../../shared/api/fund/get-fund-by-id';
 import { AppNavigationProps } from '../../navigation';
+import { COLOR_GREY } from '../../shared/constants/style-variables';
 
 export interface NewsWithFundType extends NewsType {
   fundName: string;
@@ -63,6 +64,17 @@ export const News = ({ appNavigation }: { appNavigation: AppNavigationProps }) =
             <NewsPreview {...item} openFund={openFund} />
           </View>
         )}
+        ListEmptyComponent={
+          <Text
+            style={{
+              marginTop: 30,
+              fontSize: 22,
+              color: COLOR_GREY,
+            }}
+          >
+            Поиск последних новостей...
+          </Text>
+        }
         style={styles.wrapperPadding}
         initialNumToRender={3}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}

@@ -134,6 +134,7 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
             <FeesPreviewInsideFund
               onPress={() => onPressFees(item)}
               fundDescription={item.description}
+              feesName={item.name}
               fundraising={{
                 allMoney: item.goal,
                 currentMoney: item.collected,

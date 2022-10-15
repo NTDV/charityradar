@@ -10,7 +10,6 @@ import { AuthFund } from '../api/sign-in/auth-fund';
 import { ERRORS } from '../constants/types';
 import { validationSchemaVtbFormProps } from '../../widgets/sign-in/vtb-modal/validation-schema';
 import { getToken } from '../api/sign-in/get-token';
-import { SERVER_ERROR } from '../constants/variables';
 import { bankCardStore } from '../../stores/bank-card-store';
 
 export enum UserType {
@@ -61,6 +60,12 @@ type AuthContextDefault = {
   signInVtbId: null;
 };
 
+export type EditFond = {
+  image?: string;
+  name: string;
+  description: string;
+};
+
 // После того, как сработал хук
 export type UseProvideAuthExit = {
   user: User | null | undefined;
@@ -69,7 +74,7 @@ export type UseProvideAuthExit = {
   logout: () => void;
   signUpSimple: (values: validationSchemaSimpleFormProps) => void;
   signInVtbId: (values: validationSchemaVtbFormProps) => void;
-  setPhotoFond: (image: string) => void;
+  editFond: (values: EditFond) => void;
 };
 
 // Контекст
@@ -159,13 +164,23 @@ export const useProvideAuth = (): UseProvideAuthExit => {
     return userVtb;
   };
 
-  const setPhotoFond = (image: string) => {
+  const editFond = ({
+    image,
+    name,
+    description,
+  }: {
+    image?: string;
+    name: string;
+    description: string;
+  }) => {
     setUser((prev) => {
       return {
         ...prev,
         fund: {
-          ...prev,
-          image,
+          ...prev?.fund,
+          image: !image ? prev?.fund.image : image,
+          name,
+          description,
         },
       };
     });
@@ -211,7 +226,7 @@ export const useProvideAuth = (): UseProvideAuthExit => {
     })();
   }, []);
 
-  return { user, signUpSimple, signInSimple, signInGuest, logout, signInVtbId, setPhotoFond };
+  return { user, signUpSimple, signInSimple, signInGuest, logout, signInVtbId, editFond };
 };
 
 // Обертка приложения

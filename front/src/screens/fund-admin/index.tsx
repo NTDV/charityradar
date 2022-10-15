@@ -4,7 +4,7 @@ import { styles } from './styles';
 
 import { HeaderLogo } from '../../widgets/header';
 import { TitleMore } from '../../shared/ui/title-more';
-import { FeesForm, InfoForm } from '../../widgets/fund-forms';
+import { FeesForm, InfoForm, NewsForm } from '../../widgets/fund-forms';
 import { KeyboardShift } from '../../shared/ui/keyboard-shift';
 
 export const FundAdmin = () => {
@@ -24,6 +24,12 @@ export const FundAdmin = () => {
               <TitleMore title="Заполните информацию про сбор" />
             </View>
             <FeesForm />
+          </View>
+          <View>
+            <View style={{ marginVertical: 15 }}>
+              <TitleMore title="Публикация новости" />
+            </View>
+            <NewsForm />
           </View>
         </ScrollView>
       </KeyboardShift>
