@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.charityradar.api.input.FundInput;
-import ru.charityradar.api.input.UserInput;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,5 +34,19 @@ public class Fund {
         this.image= fundInput.getImage();
         this.description = fundInput.getDescription();
         this.rating = fundInput.getRating();
+    }
+
+    public Fund edit(final FundInput fundInput) {
+        this.name = fundInput.getName();
+        this.email = fundInput.getEmail();
+        this.phone = fundInput.getPhone();
+        this.image= fundInput.getImage();
+        this.description = fundInput.getDescription();
+        return this;
+    }
+
+    public Fund editImage(final String image) {
+        this.image = image;
+        return this;
     }
 }

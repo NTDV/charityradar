@@ -54,8 +54,8 @@ public class VTBCardInfoService {
                     TransactionType.REFILL,
                     amount,
                     LocalDate.now().toString(),
-                    null,
-                    null,
+                    "Пополнение баланса",
+                    "Платеж картой",
                     TransactionStatus.CONFIRMED,
                     null,
                     null,
@@ -78,8 +78,8 @@ public class VTBCardInfoService {
                     TransactionType.REFILL,
                     amount,
                     LocalDate.now().toString(),
-                    null,
-                    null,
+                    "Пополнение баланса",
+                    "Платеж картой",
                     TransactionStatus.CONFIRMED,
                     null,
                     Integer.valueOf(fundId),
@@ -101,8 +101,8 @@ public class VTBCardInfoService {
                     TransactionType.REFILL,
                     amount.floatValue(),
                     LocalDate.now().toString(),
-                    null,
-                    null,
+                    "Пополнение сбора",
+                    "Платеж картой",
                     TransactionStatus.CONFIRMED,
                     Integer.valueOf(feesId),
                     null,
@@ -112,8 +112,8 @@ public class VTBCardInfoService {
                     TransactionType.EXPENSE,
                     amount.floatValue(),
                     LocalDate.now().toString(),
-                    null,
-                    null,
+                    "Пополнение сбора " + fees.getName(),
+                    "Платеж картой",
                     TransactionStatus.CONFIRMED,
                     Integer.valueOf(feesId),
                     null,
@@ -136,7 +136,19 @@ public class VTBCardInfoService {
                     TransactionType.REFILL,
                     amount,
                     LocalDate.now().toString(),
-                    null, null,
+                    "Пожертвование от пользователя",
+                    "Платеж со счета",
+                    TransactionStatus.CONFIRMED,
+                    null,
+                    Integer.valueOf(fundId),
+                    auth.getLink(),
+                    null));
+            _transactionService.addTransaction(new TransactionInput(
+                    TransactionType.EXPENSE,
+                    amount,
+                    LocalDate.now().toString(),
+                    "Пожертвование в фонд",
+                    "Платеж со счета",
                     TransactionStatus.CONFIRMED,
                     null,
                     Integer.valueOf(fundId),
@@ -157,7 +169,8 @@ public class VTBCardInfoService {
                     TransactionType.REFILL,
                     amount.floatValue(),
                     LocalDate.now().toString(),
-                    null, null,
+                    "Пожертвование от пользователя",
+                    "Платеж со счета",
                     TransactionStatus.CONFIRMED,
                     Integer.valueOf(feesId),
                     null,
@@ -167,13 +180,48 @@ public class VTBCardInfoService {
                     TransactionType.EXPENSE,
                     amount.floatValue(),
                     LocalDate.now().toString(),
-                    null, null,
+                    "Пожертвование в сбор " + fees.getName(),
+                    "Платеж со счета",
                     TransactionStatus.CONFIRMED,
                     Integer.valueOf(feesId),
                     null,
                     auth.getLink(),
                     null));
             return new IntegerAndBalance(_feesService.collect(fees, amount).getCollected(), userBalance);
+        } else throw new IllegalArgumentException("Some values has unexpected value.");
+    }
+
+    public IntegerAndBalance payFromFundToFees(final String token, final Integer amount, final String feesId)
+            throws ParseException {
+        final var auth = _authService.getAuthByToken(token);
+        final var fundBalance = _balanceService.getBalanceById(_fundService.getFundById(auth.getLink()).getBalanceId());
+        final var fees = _feesService.getFeesById(Integer.valueOf(feesId));
+        if (fees != null && amount > 0 && amount < 600_000) {
+            _balanceService.addExpense(fundBalance, amount.floatValue());
+            fees.collect(amount);
+            _transactionService.addTransaction(new TransactionInput(
+                    TransactionType.REFILL,
+                    amount.floatValue(),
+                    LocalDate.now().toString(),
+                    "Пожертвование от фонда " + auth.getLink(),
+                    "Платеж со счета",
+                    TransactionStatus.CONFIRMED,
+                    Integer.valueOf(feesId),
+                    null,
+                    auth.getLink(),
+                    null));
+            _transactionService.addTransaction(new TransactionInput(
+                    TransactionType.EXPENSE,
+                    amount.floatValue(),
+                    LocalDate.now().toString(),
+                    "Пожертвование в сбор " + fees.getName(),
+                    "Платеж со счета",
+                    TransactionStatus.CONFIRMED,
+                    Integer.valueOf(feesId),
+                    null,
+                    auth.getLink(),
+                    null));
+            return new IntegerAndBalance(fees.getCollected(), fundBalance);
         } else throw new IllegalArgumentException("Some values has unexpected value.");
     }
 }

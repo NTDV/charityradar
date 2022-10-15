@@ -81,7 +81,7 @@ public class UploadService {
 
     public void setFilePath(ModelWithImageType type, int id, String fileNameAndPath) {
         fileNameAndPath = fileNameAndPath.substring(ProjectProperties.ProjectProperty.IMAGE_UPLOAD_PATH.getCachedValue().length());
-        if      (type == ModelWithImageType.FUND) _fundService.setImage(_fundService.getFundById(id), fileNameAndPath);
+        if      (type == ModelWithImageType.FUND) _fundService.editImage(_fundService.getFundById(id), fileNameAndPath);
         else if (type == ModelWithImageType.NEWS) _newsService.setImage(_newsService.getNewsById(id), fileNameAndPath);
         else if (type == ModelWithImageType.FEES) _feesService.setImage(_feesService.getFeesById(id), fileNameAndPath);
         else if (type == ModelWithImageType.TRANSACTION) _transactionService.setDocument(_transactionService.getTransactionById(id), fileNameAndPath);

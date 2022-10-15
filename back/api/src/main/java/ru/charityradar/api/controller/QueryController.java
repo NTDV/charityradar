@@ -57,8 +57,8 @@ public class QueryController {
         sb.append("[");
         for (String date : hmSumms.keySet()){
             if (!first) sb.append(",");
-            sb.append("\"").append(Helper.monthsRus[monthYear.parse(date).getMonth()]).append("\":{");
-            sb.append("\"expense\":").append(hmSumms.get(date)[0]);
+            sb.append("{\"month\":\"").append(Helper.monthsRus[monthYear.parse(date).getMonth()]).append("\"");
+            sb.append(",\"expense\":").append(hmSumms.get(date)[0]);
             sb.append(",\"fills\":").append(hmSumms.get(date)[1]);
             sb.append(",\"transactions\":[");
             boolean firstAdded = false;

@@ -41,7 +41,12 @@ public class VTBPaymentController {
     }
 
     @QueryMapping
-    public Balance addToUserBalance(final String token, final CardInput card, final Float amount) throws AuthenticationException, ParseException {
+    public Balance addToUserBalance(@Argument final String token, @Argument final CardInput card, @Argument final Float amount) throws AuthenticationException, ParseException {
         return _vtbCardInfoService.addToUserBalance(token, card, amount);
+    }
+
+    @QueryMapping
+    public IntegerAndBalance payFromFundToFees(@Argument final String token, @Argument final Integer amount, @Argument final String feesId) throws AuthenticationException, ParseException {
+        return _vtbCardInfoService.payFromFundToFees(token, amount, feesId);
     }
 }

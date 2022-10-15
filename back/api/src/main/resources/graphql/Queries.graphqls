@@ -4,6 +4,8 @@ type Query {
 
     getAllFunds: [Fund]!
 
+    searchFundAndFeesByName(query: String!): FundAndFees!
+
     getAllFees: [Fees]!
     getFeesByFundId(fundId: Int!): [Fees]
     getFeesById(feesId: Int!): Fees
@@ -35,6 +37,8 @@ type Query {
     payToFees(token: String!, card: CardInput!, amount: Int!, feesId: ID!): Int!
     payToFundByBalance(token: String!, amount: Float!, fundId: ID!): [Balance!]!
     payToFeesByBalance(token: String!, amount: Float!, feesId: ID!): IntegerAndBalance!
+
+    payFromFundToFees(token: String!, amount: Int!, feesId: ID!): IntegerAndBalance!
 
 # Delete before deploying production
     getAllUsers: [User]!

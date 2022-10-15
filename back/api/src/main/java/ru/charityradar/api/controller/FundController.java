@@ -18,10 +18,6 @@ public class FundController {
         return _fundService.getAllFunds();
     }
 
-    public Fund setImage(@Argument final Fund fund, @Argument final String image) {
-        return _fundService.setImage(fund, image);
-    }
-
     @QueryMapping
     public Fund getFundById(@Argument final Integer id) {
         return _fundService.getFundById(id);

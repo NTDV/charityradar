@@ -1,0 +1,4 @@
+type FundAndFees {
+    fund: [Fund]!
+    fees: [Fees]!
+}

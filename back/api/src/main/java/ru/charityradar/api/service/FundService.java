@@ -25,11 +25,6 @@ public class FundService {
         return _fundRepository.save(fund);
     }
 
-    public Fund setImage(Fund fund, String image) {
-        fund.setImage(image);
-        return _fundRepository.save(fund);
-    }
-
     public Fund getFundByEmail(String email) {
         return _fundRepository.getFundByEmail(email);
     }
@@ -61,4 +56,10 @@ public class FundService {
         return result;
     }
 
+    public Fund edit(final Fund fund, final FundInput fundInput) {
+        return _fundRepository.save(fund.edit(fundInput));
+    }
+    public Fund editImage(final Fund fund, final String image) {
+        return _fundRepository.save(fund.editImage(image));
+    }
 }

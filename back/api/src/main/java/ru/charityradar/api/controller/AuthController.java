@@ -11,8 +11,10 @@ import ru.charityradar.api.input.FundInput;
 import ru.charityradar.api.input.UserInput;
 import ru.charityradar.api.mixed.BalanceMixed;
 import ru.charityradar.api.model.Auth;
+import ru.charityradar.api.model.Fund;
 import ru.charityradar.api.service.AuthService;
 
+import javax.security.sasl.AuthenticationException;
 import java.security.NoSuchAlgorithmException;
 
 @Controller
@@ -29,6 +31,16 @@ public class AuthController {
     @MutationMapping
     public Auth addFundAuth(@Argument final AuthInput authInput, @Argument final FundInput fundInput) throws NoSuchAlgorithmException {
         return  _authService.registerAuth(authInput, fundInput);
+    }
+
+    @MutationMapping
+    public Fund editFund(@Argument final String token, @Argument final FundInput fundInput) throws AuthenticationException {
+        return _authService.editFund(token, fundInput);
+    }
+
+    @MutationMapping
+    public Fund setImage(@Argument final String token, @Argument final String image) {
+        return _authService.setImage(token, image);
     }
 
     @QueryMapping

@@ -17,9 +17,11 @@ import ru.charityradar.api.input.FundInput;
 import ru.charityradar.api.input.UserInput;
 import ru.charityradar.api.mixed.BalanceMixed;
 import ru.charityradar.api.model.Auth;
+import ru.charityradar.api.model.Fund;
 import ru.charityradar.api.model.User;
 import ru.charityradar.api.repository.AuthRepository;
 
+import javax.security.sasl.AuthenticationException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
@@ -122,6 +124,17 @@ public class AuthService {
 
     public Auth getAuthByToken(String token) {
         return _authRepository.getAuthByToken(token);
+    }
+
+    public Fund editFund(final String token, final FundInput fundInput) throws AuthenticationException {
+        final var auth = _authRepository.getAuthByToken(token);
+        final var fund = _fundService.getFundById(auth.getLink());
+        if (fund == null) throw new AuthenticationException("No fund for token found!");
+        return _fundService.edit(fund, fundInput);
+    }
+
+    public Fund setImage(final String token, final String image) {
+        return _fundService.editImage(_fundService.getFundById(_authRepository.getAuthByToken(token).getLink()), image);
     }
 
     public void setConfirmed(Auth auth) {
