@@ -2,8 +2,6 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <script src="redirect.js"></script>
-
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">        
@@ -15,6 +13,7 @@
         <title>CharityRadar</title>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js">
+
         </script>
     </head>
     <body>
@@ -30,6 +29,7 @@
                     <nav class="nav" id="nav">
                         <a class="nav__link" href="#" data-scroll="#features">ОПИСАНИЕ</a>
                         <a class="nav__link" href="#" data-scroll="#team">КОМАНДА</a>
+                        <a class="nav__link" href="#" data-scroll="#demo">ВИДЕО</a>
                         <a class="nav__link" href="#" data-scroll="#download">СКАЧАТЬ</a>
                     </nav>
 
@@ -217,17 +217,28 @@
             </div>
         </div>
 
+        <!-- Demo -->
+        <div class="demo" id="demo">
+            <div class="container">
+                <div class="demo__inner">
+                    <h1>Демонстрация приложения</h1>
+                    <video controls>
+                        <source src="static/demo.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
         <!-- Download -->
         <div class="download" id="download">            
             <div class="container">
                 <div class="download__inner">
                     <img src="images/logo_big_v1.svg" alt="" width="400">
-                    <h1>Начните помогать прямо сейчас!</h1>
+                    <h1>Скачайте приложение прямо сейчас!</h1>
                     <h2>Приложение доступно для Android</h2>
                     <img src="images/qr-code.png" alt="" width="300">
-                    <br>
-                    <br>
-                    <a class="btn btn--gradient" href="?download=1">Скачать</a>
+                    <h2>Или так :)</h2>
+                    <a class="btn btn--gradient" href="#">Скачать</a>
                 </div>                
             </div>
         </div>
@@ -254,7 +265,8 @@
                         <h4 class="footer__title">About us</h4>
                         <div class="footer__text">
                             <p>
-                                Благотворительность - важная часть современного общества. Наш долг позволить каждому помочь другим!
+                                Благотворительность - очень важная часть нашего общества. Мы надеемся, что приложение
+                                найдет своих пользователей, и мир станет чуточку лучше :) 
                             </p>
                         </div>
                     </div>
@@ -265,7 +277,10 @@
                 <div class="container">
                     <div class="copyright__text">
                         <div>
-                            Сделано командой <span>Nice -_- Team</span>
+                            Мы простая группа разработчиков, работающая за идею.
+                        </div>
+                        <div>
+                            Сделано командой <span>Nice-_-Team</span>
                         </div>
                     </div>
                 </div>
