@@ -25,7 +25,7 @@ export const PopularFundsList = ({ onPressAll, onPressFund, fundsList }: Popular
       <View style={styles.titleContainer}>
         <TitleMore
           title="Популярные фонды"
-          nameLink={fundsList.length >= 10 ? 'Смотреть все' : ''}
+          nameLink={fundsList.length >= 5 ? 'Смотреть все' : ''}
           onPress={onPressAll}
         />
       </View>

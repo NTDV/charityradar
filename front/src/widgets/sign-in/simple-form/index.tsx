@@ -19,7 +19,7 @@ import Toast from 'react-native-root-toast';
 import { ERRORS } from '../../../shared/constants/types';
 
 const defaultValues = __DEV__
-  ? { email: 'asafohin1999@gmail.com', password: 'artem1999' }
+  ? { email: 'asafohin1999@gmail.com', password: 'qwerty123QQ!' }
   : { email: '', password: '' };
 
 /**

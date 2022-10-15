@@ -29,7 +29,7 @@ export const ActualFees = ({ onPressFees, onPressAll, feesList }: ActualFeesList
       <View style={styles.titleContainer}>
         <TitleMore
           title="Актуальные сборы"
-          nameLink={feesList.length >= 10 ? 'Смотреть все' : ''}
+          nameLink={feesList.length >= 5 ? 'Смотреть все' : ''}
           onPress={onPressAll}
         />
       </View>

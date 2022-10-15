@@ -52,7 +52,7 @@ export const TransactionHistory = (appNavigation: AppNavigationProps) => {
             <View style={styles.transactionsHeader}>
               <Text style={styles.transactionsMonth}>{item.month}</Text>
               <Text style={styles.transactionsAdd}>{numberWithSpaces(item.fills)} ₽</Text>
-              <Text style={styles.transactionsMinus}>{numberWithSpaces(item.expense)} ₽</Text>
+              {/*<Text style={styles.transactionsMinus}>{numberWithSpaces(item.expense)} ₽</Text>*/}
             </View>
             {item.transactions.map((transaction, index) => (
               <View key={index} style={styles.transactionsContainer}>

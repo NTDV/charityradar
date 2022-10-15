@@ -74,6 +74,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    flex: 1,
   },
   date: {
     fontSize: 14,

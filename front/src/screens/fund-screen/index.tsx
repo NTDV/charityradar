@@ -90,11 +90,13 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
       />
       <FlatList
         data={feesList}
+        showsVerticalScrollIndicator={false}
         style={styles.container}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
           <>
             <Text style={styles.name}>{fund.name}</Text>
+            <Text style={styles.email}>{fund.email}</Text>
             <View style={styles.containerImg}>
               {!fund.image ? (
                 <IconNullPhoto />

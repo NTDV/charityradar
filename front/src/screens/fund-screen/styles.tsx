@@ -91,4 +91,10 @@ export const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: COLOR_GREY,
   },
+  email: {
+    fontSize: 14,
+    fontWeight: '300',
+    color: COLOR_BLACK,
+    marginBottom: 15,
+  },
 });

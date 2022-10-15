@@ -30,7 +30,7 @@ export const NewsPreview = ({
     <View style={styles.container}>
       <TouchableOpacity style={styles.header} onPress={() => openFund(fundId)} activeOpacity={0.7}>
         <Text style={styles.headerFundName}>{fundName}</Text>
-        {rating !== null && <Rating rating={rating} styles={styles.coefficient} />}
+        {!!rating && <Rating rating={rating} styles={styles.coefficient} />}
       </TouchableOpacity>
       <View style={styles.containerImg}>
         {!image ? (

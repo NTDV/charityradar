@@ -24,14 +24,14 @@ import { settingsToastError } from '../../../shared/constants/settings-toast';
 
 const defaultValues = __DEV__
   ? {
-      surname: '123456',
-      name: '123456',
-      patronymic: '123',
-      phone: '89998670934',
+      surname: 'Сафохин',
+      name: 'Артем',
+      patronymic: 'Анатольевич',
+      phone: '89998670999',
       birthday: '29.10.1999',
       email: 'asafohin1999@gmail.com',
-      password: 'qwerty123QQW',
-      passwordRepeat: 'qwerty123QQW',
+      password: 'qwerty123QQ!',
+      passwordRepeat: 'qwerty123QQ!',
     }
   : {
       surname: '',
