@@ -10,12 +10,14 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { validationSchemaPayment } from './validation-schema';
 import { payToBitFund } from '../../shared/api/bank-card/pay-to-bit-fund';
-import { useAuth } from '../../shared/hooks/use-auth';
+import { useAuth, UserType } from '../../shared/hooks/use-auth';
 import { COLOR_ERROR } from '../../shared/constants/style-variables';
 import { observer } from 'mobx-react';
 import { bankCardStore } from '../../stores/bank-card-store';
 import Toast from 'react-native-root-toast';
 import { settingsToast } from '../../shared/constants/settings-toast';
+import { payToBitFees } from '../../shared/api/bank-card/pay-to-bit-fees';
+import { payToBitFeesFromFund } from '../../shared/api/bank-card/pay-to-bit-fees-from-fund';
 
 type DonationProps = {
   visibility: boolean;
@@ -51,7 +53,7 @@ export const Donation = observer(
 
     const onSubmit = async (values: { amount: number }) => {
       // Если оплата по счету и оплата фонда
-      if (typePayment === TYPE_PAYMENT.fondDonation) {
+      if (typePayment === TYPE_PAYMENT.fondDonation && user?.type === UserType.user) {
         const payload = await payToBitFund({
           token: user?.token,
           amount: values.amount,
@@ -62,6 +64,39 @@ export const Donation = observer(
           serError('Что-то пошло не так, повторите запрос');
         } else {
           bankCardStore.setDonations(payload[0]['Balance']);
+          Toast.show('Транзакция прошла успешно', settingsToast);
+          serError('');
+          onClose();
+        }
+      }
+
+      if (typePayment === TYPE_PAYMENT.feesDonation && user?.type === UserType.user) {
+        const payload = await payToBitFees({
+          token: user?.token,
+          amount: values.amount,
+          feesId: id,
+        });
+
+        if (payload === null) {
+          serError('Что-то пошло не так, повторите запрос');
+        } else {
+          Toast.show('Транзакция прошла успешно', settingsToast);
+          serError('');
+          onClose();
+        }
+      }
+
+      if (typePayment === TYPE_PAYMENT.feesDonation && user?.type === UserType.fund) {
+        const payload = await payToBitFeesFromFund({
+          token: user?.token,
+          amount: values.amount,
+          feesId: id,
+        });
+
+        if (payload === null) {
+          serError('Что-то пошло не так, повторите запрос');
+        } else {
+          bankCardStore.setDonations(payload);
           Toast.show('Транзакция прошла успешно', settingsToast);
           serError('');
           onClose();

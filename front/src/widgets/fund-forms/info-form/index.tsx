@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Dimensions, TouchableOpacity, View, Text } from 'react-native';
+import { Dimensions, TouchableOpacity, View, Text, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -12,19 +12,32 @@ import { CustomButton } from '../../../shared/ui/custom-button';
 import { Avatar } from '../../../shared/ui/avatar';
 import { MAIN_PADDING } from '../../../shared/constants/styles-global';
 import { uploadImg } from '../../../shared/api/fund-admin/upload-img';
+import { useAuth } from '../../../shared/hooks/use-auth';
 
 export const InfoForm = () => {
+  const { user, setPhotoFond } = useAuth();
+  const [formDataImg, setFormDataImg] = useState(null);
   const [photo, setPhoto] = useState<null | object>(null);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     resolver: yupResolver(validationSchemaFund),
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (value) => {
+    if (formDataImg !== null) {
+      const payload = await uploadImg(formDataImg);
+
+      if (payload.path) {
+        const path = payload.path.substring(16);
+        setPhotoFond(path);
+      }
+    }
+  };
 
   const choosePhoto = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -51,8 +64,7 @@ export const InfoForm = () => {
     let formData = new FormData();
     formData.append('image', { uri: photo, name: filename, type });
     formData.append('type', 0);
-
-    await uploadImg(formData);
+    setFormDataImg(formData);
   };
 
   useEffect(() => {
@@ -61,11 +73,33 @@ export const InfoForm = () => {
     })();
   }, [photo]);
 
+  useEffect(() => {
+    if (user?.fund !== undefined) {
+      setValue('name', user.fund.name);
+      setValue('description', user.fund.description);
+    }
+  }, []);
+
+  if (user?.fund === undefined) return <View style={styles.container} />;
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={choosePhoto} activeOpacity={0.8}>
         <View style={[styles.row, styles.rowAvatar]}>
-          <Avatar height={180} width={Dimensions.get('window').width - MAIN_PADDING * 2} />
+          {!!user.fund.image ? (
+            <Avatar
+              height={180}
+              width={Dimensions.get('window').width - MAIN_PADDING * 2}
+              uri={user.fund.image}
+            />
+          ) : (
+            <View
+              style={{
+                height: 180,
+                width: Dimensions.get('window').width - MAIN_PADDING * 2,
+              }}
+            />
+          )}
           <View style={styles.photo} />
         </View>
         <Text style={styles.photoText}>Выберите фотографию</Text>

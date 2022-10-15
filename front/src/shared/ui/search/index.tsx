@@ -5,9 +5,12 @@ import { styles } from './styles';
 
 import { COLOR_PLACEHOLDER_LIGHT } from '../../constants/style-variables';
 import { Ionicons } from '@expo/vector-icons';
+import { search, SearchType } from '../../api/search';
+import { AppNavigationProps } from '../../../navigation';
 
 type SearchProps = {
   placeholder?: string;
+  appNavigation: AppNavigationProps;
 };
 
 /**
@@ -15,16 +18,37 @@ type SearchProps = {
  * @param placeholder - children
  */
 
-export const Search = ({ placeholder }: SearchProps) => {
+export const Search = ({ placeholder, appNavigation }: SearchProps) => {
   const [value, setValue] = useState('');
+  const [fundList, setFundList] = useState<SearchType['fund'] | []>([]);
+  const [feesList, setFeesList] = useState<SearchType['fees'] | []>([]);
   const [focusSearch, setFocusSearch] = useState(false);
 
   const onFocus = () => setFocusSearch(true);
   const onBlur = () => setFocusSearch(false);
 
-  const onChangeText = (value: string) => setValue(value);
+  const openFund = (id: string | number) => {
+    appNavigation.navigation.push('FundScreen', { id });
+  };
+  const openFees = (fees: SearchType['fees']) => {
+    appNavigation.navigation.push('FeesFullScreen', {
+      id: fees.id,
+      fondName: fees.name,
+    });
+  };
 
-  const clearValue = () => setValue('');
+  const onChangeText = async (value: string) => {
+    setValue(value);
+    const payload: SearchType = await search(value);
+    setFundList(payload.fund);
+    setFeesList(payload.fees);
+  };
+
+  const clearValue = () => {
+    setValue('');
+    setFundList([]);
+    setFeesList([]);
+  };
 
   const cancelHandler = () => {
     Keyboard.dismiss();
@@ -46,7 +70,6 @@ export const Search = ({ placeholder }: SearchProps) => {
             placeholderTextColor={COLOR_PLACEHOLDER_LIGHT}
             onChangeText={onChangeText}
             onFocus={onFocus}
-            onBlur={onBlur}
           />
           {value.length > 0 && (
             <TouchableOpacity style={styles.iconClear} onPress={clearValue}>
@@ -60,9 +83,38 @@ export const Search = ({ placeholder }: SearchProps) => {
           </TouchableOpacity>
         )}
       </View>
-      {focusSearch && (
+      {focusSearch && (fundList.length > 0 || feesList.length > 0) && (
         <View style={styles.containerList}>
-          <Text>Тут будет что-то</Text>
+          <View style={styles.searchContainer}>
+            {fundList.length > 0 && <Text style={styles.searchContainerTitle}>Фонды</Text>}
+            <View style={styles.searchBox}>
+              {fundList.map((fund) => (
+                <TouchableOpacity
+                  key={fund.id}
+                  style={styles.searchBoxItem}
+                  onPress={() => openFund(fund.id)}
+                  activeOpacity={0.8}
+                >
+                  <Text>{fund.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          <View style={styles.searchContainer}>
+            {feesList.length > 0 && <Text style={styles.searchContainerTitle}>Сборы</Text>}
+            <View style={styles.searchBox}>
+              {feesList.map((fees) => (
+                <TouchableOpacity
+                  key={fees.id}
+                  style={styles.searchBoxItem}
+                  onPress={() => openFees(fees)}
+                  activeOpacity={0.8}
+                >
+                  <Text>{fees.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
         </View>
       )}
     </View>

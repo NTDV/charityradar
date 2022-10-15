@@ -45,8 +45,7 @@ export const FundScreen = (appNavigation: AppNavigationProps) => {
   const onPressFees = (fees: FeesPreviewType) => {
     appNavigation.navigation.push('FeesFullScreen', {
       id: fees.id,
-      fondName: fees.fund.name,
-      fondRating: fees.fund.rating,
+      fondName: fees.name,
     });
   };
 

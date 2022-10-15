@@ -4,11 +4,9 @@ import { styles } from './styles';
 
 import { ProgressBar } from '../../../shared/ui/progress-bar';
 import { BASE_URL } from '../../../shared/api/general';
-import { Rating } from '../../../shared/ui/rating';
 
 type FundPreviewProps = {
   onPress: () => void;
-  coefficient: string | number | null;
   fundName: string;
   fundDescription: string;
   isLarge?: boolean;
@@ -32,7 +30,6 @@ type FundPreviewProps = {
 
 export const FeesPreview = ({
   onPress,
-  coefficient,
   fundName,
   fundraising,
   fundDescription,
@@ -53,7 +50,6 @@ export const FeesPreview = ({
       </View>
       <View style={styles.coefficientRow}>
         <Text style={styles.nameFund}>{fundName}</Text>
-        {coefficient !== null && <Rating rating={coefficient} styles={styles.coefficient} />}
       </View>
       <Text style={styles.info}>{fundDescription}</Text>
 

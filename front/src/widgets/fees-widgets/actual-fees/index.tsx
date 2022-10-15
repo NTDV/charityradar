@@ -41,8 +41,7 @@ export const ActualFees = ({ onPressFees, onPressAll, feesList }: ActualFeesList
             <View style={styles.item}>
               <FeesPreview
                 onPress={() => onPressFees(item)}
-                fundName={item.fund.name}
-                coefficient={item.fund.rating}
+                fundName={item.name}
                 fundDescription={item.description}
                 image={item.image}
                 fundraising={{

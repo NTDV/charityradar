@@ -12,9 +12,7 @@ export const getTransaction = async (id: string | number) => {
     method: 'GET',
     headers: headers,
   })
-    .then(({ data }) => {
-      console.log(data);
-    })
+    .then(({ data }) => (Array.isArray(data) ? data : []))
     .catch((err) => {
       console.log(err.response.data, 'err');
       return [];

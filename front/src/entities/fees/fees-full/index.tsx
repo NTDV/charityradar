@@ -7,7 +7,6 @@ import { BASE_URL } from '../../../shared/api/general';
 import { Rating } from '../../../shared/ui/rating';
 
 type FundPreviewProps = {
-  coefficient?: string;
   fundName?: string;
   fundDescription?: string;
   image?: string;
@@ -26,13 +25,7 @@ type FundPreviewProps = {
  * @param fundDescription - Описание фонда
  */
 
-export const FeesFull = ({
-  coefficient,
-  fundName,
-  fundraising,
-  fundDescription,
-  image,
-}: FundPreviewProps) => {
+export const FeesFull = ({ fundName, fundraising, fundDescription, image }: FundPreviewProps) => {
   return (
     <View style={styles.containerLarge}>
       {image && (
@@ -42,7 +35,6 @@ export const FeesFull = ({
       )}
       <View style={styles.coefficientRow}>
         <Text style={styles.nameFund}>{fundName}</Text>
-        {coefficient !== null && <Rating rating={coefficient} styles={styles.coefficient} />}
       </View>
       <Text style={styles.info}>{fundDescription}</Text>
       {fundraising && (

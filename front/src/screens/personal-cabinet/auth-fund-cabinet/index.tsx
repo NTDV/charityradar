@@ -10,6 +10,7 @@ import { observer } from 'mobx-react';
 import { bankCardStore } from '../../../stores/bank-card-store';
 import { getBalance } from '../../../shared/api/bank-card/get-balance';
 import { numberWithSpaces } from '../../../shared/utils/number-with-spaces';
+import { getBalanceByFundId } from '../../../shared/api/bank-card/get-balance-by-fund-id';
 
 export const AuthFundCabinet = observer(() => {
   const [fundData, setFundData] = useState({});
@@ -20,11 +21,11 @@ export const AuthFundCabinet = observer(() => {
   };
 
   const getBalanceCard = async () => {
-    if (!!user && !!user.token) {
-      const payload = await getBalance(user.token);
+    if (!!user && !!user.fund.id) {
+      const payload = await getBalanceByFundId(user.fund.id);
 
       if (payload !== null) {
-        bankCardStore.setCurrentBalance(payload.amount);
+        bankCardStore.setCurrentBalance(payload);
       }
     }
   };

@@ -11,6 +11,11 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLOR_WHITE,
   },
+  empty: {
+    fontSize: 18,
+    color: COLOR_GREY,
+    textAlign: 'center',
+  },
   rowCard: {
     marginTop: 15,
   },
@@ -52,6 +57,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 3,
+    marginBottom: 15,
   },
   transaction: {
     flexDirection: 'row',
@@ -66,10 +72,17 @@ export const styles = StyleSheet.create({
   transactionInfo: {
     justifyContent: 'center',
   },
+  transactionInfoRight: {
+    marginLeft: 15,
+  },
   transactionName: {
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 3,
+  },
+  transactionNameSmall: {
+    maxWidth: 210,
+    fontSize: 14,
   },
   transactionSmallText: {
     fontSize: 12,
@@ -86,8 +99,8 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
   },
   logoText: {
-    fontSize: 18,
-    fontWeight: '500',
+    fontSize: 32,
     color: COLOR_PRIMARY,
+    fontWeight: '500',
   },
 });

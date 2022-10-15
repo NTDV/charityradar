@@ -19,8 +19,7 @@ export const FeesAllScreen = ({ navigation }: FeesAllScreenProps) => {
   const openFees = (fees: FeesPreviewType) => {
     navigation.push('FeesFullScreen', {
       id: fees.id,
-      fondName: fees.fund.name,
-      fondRating: fees.fund.rating,
+      fondName: fees.name,
     });
   };
 
@@ -70,8 +69,7 @@ export const FeesAllScreen = ({ navigation }: FeesAllScreenProps) => {
         <View style={[styles.item, styles.itemVertical]}>
           <FeesPreview
             onPress={() => openFees(item)}
-            fundName={item.fund.name}
-            coefficient={item.fund.rating}
+            fundName={item.name}
             fundDescription={item.description}
             image={item.image}
             fundraising={{

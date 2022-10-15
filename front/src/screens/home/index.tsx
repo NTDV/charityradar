@@ -50,8 +50,7 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
   const onPressFees = (fees: FeesPreviewType) =>
     appNavigation.navigation.push('FeesFullScreen', {
       id: fees.id,
-      fondName: fees.fund.name,
-      fondRating: fees.fund.rating,
+      fondName: fees.name,
     });
 
   // Получение баланса карты у авторизованного пользователя и не фонда
@@ -120,16 +119,13 @@ export const Home = observer(({ appNavigation }: { appNavigation: AppNavigationP
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
         <View style={[styles.rowSection, styles.rowCard]}>
-          <Search placeholder="Введите название фонда или сбора" />
+          <Search placeholder="Введите название фонда или сбора" appNavigation={appNavigation} />
         </View>
         {user?.type === UserType.user && bankCardStore.amount !== null && (
           <View style={styles.rowSection}>
             <PreviewCard />
           </View>
         )}
-        {/*<View style={styles.rowSection}>*/}
-        {/*  <YouHelpList onPressFund={openFund} />*/}
-        {/*</View>*/}
         {fundsList !== null && fundsList.length !== 0 && (
           <View style={styles.rowSection}>
             <PopularFundsList

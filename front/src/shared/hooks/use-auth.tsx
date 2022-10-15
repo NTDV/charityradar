@@ -69,6 +69,7 @@ export type UseProvideAuthExit = {
   logout: () => void;
   signUpSimple: (values: validationSchemaSimpleFormProps) => void;
   signInVtbId: (values: validationSchemaVtbFormProps) => void;
+  setPhotoFond: (image: string) => void;
 };
 
 // Контекст
@@ -158,6 +159,18 @@ export const useProvideAuth = (): UseProvideAuthExit => {
     return userVtb;
   };
 
+  const setPhotoFond = (image: string) => {
+    setUser((prev) => {
+      return {
+        ...prev,
+        fund: {
+          ...prev,
+          image,
+        },
+      };
+    });
+  };
+
   // Авторизация гостя
   const signInGuest = async () => {
     const user = { type: UserType.guest };
@@ -198,7 +211,7 @@ export const useProvideAuth = (): UseProvideAuthExit => {
     })();
   }, []);
 
-  return { user, signUpSimple, signInSimple, signInGuest, logout, signInVtbId };
+  return { user, signUpSimple, signInSimple, signInGuest, logout, signInVtbId, setPhotoFond };
 };
 
 // Обертка приложения

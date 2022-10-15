@@ -1,5 +1,10 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import { COLOR_GREY_LIGHT, COLOR_SECONDARY } from '../../constants/style-variables';
+import {
+  COLOR_GREY,
+  COLOR_GREY_LIGHT,
+  COLOR_PRIMARY,
+  COLOR_SECONDARY,
+} from '../../constants/style-variables';
 import { MAIN_PADDING } from '../../constants/styles-global';
 
 export const styles = StyleSheet.create({
@@ -17,7 +22,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  containerFocused: {},
+  containerFocused: {
+    height: '100%',
+  },
   icon: {
     position: 'absolute',
     left: 15,
@@ -47,5 +54,15 @@ export const styles = StyleSheet.create({
   cancelText: {
     color: COLOR_SECONDARY,
     fontSize: 16,
+  },
+  searchContainer: {},
+  searchContainerTitle: {
+    fontSize: 16,
+    color: COLOR_GREY,
+  },
+  searchBox: {},
+  searchBoxItem: {
+    width: '100%',
+    paddingVertical: 10,
   },
 });

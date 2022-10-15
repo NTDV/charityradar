@@ -71,7 +71,6 @@ export const FeesFullScreen = (appNavigation: AppNavigationProps) => {
           <FeesFull
             image={fees?.image}
             fundName={fund.name}
-            coefficient={fund.rating}
             fundDescription={fees?.description}
             fundraising={{
               allMoney: fees.goal,
@@ -81,7 +80,7 @@ export const FeesFullScreen = (appNavigation: AppNavigationProps) => {
           />
         </View>
       </ScrollView>
-      {user?.type === UserType.user && (
+      {user?.type !== UserType.guest && (
         <View style={styles.footer}>
           <CustomButton name="Пожертвовать" onPress={openFeesModal} primary={true} />
         </View>

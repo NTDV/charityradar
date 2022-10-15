@@ -13,6 +13,6 @@ export const uploadImg = async (formData: object) => {
     headers: headers,
     data: formData,
   })
-    .then(({ data }) => console.log(data))
-    .catch((err) => console.log(err.response.data, 'err'));
+    .then(({ data }) => data)
+    .catch((err) => null);
 };
